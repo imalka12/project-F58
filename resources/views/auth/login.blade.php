@@ -97,7 +97,7 @@
                                     <div class="my-auto">
 
                                         <div>
-                                            <h5 class="text-primary">Welcome Back !</h5>
+                                            <h5 class="text-primary">Welcome Back!</h5>
                                             <p class="text-muted">Sign in to continue to Skote.</p>
                                         </div>
 
