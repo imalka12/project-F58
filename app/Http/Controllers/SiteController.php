@@ -24,4 +24,19 @@ class SiteController extends Controller
         return view('pages.web.about');
     }
 
+    public function faq()
+    {
+        return view('pages.web.faq');
+    }
+
+    public function pricing()
+    {
+        return view('pages.web.pricing');
+    }
+
+    public function contact()
+    {
+        return view('pages.web.contact');
+    }
+
 }

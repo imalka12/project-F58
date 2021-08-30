@@ -1,10 +1,10 @@
 <nav class="topnav py-2 border-bottom">
     <div class="container d-flex flex-wrap">
         <ul class="nav me-auto">
-            <li class="nav-item"><a href="/about" class="nav-link link-dark px-2">About</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Contacts</a></li>
+            <li class="nav-item"><a href="{{route('site.about')}}" class="nav-link link-dark px-2">About</a></li>
+            <li class="nav-item"><a href="{{route('site.pricing')}}" class="nav-link link-dark px-2">Pricing</a></li>
+            <li class="nav-item"><a href="{{route('site.faq')}}" class="nav-link link-dark px-2">FAQs</a></li>
+            <li class="nav-item"><a href="{{route('site.contact')}}" class="nav-link link-dark px-2">Contacts</a></li>
         </ul>
         <ul class="nav">
             <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Login</a></li>
@@ -15,7 +15,7 @@
 
 <header class="py-3" id="top-header-main">
     <div class="container d-flex flex-wrap justify-content-center">
-        <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-white text-decoration-none">
+        <a href="{{ route('site.home') }}" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-white text-decoration-none">
             <img class="me-2" src="{{ asset('assets/images/logo-icon-white.png') }}" alt="Logo Icon" width="24" height="24">
             <span class="fs-4">Quick Ads</span>
         </a>

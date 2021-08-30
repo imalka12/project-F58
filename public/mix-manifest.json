@@ -139,14 +139,14 @@
     "/assets/libs/spectrum-colorpicker/spectrum-colorpicker.min.js": "/assets/libs/spectrum-colorpicker/spectrum-colorpicker.min.js",
     "/assets/libs/spectrum-colorpicker/spectrum-colorpicker.min.css": "/assets/libs/spectrum-colorpicker/spectrum-colorpicker.min.css",
     "/assets/libs/jquery-steps/jquery-steps.min.js": "/assets/libs/jquery-steps/jquery-steps.min.js",
-    "/assets/libs/tinymce/CHANGELOG.md": "/assets/libs/tinymce/CHANGELOG.md",
-    "/assets/libs/tinymce/README.md": "/assets/libs/tinymce/README.md",
     "/assets/libs/tinymce/bower.json": "/assets/libs/tinymce/bower.json",
+    "/assets/libs/tinymce/CHANGELOG.md": "/assets/libs/tinymce/CHANGELOG.md",
     "/assets/libs/tinymce/composer.json": "/assets/libs/tinymce/composer.json",
     "/assets/libs/tinymce/jquery.tinymce.js": "/assets/libs/tinymce/jquery.tinymce.js",
     "/assets/libs/tinymce/jquery.tinymce.min.js": "/assets/libs/tinymce/jquery.tinymce.min.js",
     "/assets/libs/tinymce/license.txt": "/assets/libs/tinymce/license.txt",
     "/assets/libs/tinymce/package.json": "/assets/libs/tinymce/package.json",
+    "/assets/libs/tinymce/README.md": "/assets/libs/tinymce/README.md",
     "/assets/libs/tinymce/tinymce.d.ts": "/assets/libs/tinymce/tinymce.d.ts",
     "/assets/libs/tinymce/tinymce.js": "/assets/libs/tinymce/tinymce.js",
     "/assets/libs/tinymce/tinymce.min.js": "/assets/libs/tinymce/tinymce.min.js",
@@ -200,6 +200,7 @@
     "/assets/images/maintenance.svg": "/assets/images/maintenance.svg",
     "/assets/images/megamenu-img.png": "/assets/images/megamenu-img.png",
     "/assets/images/profile-img.png": "/assets/images/profile-img.png",
+    "/assets/images/search.png": "/assets/images/search.png",
     "/assets/images/smiling-emoticon-square-face.png": "/assets/images/smiling-emoticon-square-face.png",
     "/assets/images/smiling-emoticon-square-face.svg": "/assets/images/smiling-emoticon-square-face.svg",
     "/assets/images/verification-img.png": "/assets/images/verification-img.png",
@@ -209,6 +210,5 @@
     "/assets/css/app.min.css": "/assets/css/app.min.css",
     "/assets/css/app-dark.min.css": "/assets/css/app-dark.min.css",
     "/assets/css/web.min.css": "/assets/css/web.min.css",
-    "/assets/js/app.min.js": "/assets/js/app.min.js",
-    "/assets/images/search.png": "/assets/images/search.png"
+    "/assets/js/app.min.js": "/assets/js/app.min.js"
 }
