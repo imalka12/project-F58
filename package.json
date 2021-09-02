@@ -58,7 +58,7 @@
         "dragula": "^3.7.2",
         "dropzone": "^5.7.2",
         "echarts": "^4.7.0",
-        "flot-charts": "^0.8.3",
+        // "flot-charts": "^0.8.3",
         "flot.curvedlines": "^1.1.1",
         "gmaps": "^0.4.24",
         "gulp-rtlcss": "^1.4.1",

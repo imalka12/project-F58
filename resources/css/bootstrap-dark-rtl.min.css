@@ -5404,10 +5404,10 @@ textarea.form-control-lg {
   -webkit-transform: none;
           transform: none; }
 
-.clearfix::after {
+/* .clearfix::after {
   display: block;
   clear: both;
-  content: ""; }
+  content: ""; } */
 
 .link-primary {
   color: #556ee6; }
