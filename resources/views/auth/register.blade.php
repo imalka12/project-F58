@@ -117,10 +117,22 @@
                                                 </div>
         
                                                 <div class="mb-3">
-                                                    <label for="username" class="form-label">Username</label>
+                                                    <label for="firstname" class="form-label">First Name</label>
                                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                                    value="{{ old('name') }}" id="username" name="name" autofocus required
-                                                        placeholder="Enter username">
+                                                    value="{{ old('name') }}" id="firstname" name="firstname" autofocus required
+                                                        placeholder="Enter first name">
+                                                    @error('name')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="lastname" class="form-label">Last Name</label>
+                                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                                    value="{{ old('name') }}" id="lastname" name="lastname" autofocus required
+                                                        placeholder="Enter last name">
                                                     @error('name')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -149,35 +161,7 @@
                                                         </span>
                                                     @enderror
                                                 </div>
-        
-                                                <div class="mb-3">
-                                                    <label for="userdob">Date of Birth</label>
-                                                    <div class="input-group" id="datepicker1">
-                                                        <input type="text" class="form-control @error('dob') is-invalid @enderror" placeholder="dd-mm-yyyy"
-                                                            data-date-format="dd-mm-yyyy" data-date-container='#datepicker1' data-date-end-date="0d" value="{{ old('dob') }}"
-                                                            data-provide="datepicker" name="dob" autofocus required>
-                                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                                        @error('dob')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-        
-                                                <div class="mb-3">
-                                                    <label for="avatar">Profile Picture</label>
-                                                    <div class="input-group">
-                                                        <input type="file" class="form-control @error('avatar') is-invalid @enderror" id="inputGroupFile02" name="avatar" autofocus required>
-                                                        <label class="input-group-text" for="inputGroupFile02">Upload</label>
-                                                    </div>
-                                                    @error('avatar')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-        
+
                                                 <div class="mt-4 d-grid">
                                                     <button class="btn btn-primary waves-effect waves-light"
                                                         type="submit">Register</button>
