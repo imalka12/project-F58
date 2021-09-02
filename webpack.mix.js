@@ -238,20 +238,20 @@ var third_party_assets = {
             assets: ["./node_modules/jquery-knob/dist/jquery.knob.min.js"],
         },
         { name: "moment", assets: ["./node_modules/moment/min/moment.min.js"] },
-        {
-            name: "flot-charts",
-            assets: [
-                "./node_modules/flot-charts/jquery.flot.js",
-                "./node_modules/flot-charts/jquery.flot.time.js",
-                "./node_modules/flot-charts/jquery.flot.resize.js",
-                "./node_modules/flot-charts/jquery.flot.pie.js",
-                "./node_modules/flot-charts/jquery.flot.selection.js",
-                "./node_modules/flot-charts/jquery.flot.stack.js",
-                "./node_modules/flot-charts/jquery.flot.crosshair.js",
-                "./node_modules/jquery.flot.tooltip/js/jquery.flot.tooltip.min.js",
-                "./node_modules/flot-orderbars/js/jquery.flot.orderBars.js",
-            ],
-        },
+        // {
+        //     name: "flot-charts",
+        //     assets: [
+        //         "./node_modules/flot-charts/jquery.flot.js",
+        //         "./node_modules/flot-charts/jquery.flot.time.js",
+        //         "./node_modules/flot-charts/jquery.flot.resize.js",
+        //         "./node_modules/flot-charts/jquery.flot.pie.js",
+        //         "./node_modules/flot-charts/jquery.flot.selection.js",
+        //         "./node_modules/flot-charts/jquery.flot.stack.js",
+        //         "./node_modules/flot-charts/jquery.flot.crosshair.js",
+        //         "./node_modules/jquery.flot.tooltip/js/jquery.flot.tooltip.min.js",
+        //         "./node_modules/flot-orderbars/js/jquery.flot.orderBars.js",
+        //     ],
+        // },
         {
             name: "magnific-popup",
             assets: [
