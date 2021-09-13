@@ -14,7 +14,7 @@
     @include('includes.header')
     
     <div>
-        @yield('contents');
+        @yield('contents')
     </div>
 
     @include('includes.footer')

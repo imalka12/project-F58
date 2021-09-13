@@ -7,7 +7,9 @@
         <form action="/" method="post" id="home-search-form" onsubmit="return false">
             @csrf
             <input type="search" name="search" id="home-search-anything" placeholder="What are you looking for today?">
-            <button type="submit" id="search-button"><img src="{{  asset('assets/images/search.png') }}" alt="" height="38px"></button>
+            <button type="submit" id="search-button">
+                <img src="{{  asset('assets/images/search.png') }}" alt="" height="38px">
+            </button>
         </form>
     </div>
 </div>
@@ -26,6 +28,9 @@
                 <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Post Your Ad</button>
                 <button type="button" class="btn btn-outline-secondary btn-lg px-4">Learn More</button>
             </div>
+            <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi numquam provident iure! Optio similique a veritatis molestiae hic fugiat placeat ad adipisci consequuntur, ullam eius iusto qui, voluptatum quibusdam quae.
+            </p>
         </div>
     </div>
 </div>
