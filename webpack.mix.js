@@ -19,8 +19,7 @@ const folder = {
  */
 
 var third_party_assets = {
-    css_js: [
-        {
+    css_js: [{
             name: "jquery",
             assets: ["./node_modules/jquery/dist/jquery.min.js"],
         },
@@ -350,14 +349,14 @@ var third_party_assets = {
 };
 
 //copying third party assets
-lodash(third_party_assets).forEach(function (assets, type) {
+lodash(third_party_assets).forEach(function(assets, type) {
     if (type == "css_js") {
-        lodash(assets).forEach(function (plugin) {
+        lodash(assets).forEach(function(plugin) {
             var name = plugin["name"],
                 assetlist = plugin["assets"],
                 css = [],
                 js = [];
-            lodash(assetlist).forEach(function (asset) {
+            lodash(assetlist).forEach(function(asset) {
                 var ass = asset.split(",");
                 for (let i = 0; i < ass.length; ++i) {
                     if (ass[i].substr(ass[i].length - 3) == ".js") {
@@ -371,22 +370,22 @@ lodash(third_party_assets).forEach(function (assets, type) {
                 mix.combine(
                     js,
                     folder.dist_assets +
-                        "/libs/" +
-                        name +
-                        "/" +
-                        name +
-                        ".min.js"
+                    "/libs/" +
+                    name +
+                    "/" +
+                    name +
+                    ".min.js"
                 );
             }
             if (css.length > 0) {
                 mix.combine(
                     css,
                     folder.dist_assets +
-                        "/libs/" +
-                        name +
-                        "/" +
-                        name +
-                        ".min.css"
+                    "/libs/" +
+                    name +
+                    "/" +
+                    name +
+                    ".min.css"
                 );
             }
         });
@@ -510,10 +509,12 @@ var app_pages_assets = {
 };
 
 var out = folder.dist_assets + "js/";
-lodash(app_pages_assets).forEach(function (assets, type) {
+lodash(app_pages_assets).forEach(function(assets, type) {
     for (let i = 0; i < assets.length; ++i) {
         mix.js(assets[i], out + "pages");
     }
 });
 
 mix.combine("resources/js/app.js", folder.dist_assets + "js/app.min.js");
+
+mix.js("resources/js/web.js", folder.dist_assets + "js");

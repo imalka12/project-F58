@@ -25,12 +25,6 @@
             </div>
             <div class="col-6 px-5">
                 <div id="form-wrapper">
-                    @if (session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-
                     <form action="{{ route('client.process-login') }}" method="post">
                         @csrf
 

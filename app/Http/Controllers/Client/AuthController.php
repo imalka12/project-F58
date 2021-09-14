@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ClientRegistered;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -74,11 +77,13 @@ class AuthController extends Controller
 
         // create profile
         $user->profile()->create();
+        
+        // log in the user
+        Auth::login($user);
 
-        // send verification email - trigger client registered event
+        event(new Registered($user));
 
-        // show the verification email sent notice page
-        return redirect()->route('client.email-verify');
+        return redirect()->route('verification.notice');
     }
 
     /**
@@ -91,10 +96,33 @@ class AuthController extends Controller
     
     /**
      * Verify email address
+     * @param EmailVerificationRequest $request
      */
-    public function verifyClientEmail()
-    {
-        # code...
+    public function verifyClientEmail(EmailVerificationRequest $request) {
+        // verify the email address
+        $request->fulfill();
+
+        // change user status to active
+        $user = User::find(auth()->user()->id);
+        $user->status = 'active';
+        $user->save();
+
+        // return to login page after
+        return redirect()->route('client.profile')->with('success', 'Thank you for verifying your email address. Your account is now verified and active.');
+    }
+
+    /**
+     * Resend the email address verification email message
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function resendClientEmailVerificationEmail(Request $request) {
+        // trigger resend email for email verification
+        $request->user()->sendEmailVerificationNotification();
+    
+        // go back to email verification page with link sent message.
+        return back()->with('success', 'Verification link sent!');
     }
 
     /**
@@ -105,15 +133,12 @@ class AuthController extends Controller
      */
     public function processClientLogin(Request $request)
     {
-        // get all post data
-        $data = $request->post();
-
         // validate post request
-        $request->validate([
+        $data = $request->validate([
             'email_address' => 'required|email|exists:users,email',
             'password' =>'required',
             'remember_me' =>'nullable|boolean',
-        ], $data);
+        ]);
 
         // if validation is passed;
         // get the user for the email address
@@ -147,7 +172,7 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('site.home');
+        return redirect()->route('site.home')->with('info', 'You are now successfully logged out.');
     }
 
 }

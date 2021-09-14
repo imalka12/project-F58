@@ -48,7 +48,7 @@
                 </div>
             </div>
             
-            <div class="d-flex justify-content-between py-4 mys-4 border-top">
+            <div class="d-flex justify-content-between pt-4 mt-4 border-top">
                 <p>&copy; 2021 {{ config('app.name') }}. Designed and developed by {{ config('system.developer.name') }}</p>
                 <ul class="list-unstyled d-flex">
                     <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
@@ -59,3 +59,4 @@
         </footer>
     </div>
 </div>
+

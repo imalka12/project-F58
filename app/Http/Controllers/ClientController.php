@@ -15,6 +15,7 @@ class ClientController extends Controller
 
     public function showProfilePage()
     {
-        return view('pages.web.user.profile');
+        $user = auth()->user();
+        return view('pages.web.user.profile', compact('user'));
     }
 }
