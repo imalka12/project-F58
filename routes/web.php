@@ -42,12 +42,12 @@ Route::post('clients/logout', [AuthController::class, 'processClientLogout'])->n
 Route::get('client/profile', [ClientController::class, 'showProfilePage'])->middleware('verified')->name('client.profile');
 
 # Email Verification Routes
-// show email notification page
+// 1. show email notification page
 Route::get('/email/verify', [AuthController::class, 'showVerifyEmailNotificationPage'])->middleware('auth')->name('verification.notice');
+// 2. allow to resend the email for email verification - limited to 6 attempts per minute
+Route::post('/email/verification-notification', [AuthController::class, 'resendClientEmailVerificationEmail'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 // verify the email
 Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyClientEmail'])->middleware(['auth', 'signed'])->name('verification.verify');
-// resend the email for email verification
-Route::post('/email/verification-notification', [AuthController::class, 'resendClientEmailVerificationEmail'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // Administration Panel Routes
 Route::get('/admin', [HomeController::class, 'root'])->name('root');

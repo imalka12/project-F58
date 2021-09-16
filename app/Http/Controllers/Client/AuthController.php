@@ -102,12 +102,14 @@ class AuthController extends Controller
         // verify the email address
         $request->fulfill();
 
+        // get current logged in user
+        $userId = auth()->user()->id;
         // change user status to active
-        $user = User::find(auth()->user()->id);
-        $user->status = 'active';
-        $user->save();
+        $user = User::find($userId);// get user record from users table
+        $user->status = 'active';// change to active
+        $user->save();// save change
 
-        // return to login page after
+        // return to client profile page after
         return redirect()->route('client.profile')->with('success', 'Thank you for verifying your email address. Your account is now verified and active.');
     }
 

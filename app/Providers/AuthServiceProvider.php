@@ -28,11 +28,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // email verification
+        // customize email verification template and sending data
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
+            // get logged in user
+            $loggedInUser = auth()->user();
+            // create a new email using the template
             return (new MailMessage)
-                ->view('emails.client-registered', ['url' => $url, 'user' => auth()->user()])
-                ->subject('Verify Your Email Address');
+                ->view('emails.client-registered', ['url' => $url, 'user' => $loggedInUser])
+                ->subject('Hello ' . $loggedInUser->firstname . '! Please verify Your Email Address');
         });
     }
 }
