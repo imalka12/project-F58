@@ -43,11 +43,13 @@ body {
 }
 
 #footer-wrapper {
-    background-color: #5274d9;
-    color: #ffffff;
     a {
-        color: #f2f2f2;
         text-decoration: none;
+    }
+    footer {
+        background-color: #f2f2f2;
+        text-align: center;
+        border-top: 1px solid #b6b6b6;
     }
 }
 
@@ -63,10 +65,22 @@ body {
     }
 }
 
-.alert {
+.notification-alert {
     border-radius: 0px;
     text-align: center;
     margin: 0px;
     position: fixed;
     width: 100%;
+}
+
+.category_link {
+    text-decoration: none;
+    color: inherit;
+     :hover {
+        color: #5274d9;
+    }
+}
+
+.required-label {
+    color: #ff0000;
 }

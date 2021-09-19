@@ -40,6 +40,7 @@ Route::post('clients/logout', [AuthController::class, 'processClientLogout'])->n
 
 // Client Profile Routes
 Route::get('client/profile', [ClientController::class, 'showProfilePage'])->middleware('verified')->name('client.profile');
+Route::post('client/profile', [ClientController::class, 'updateClientProfile'])->name('client.profile.update');
 
 # Email Verification Routes
 // 1. show email notification page

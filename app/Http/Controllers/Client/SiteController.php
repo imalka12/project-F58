@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class SiteController extends Controller
@@ -13,8 +14,11 @@ class SiteController extends Controller
      */
     public function home()
     {
+        // get categories
+        $categories = Category::orderBy('title')->get();
+
         // Return home page inside pages. web folder
-        return view('pages.web.home');
+        return view('pages.web.home', compact('categories'));
     }
 
     /**

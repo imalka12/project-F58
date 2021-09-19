@@ -28,9 +28,6 @@
                 <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Post Your Ad</button>
                 <button type="button" class="btn btn-outline-secondary btn-lg px-4">Learn More</button>
             </div>
-            <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi numquam provident iure! Optio similique a veritatis molestiae hic fugiat placeat ad adipisci consequuntur, ullam eius iusto qui, voluptatum quibusdam quae.
-            </p>
         </div>
     </div>
 </div>

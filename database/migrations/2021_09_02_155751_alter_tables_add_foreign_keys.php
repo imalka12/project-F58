@@ -24,7 +24,7 @@ class AlterTablesAddForeignKeys extends Migration
             $table->foreign('payment_id')->references('id')->on('payments');
         });
         
-        Schema::table('ratings', function (Blueprint $table) {
+        Schema::table('feedbacks', function (Blueprint $table) {
             $table->foreign('profile_id')->references('id')->on('profiles');
         });
 
@@ -82,7 +82,7 @@ class AlterTablesAddForeignKeys extends Migration
             $table->dropForeign(['payment_id']);
         });
 
-        Schema::table('ratings', function (Blueprint $table) {
+        Schema::table('feedbacks', function (Blueprint $table) {
             $table->dropForeign(['profile_id']);
         });
 

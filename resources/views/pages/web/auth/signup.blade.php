@@ -45,11 +45,11 @@
                         </div>
 
                         <div class="col-12 form-group">
-                            <label for="email_address" class="mb-2">Email Address</label>
-                            <input type="email" name="email_address" id="email_address"
-                                class="form-control @error('email_address') is-invalid @enderror"
-                                value="{{ old('email_address') }}">
-                            @error('email_address')
+                            <label for="email" class="mb-2">Email Address</label>
+                            <input type="email" name="email" id="email"
+                                class="form-control @error('email') is-invalid @enderror"
+                                value="{{ old('email') }}">
+                            @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

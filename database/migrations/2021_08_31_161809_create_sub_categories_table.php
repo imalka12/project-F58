@@ -17,7 +17,7 @@ class CreateSubCategoriesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->string('title');
-            $table->string('icon');
+            $table->string('icon')->nullable();
             $table->string('status')->default('active');
             $table->timestamps();
             $table->softDeletes();

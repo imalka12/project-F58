@@ -3,19 +3,24 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Mail\ClientRegistered;
-use App\Models\Role;
+use App\Http\Requests\ClientLoginRequest;
+use App\Http\Requests\ClientSignupRequest;
 use App\Models\User;
+use App\Services\ClientAuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
+
+    protected $clientAuth;
+
+    public function __construct(ClientAuthService $clientAuth ) {
+        $this->clientAuth = $clientAuth;
+    }
+
     /**
      * Shows the login page for website users
      */
@@ -41,58 +46,26 @@ class AuthController extends Controller
     }
 
     /**
-     * Process the sign up for a website user
-     */
-    public function processClientSignUp(Request $request)
-    {
-        // get all post data from the request
-        $data = $request->post();
-
-        // create validation
-        $validator = Validator::make($data, [
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'email_address' => 'required|email',
-            'password' => 'required|confirmed',
-        ]);
-
-        // check if validation fails
-        if($validator->fails()) {
-            // redirect to the sign up page with validation errors and old input values
-            return redirect()->route('client.signup')->withErrors($validator)->withInput()->with('error', 'Please check your input values and try again.');
-        }
-
-        // get the default role from roles table
-        $role = Role::where('is_default_role', true)->first();
-
-        // create general user entry
-        $user = User::create([
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname'],
-            'email' => $data['email_address'],
-            'password' => Hash::make($data['password']),
-            'status' => 'inactive',
-            'role_id' => $role->id
-        ]);
-
-        // create profile
-        $user->profile()->create();
-        
-        // log in the user
-        Auth::login($user);
-
-        event(new Registered($user));
-
-        return redirect()->route('verification.notice');
-    }
-
-    /**
      * Show the email verification sent notification page
      */
     public function showVerifyEmailNotificationPage()
     {
         return view('pages.web.auth.verify-email');
     }     
+
+    /**
+     * Process the sign up for a website user
+     * 
+     * @param ClientSignupRequest $clientSignupRequest
+     */
+    public function processClientSignUp(ClientSignupRequest $request)
+    {
+        // signup
+        $this->clientAuth->signUp($request);
+
+        // redirect to email address verification notice page
+        return redirect()->route('verification.notice');
+    }
     
     /**
      * Verify email address
@@ -102,15 +75,11 @@ class AuthController extends Controller
         // verify the email address
         $request->fulfill();
 
-        // get current logged in user
-        $userId = auth()->user()->id;
-        // change user status to active
-        $user = User::find($userId);// get user record from users table
-        $user->status = 'active';// change to active
-        $user->save();// save change
+        $this->clientAuth->setActive();
 
         // return to client profile page after
-        return redirect()->route('client.profile')->with('success', 'Thank you for verifying your email address. Your account is now verified and active.');
+        return redirect()->route('client.profile')
+                ->with('success', 'Thank you for verifying your email address. Your account is now verified and active.');
     }
 
     /**
@@ -130,35 +99,16 @@ class AuthController extends Controller
     /**
      * Process client login request
      *
-     * @param Request $request
+     * @param ClientLoginRequest $request
      * @return \Illuminate\Http\RedirectResponse $response
      */
-    public function processClientLogin(Request $request)
+    public function processClientLogin(ClientLoginRequest $request)
     {
-        // validate post request
-        $data = $request->validate([
-            'email_address' => 'required|email|exists:users,email',
-            'password' =>'required',
-            'remember_me' =>'nullable|boolean',
-        ]);
+        $isLoggedIn = $this->clientAuth->login($request);
 
-        // if validation is passed;
-        // get the user for the email address
-        $user = User::where('email', $data['email_address'])->first();
-
-        // verify password
-        $passwordVerified = Hash::check($data['password'], $user->password);
-
-        // return to login page if password is incorrect
-        if(!$passwordVerified) {
-            return redirect()->route('client.login')->with('error', 'Failed to login. Please try again.');
+        if(!$isLoggedIn) {
+            return redirect()->route('client.login')->with('error', 'Failed to login. Please check your username and password and try again.');
         }
-
-        // check if remember me option is checked
-        $isRememberMe = $request->post('remember_me') ? true : false;
-
-        // login the user with remember option
-        Auth::login($user, $isRememberMe);
 
         // redirect user to user profile
         return redirect()->route('client.profile');

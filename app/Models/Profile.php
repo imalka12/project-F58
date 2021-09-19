@@ -21,4 +21,17 @@ class Profile extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * 
+     */
+    public function isIncomplete() {
+        $fields = [
+            $this->address_line_1, 
+            $this->city_id,
+            $this->telephone
+        ];
+
+        return in_array(null, $fields) || in_array('', $fields);
+    }
+
 }
