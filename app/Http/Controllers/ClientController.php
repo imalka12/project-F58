@@ -58,6 +58,6 @@ class ClientController extends Controller
             'telephone' => $data['telephone'],
         ]);
 
-        dd('done');
+        return redirect()->route('client.profile')->with('success', 'Profile updated successfully.');
     }
 }

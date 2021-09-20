@@ -25,8 +25,13 @@ class ClientAuthService {
      * @return void
      */
     public function signUp(ClientSignupRequest $request) {
+        $data = $request->validated();
+
+        // has password
+        $data['password'] = Hash::make($data['password']);
+
         // create user and profile
-        $user = $this->userRepository->create($request->validated());
+        $user = $this->userRepository->create($data);
         
         // log in the user - with remember set to true
         Auth::login($user, true);
