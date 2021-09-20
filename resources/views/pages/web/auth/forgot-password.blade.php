@@ -21,7 +21,7 @@
 
                     <div class="mb-4">
                         <input type="email" name="email_address" id="email_address" class="form-control"
-                            placeholder="Enter your email address here...">
+                            placeholder="Enter your email address here..." autofocus>
                     </div>
 
                     <div class="mb-2">

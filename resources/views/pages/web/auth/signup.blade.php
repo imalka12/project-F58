@@ -32,7 +32,7 @@
                             <label for="firstname" class="mb-2">First Name</label>
                             <input type="text" id="firstname" name="firstname"
                                 class="form-control @error('firstname') is-invalid @enderror"
-                                value="{{ old('firstname') }}">
+                                value="{{ old('firstname') }}" autofocus>
                             @error('firstname') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
