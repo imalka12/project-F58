@@ -32,7 +32,7 @@
                             <label for="email" class="mb-2">Email Address</label>
                             <input type="email" name="email" id="email"
                                 class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email') }}">
+                                value="{{ old('email') }}" autofocus>
                             @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

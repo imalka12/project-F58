@@ -21,7 +21,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Auth::routes(['register' => false]);
+Route::get('/register', function(){
+    return redirect()->route('login');
+});
 
 // Web Site Page Routes
 Route::get('/', [SiteController::class, 'home'])->name('site.home');

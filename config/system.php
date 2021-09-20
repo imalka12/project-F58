@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'developer' => ['name' => 'Imalka Wijerathna', 'email' => 'piumiwijerathna1997@gmail.com'],
+    'developer' => ['name' => env('APP_DEVELOPER_NAME'), 'email' => env('APP_DEVELOPER_EMAIL')],
 ];

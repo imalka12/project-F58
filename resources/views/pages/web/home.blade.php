@@ -25,8 +25,8 @@
             <h1 class="display-4 fw-bold lh-1">Quick Advertisements</h1>
             <p class="lead">Why waste time on multiple ad websites posting your advertisements? Quickly post your ad with cheapest rates and get the best coverage for your ad.</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-                <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Post Your Ad</button>
-                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Learn More</button>
+                <a href="{{ route('client.profile') }}" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Post Your Ad</a>
+                <a href="{{ route('site.faq') }}" class="btn btn-outline-secondary btn-lg px-4">Learn More</a>
             </div>
         </div>
     </div>
