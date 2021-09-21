@@ -6,7 +6,10 @@
             <div class="col-lg-12">
 
                 <h1>What is Quick Ads?</h1>
-                <img src="{{ asset('assets/images/site-images/team.png') }}" alt="">
+                
+                <div class="text-center">
+                    <img src="{{ asset('assets/images/site-images/team.png') }}" alt="">
+                </div>
 
                 <p>Quick Ads is a website where you can buy and sell almost everything. The best deals are often done with
                     people who live in your own city or on your own street, so on Quick Ads it's easy to buy and sell
@@ -23,7 +26,7 @@
                 <p>We also carefully review all ads that are being published, to make sure the quality is up to our
                     standards.</p>
 
-                <p>If you'd like to get in touch with us, go to Contact us.</p>
+                <p>If you'd like to get in touch with us, go to <a href="{{ route('site.contact') }}">contact us</a>.</p>
             </div>
         </div>
     </div>

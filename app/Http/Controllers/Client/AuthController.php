@@ -19,6 +19,13 @@ class AuthController extends Controller
 
     public function __construct(ClientAuthService $clientAuth ) {
         $this->clientAuth = $clientAuth;
+        
+        if(Auth::check()) {
+            // redirect to admin panel if admin user
+            if(Auth::user()->role_id == 3) {
+                return redirect()->route('root');
+            }
+        }
     }
 
     /**
@@ -50,7 +57,23 @@ class AuthController extends Controller
      */
     public function showVerifyEmailNotificationPage()
     {
-        return view('pages.web.auth.verify-email');
+        // if admin, redirect to admin panel
+        if(Auth::user()->role_id == 3) {
+            return redirect()->route('root');
+        }
+        
+        // if admin and already verified, redirect to admin panel
+        if(Auth::user()->email_verified_at != null && Auth::user()->role_id == 3) {
+            return redirect()->route('root');
+        }
+
+        // if email not verified, show notification page
+        if(Auth::user()->email_verified_at == null){
+            return view('pages.web.auth.verify-email');
+        }
+
+        // if general user and email verified, show profile.
+        return redirect()->route('client.profile');
     }     
 
     /**

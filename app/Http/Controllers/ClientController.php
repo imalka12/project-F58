@@ -10,6 +10,10 @@ class ClientController extends Controller
 {
     public function showProfilePage()
     {
+        if(auth()->user()->role_id == 3) {
+            return redirect()->route('root');
+        }
+
         $user = User::whereId(auth()->user()->id)->with('profile')->first();
         $cities = $this->getCitiesList();
 

@@ -5,10 +5,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1>FAQs</h1>
-
+                <p>Frequently asked questions</p>
             </div>
 
-            <div class="col-12 px-5">
+            <div class="col-12 px-5 mt-5">
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
@@ -213,10 +213,5 @@
                 </div>
             </div>
         </div>
-    </div>
-
-
-    </div>
-    </div>
     </div>
 @endsection

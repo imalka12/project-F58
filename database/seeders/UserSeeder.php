@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123456789'),
             'status' => 'active',
             'role_id' => $role->id,
+            'email_verified_at' => date('Y-m-d H:i:s'),
         ]);
     }
 }

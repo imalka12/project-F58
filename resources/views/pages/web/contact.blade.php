@@ -7,26 +7,63 @@
                 <h1>Contact us</h1>
                 <p>If you did not find the answer to your question or problem, please get in touch with us using the form
                     below and we will respond to your message as soon as possible.</p>
-                
-                    <form>
-                    <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" placeholder="City" aria-label="City" id="floatingTextarea">
-                        <label for="floatingTextarea">Your Name</label>
+
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="ratio ratio-21x9">
+                            <iframe width="1200" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" src="https://maps.google.com/maps?width=1200&amp;height=400&amp;hl=en&amp;q=Puttalam%20Road%20Kurunegala+(Quick%20Ads%20Advertising)&amp;t=p&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe> <a href='https://embed-map.org/'>embed google maps</a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=6d566c329222b33308b08342cb6ef4ac50dba948'></script>
+                        </div>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Your Email</label>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-lg-4">
+                        <h2>Quick Ads Advertising</h2>
+                        <address>
+                            <strong>Address</strong>
+                            <br>
+                            Puttalam Road,
+                            <br>
+                            Kurunegala
+                            <br>
+                            Sri Lanka.
+                        </address>
+
+                        <address>
+                            <strong>Telephone</strong>
+                            <br>
+                            0701234567
+                            <br>
+                            <strong>Email</strong>
+                            <br>
+                            <a href="mail-to:info@quickads.local">info@quickads.local</a>
+                        </address>
                     </div>
-                    <div class="form-floating mb-3">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 150px"></textarea>
-                        <label for="floatingTextarea">Message</label>
+                    <div class="col-lg-8">
+                        <form action="/" method="post">
+                            @csrf
+                            <div class="row justify-content-center">
+                                <div class="col-lg-10">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" placeholder="City" aria-label="City"
+                                            id="floatingTextarea">
+                                        <label for="floatingTextarea">Your Name</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                        <label for="floatingInput">Your Email</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                                            style="height: 150px"></textarea>
+                                        <label for="floatingTextarea">Message</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Send Message</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                    </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
