@@ -20,7 +20,7 @@ class CreateAdvertisementsTable extends Migration
             $table->unsignedBigInteger('city_id');
             $table->string('title');
             $table->text('description');
-            $table->string('condition')->default('free');
+            $table->string('condition')->default('used');
             $table->decimal('price', 11, 2);
             $table->boolean('is_price_negotiable')->default(false);
             $table->boolean('is_offers_accepted')->default(false);

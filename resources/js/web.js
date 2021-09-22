@@ -15,3 +15,13 @@ setTimeout(() => {
         alert.close();
     }
 }, 5000);
+
+if (ClassicEditor) {
+    ClassicEditor.create(document.querySelector(".ckeditor-editor"))
+        .then((editor) => {
+            console.log(editor);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}

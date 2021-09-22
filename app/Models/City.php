@@ -20,4 +20,9 @@ class City extends Model
     {
         return $this->belongsTo(District::class);
     }
+
+    public function advertisements()
+    {
+        return $this->hasMany(Advertisement::class);
+    }
 }

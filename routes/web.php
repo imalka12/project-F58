@@ -1,13 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Client\AuthController;
+use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\SiteController;
-use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HomeController;
-use App\Mail\ClientRegistered;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,8 +40,11 @@ Route::post('clients/login', [AuthController::class, 'processClientLogin'])->nam
 Route::post('clients/logout', [AuthController::class, 'processClientLogout'])->name('client.process-logout');
 
 // Client Profile Routes
-Route::get('client/profile', [ClientController::class, 'showProfilePage'])->middleware('verified')->name('client.profile');
-Route::post('client/profile', [ClientController::class, 'updateClientProfile'])->name('client.profile.update');
+Route::middleware(['verified'])->group(function () {
+    Route::get('client/profile', [ClientController::class, 'showProfilePage'])->name('client.profile');
+    Route::post('client/profile', [ClientController::class, 'updateClientProfile'])->name('client.profile.update');
+    Route::get('client/create-advertisement', [AdvertisementController::class, 'showPostAdvertisementPage'])->name('client.advertisement.create');
+});
 
 # Email Verification Routes
 // 1. show email notification page
