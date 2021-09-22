@@ -45,7 +45,7 @@
                                             <img src="{{ asset('assets/images/site-images/undraw_No_data_re_kwbl.svg') }}" alt="No advertisements graphic" width="200">
                                         </div>
                                         <p>Sorry, We can't find anything to show here.</p>
-                                        <a href="#" class="btn btn-success">Let's Create an Advertisement</a>
+                                        <a href="{{ route('client.advertisement.create') }}" class="btn btn-success">Let's Create an Advertisement</a>
                                     </div>
                                 </div>
                             </div>
