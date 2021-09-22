@@ -16,9 +16,13 @@
                     <span class="logo-sm">
                         <img src="{{ URL::asset ('/assets/images/logo-light.svg') }}" alt="" height="22">
                     </span>
-                    <span class="logo-lg">
+                    <!--<span class="logo-lg">
                         <img src="{{ URL::asset ('/assets/images/logo-light.png') }}" alt="" height="19">
-                    </span>
+                    </span> -->
+                    <span class="logo-lg">
+                        <img src="{{ URL::asset ('/assets/images/logo-icon-white.png') }}" alt="Quick_Ads_Logo" width="28" height="28">
+                        <span class="fs-2 text-white">Quick Ads</span>
+                    </span> 
                 </a>
             </div>
 

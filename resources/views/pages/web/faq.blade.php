@@ -7,7 +7,9 @@
                 <h1>FAQs</h1>
                 <p>Frequently asked questions</p>
             </div>
-
+            <div class="text-center">
+                <img src="{{ asset('assets/images/site-images/problem.png') }}" alt="">
+            </div>
             <div class="col-12 px-5 mt-5">
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
