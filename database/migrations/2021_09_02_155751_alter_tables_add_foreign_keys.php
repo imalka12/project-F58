@@ -52,7 +52,8 @@ class AlterTablesAddForeignKeys extends Migration
         Schema::table('advertisements', function (Blueprint $table) {
             $table->foreign('sub_category_id')->references('id')->on('sub_categories');
             $table->foreign('city_id')->references('id')->on('cities');
-            $table->foreign('approved_by_user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('payment_id')->references('id')->on('payments');
         });
 
         Schema::table('advertisement_images', function (Blueprint $table) {
@@ -110,7 +111,8 @@ class AlterTablesAddForeignKeys extends Migration
         Schema::table('advertisements', function (Blueprint $table) {
             $table->dropForeign(['sub_category_id']);
             $table->dropForeign(['city_id']);
-            $table->dropForeign(['approved_by_user_id']);
+            $table->dropForeign(['user_id']);
+            $table->dropForeign(['payment_id']);
         });
 
         Schema::table('advertisement_images', function (Blueprint $table) {

@@ -23,7 +23,7 @@ class Advertisement extends Model
         'expire_at',
         'renewed_at',
         'is_approved',
-        'approved_by_user_id',
+        'user_id',
         'is_promoted',
     ];
 
@@ -52,9 +52,9 @@ class Advertisement extends Model
      *
      * @return void
      */
-    public function approvedByUser()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'approved_by_user_id');
+        return $this->belongsTo(User::class);
     }
 
 }

@@ -15,7 +15,6 @@ class CreateAdvertisementsTable extends Migration
     {
         Schema::create('advertisements', function (Blueprint $table) {
             $table->id();
-            $table->string('type')->default('free');
             $table->unsignedBigInteger('sub_category_id');
             $table->unsignedBigInteger('city_id');
             $table->string('title');
@@ -28,8 +27,9 @@ class CreateAdvertisementsTable extends Migration
             $table->timestamp('expire_at')->nullable();
             $table->timestamp('renewed_at')->nullable();
             $table->boolean('is_approved')->default(false);
-            $table->unsignedBigInteger('approved_by_user_id');
+            $table->unsignedBigInteger('user_id');
             $table->boolean('is_promoted')->default(false);
+            $table->unsignedBigInteger('payment_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

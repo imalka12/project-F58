@@ -37,13 +37,13 @@ class UserRepository implements UserRepositoryInterface {
      * @inheritDoc
      */
     public function find($id): User {
-        return User::whereId($id)->first();
+        return User::whereId($id)->with('profile')->first();
     }
     
     /**
      * @inheritDoc
      */
     public function findBy(string $column, $key): User {
-        return User::where($column, $key)->first();
+        return User::where($column, $key)->with('profile')->first();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\ClientLoginRequest;
+use App\Http\Requests\ClientProfileUpdateRequest;
 use App\Http\Requests\ClientSignupRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
@@ -74,6 +75,11 @@ class ClientAuthService {
         return true;
     }
 
+    /**
+     * Set the status of user account as active
+     *
+     * @return void
+     */
     public function setActive() {
         // get current logged in user
         $userId = auth()->user()->id;
@@ -81,6 +87,57 @@ class ClientAuthService {
         $user = $this->userRepository->find($userId);
 
         $this->userRepository->setActive($user);
+    }
+
+    /**
+     * Find user account by specified id
+     *
+     * @param mixed $userId
+     * @return void
+     */
+    public function findClientByUserId($userId): User
+    {
+        return $this->userRepository->find($userId);
+    }
+
+    /**
+     * Get logged in user with profile relation
+     *
+     * @return User $user
+     */
+    public function getLoggedInUserWithProfile()
+    {
+        $loggedInUser = auth()->user();
+        if(! $loggedInUser) {
+            return null;
+        }
+
+        return $this->findClientByUserId($loggedInUser->id);
+    }
+
+    /**
+     * Update profile of current logged in user
+     *
+     * @param ClientProfileUpdateRequest $request
+     * @return void
+     */
+    public function updateClientProfile(ClientProfileUpdateRequest $request)
+    {
+        $data = $request->validated();
+
+        $user = $this->getLoggedInUserWithProfile();
+
+        $user->update([
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+        ]);
+
+        $user->profile->update([
+            'address_line_1' => $data['address_line_1'],
+            'address_line_2' => $data['address_line_2'],
+            'city_id' => $data['city_id'],
+            'telephone' => $data['telephone'],
+        ]);
     }
 
 }

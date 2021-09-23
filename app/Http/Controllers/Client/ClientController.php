@@ -3,66 +3,56 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ClientProfileUpdateRequest;
 use App\Models\City;
 use App\Models\User;
+use App\Services\AdvertisementService;
+use App\Services\ClientAuthService;
+use App\Services\LocationService;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    private $clientAuth;
+    private $locations;
+    private $advertisements;
+
+    public function __construct(ClientAuthService $clientAuthService, LocationService $locationService, AdvertisementService $advertisementService) {
+        $this->clientAuth = $clientAuthService;
+        $this->locations = $locationService;
+        $this->advertisements = $advertisementService;
+    }
+
+    /**
+     * Show client profile page
+     *
+     * @return void
+     */
     public function showProfilePage()
     {
-        if(auth()->user()->role_id == 3) {
+        $user = $this->clientAuth->getLoggedInUserWithProfile();
+
+        if($user->role_id == 3) {
             return redirect()->route('root');
         }
 
-        $user = User::whereId(auth()->user()->id)->with('profile')->first();
-        $cities = $this->getCitiesList();
+        $cities = $this->locations->getCitiesForSelects();
+        $advertisements = $this->advertisements->getAllAdsCategorizedForCurrentUser();
 
-        return view('pages.web.user.profile', compact('user', 'cities'));
+        return view('pages.web.user.profile', compact('user', 'cities', 'advertisements'));
     }
 
-    public function getCitiesList()
+    /**
+     * Handle client profile update request
+     *
+     * @param ClientProfileUpdateRequest $request
+     * @return void
+     */
+    public function updateClientProfile(ClientProfileUpdateRequest $request)
     {
-        $cities = City::orderBy('title')->get();
+        $this->clientAuth->updateClientProfile($request);
 
-        $list = [];
-
-        foreach ($cities as $city) {
-            if(!array_key_exists($city->district->title, $list)) {
-                $list[$city->district->title] = [];
-            }
-            
-            $list[$city->district->title][] = $city;
-        }
-
-        return $list;
-    }
-
-    public function updateClientProfile(Request $request)
-    {
-        $data = $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'address_line_1' => 'required',
-            'address_line_2' => 'nullable',
-            'city_id' => 'required|exists:cities,id',
-            'telephone' => 'required|numeric|regex:/^0[1-9]{1}[0-9]{1}[0-9]{7}$/',
-        ]);
-
-        $user = User::whereId(auth()->user()->id)->with('profile')->first();
-
-        $user->update([
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname'],
-        ]);
-
-        $user->profile->update([
-            'address_line_1' => $data['address_line_1'],
-            'address_line_2' => $data['address_line_2'],
-            'city_id' => $data['city_id'],
-            'telephone' => $data['telephone'],
-        ]);
-
-        return redirect()->route('client.profile')->with('success', 'Profile updated successfully.');
+        return redirect()->route('client.profile')
+            ->with('success', 'Profile updated successfully.');
     }
 }

@@ -43,7 +43,8 @@ Route::post('clients/logout', [AuthController::class, 'processClientLogout'])->n
 Route::middleware(['verified'])->group(function () {
     Route::get('client/profile', [ClientController::class, 'showProfilePage'])->name('client.profile');
     Route::post('client/profile', [ClientController::class, 'updateClientProfile'])->name('client.profile.update');
-    Route::get('client/create-advertisement', [AdvertisementController::class, 'showPostAdvertisementPage'])->name('client.advertisement.create');
+    Route::get('client/create-advertisement', [AdvertisementController::class, 'showPostAdvertisementPage'])->name('client.advertisement.show-create');
+    Route::post('client/create-advertisement', [AdvertisementController::class, 'createAdvertisement'])->name('client.advertisement.create');
 });
 
 # Email Verification Routes

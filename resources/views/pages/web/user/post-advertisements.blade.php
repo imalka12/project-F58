@@ -17,44 +17,40 @@
             <div class="col-lg-12 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <form action="#" method="post">
+                        <form action="{{ route('client.advertisement.create') }}" method="post">
                             @csrf
-                            {{-- 'condition',
-                            'price',
-                            'is_price_negotiable',
-                            'is_offers_accepted',
-                            'min_offer',
-                            'expire_at',
-                            'renewed_at',
-                            'is_approved',
-                            'approved_by_user_id',
-                            'is_promoted', --}}
 
                             <div class="mb-3">
                                 <label for="sub_category_id" class="form-label">Category</label>
                                 <select name="sub_category_id" id="sub_category_id" class="form-control">
-                                    <option value="">Automobile</option>
-                                    <option value="">Electronics</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="mb-3">
                                 <label for="city_id" class="form-label">Location</label>
                                 <select name="city_id" id="city_id" class="form-control">
-                                    <option value="">Colombo</option>
-                                    <option value="">Kurunegala</option>
+                                    @foreach ($cities as $district => $districtCities)
+                                        <optgroup label="{{ $district }}">
+                                            @foreach ($districtCities as $city)
+                                                <option value="{{ $city->id }}">{{ $city->title }}</option>
+                                            @endforeach
+                                        </optgroup>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="mb-3">
                                 <label for="title" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="title"
+                                <input type="text" class="form-control" id="title" name="title"
                                     placeholder="Enter item title here. Ex: Huawei P15 Pro for sale">
                             </div>
 
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
-                                <div id="description" class="ckeditor-editor"></div>
+                                <textarea id="description" name="description" class="ckeditor-editor"></textarea>
                             </div>
 
                             <div class="row">
