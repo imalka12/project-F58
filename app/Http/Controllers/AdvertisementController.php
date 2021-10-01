@@ -27,7 +27,9 @@ class AdvertisementController extends Controller
      */
     public function showPostAdvertisementPage()
     {
-        $categories = $this->categories->list();
+        $categories = $this->categories->getCategoriesForSelect();
+        // dd($categories);
+
         $cities = $this->locations->getCitiesForSelects();
 
         return view('pages.web.user.post-advertisements', compact('categories', 'cities'));

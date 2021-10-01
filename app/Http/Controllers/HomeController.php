@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OptionGroupCreateRequest;
+use App\Models\OptionGroup;
 use App\Models\User;
+use App\Services\CategoryService;
+use App\Services\OptionGroupService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,14 +15,19 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
+    private $categories;
+    private $optionGroups;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CategoryService $categoryService, OptionGroupService $optionGroupService)
     {
         $this->middleware('auth');
+        $this->categories = $categoryService;
+        $this->optionGroups = $optionGroupService;
     }
 
     /**
@@ -127,6 +136,26 @@ class HomeController extends Controller
                 ], 200); // Status code here
             }
         }
+    }
+
+    public function showOptionGroupsPage()
+    {
+        $categories = $this->categories->getCategoriesForSelect();
+        $optionGroups = $this->optionGroups->list();
+
+        return view('pages.admin.option-groups-create', compact('categories', 'optionGroups'));
+    }
+
+    public function createOptionGroup(OptionGroupCreateRequest $request)
+    {
+        $this->optionGroups->create($request);
+
+        return redirect()->route('admin.option-groups.add')->with('success', 'Option group created successfully.');
+    }
+
+    public function showOptionGroupEditPage(Request $request, $id)
+    {
+        
     }
 
 }

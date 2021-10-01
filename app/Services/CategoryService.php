@@ -24,4 +24,29 @@ class CategoryService {
         return $this->categoryRepository->all();
     }
 
+    /**
+     * Get a list of categories and sub-categories to use in an HTML element
+     *
+     * @return array $categories
+     */
+    public function getCategoriesForSelect()
+    {
+        $categories = [];
+
+        $allCategories = $this->categoryRepository->all();
+
+        foreach ($allCategories as $category) {
+            $categories[$category->id] = [
+                'title' => $category->title,
+                'subcategories' => [],
+            ];
+
+            foreach ($category->subCategories as $subCategory) {
+                $categories[$category->id]['subcategories'][$subCategory->id] = $subCategory->title;
+            }
+        }
+
+        return $categories;
+    }
+
 }

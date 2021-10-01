@@ -12,6 +12,6 @@ class CategoryRepository implements CategoryRepositoryInterface {
      * @inheritDoc
      */
     public function all(): Collection {
-        return Category::orderBy('title')->get();
+        return Category::with('subCategories')->orderBy('title')->get();
     }
 }

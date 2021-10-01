@@ -40,12 +40,11 @@ class AlterTablesAddForeignKeys extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
         });
         
-        Schema::table('option_group_values', function (Blueprint $table) {
-            $table->foreign('option_group_id')->references('id')->on('option_groups');
+        Schema::table('option_groups', function (Blueprint $table) {
+            $table->foreign('sub_category_id')->references('id')->on('sub_categories');
         });
 
-        Schema::table('sub_category_options', function (Blueprint $table) {
-            $table->foreign('sub_category_id')->references('id')->on('sub_categories');
+        Schema::table('option_group_values', function (Blueprint $table) {
             $table->foreign('option_group_id')->references('id')->on('option_groups');
         });
 
@@ -98,13 +97,12 @@ class AlterTablesAddForeignKeys extends Migration
         Schema::table('sub_categories', function (Blueprint $table) {
             $table->dropForeign(['category_id']);
         });
-
-        Schema::table('option_group_values', function (Blueprint $table) {
-            $table->dropForeign(['option_group_id']);
+        
+        Schema::table('option_groups', function (Blueprint $table) {
+            $table->dropForeign(['sub_category_id']);
         });
 
-        Schema::table('sub_category_options', function (Blueprint $table) {
-            $table->dropForeign(['sub_category_id']);
+        Schema::table('option_group_values', function (Blueprint $table) {
             $table->dropForeign(['option_group_id']);
         });
 

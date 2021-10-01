@@ -8,20 +8,16 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu">Home</li>
+                @foreach (App\Helpers\AdminHelper::getAdminSidebarLinks() as $link)
+                <li class="{{ request()->routeIs($link['route']) ? 'mm-active' : '' }}">
+                    <a href="{{ route($link['route']) }}" class="waves-effect {{ request()->routeIs($link['route']) ? 'active' : '' }}">
+                        <i class="{{ $link['icon'] }}"></i>
+                        <span key="{{ $link['key'] }}">{{ $link['label'] }}</span>
+                    </a>
+                </li>
+                @endforeach
 
-                <li>
-                    <a href="{{ route('root') }}" class="waves-effect">
-                        <i class="bx bx-home-circle"></i>
-                        <span key="t-dashboards">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="waves-effect">
-                        <i class="bx bx-spreadsheet"></i>
-                        <span key="t-dashboards">View Ads</span>
-                    </a>
-                </li>
-                <li>
+                {{-- <li>
                     <a href="" class="waves-effect">
                         <i class="bx bx-user"></i>
                         <span key="t-dashboards">View Users</span>
@@ -32,7 +28,7 @@
                         <i class="bx bx-add-to-queue"></i>
                         <span key="t-dashboards">Add Categories</span>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </div>
         <!-- Sidebar -->

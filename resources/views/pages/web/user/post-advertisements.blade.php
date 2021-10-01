@@ -20,26 +20,35 @@
                         <form action="{{ route('client.advertisement.create') }}" method="post">
                             @csrf
 
-                            <div class="mb-3">
-                                <label for="sub_category_id" class="form-label">Category</label>
-                                <select name="sub_category_id" id="sub_category_id" class="form-control">
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->title }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="city_id" class="form-label">Location</label>
-                                <select name="city_id" id="city_id" class="form-control">
-                                    @foreach ($cities as $district => $districtCities)
-                                        <optgroup label="{{ $district }}">
-                                            @foreach ($districtCities as $city)
-                                                <option value="{{ $city->id }}">{{ $city->title }}</option>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="sub_category_id" class="form-label">Category</label>
+                                        <select name="sub_category_id" id="sub_category_id" class="form-control">
+                                            @foreach ($categories as $category)
+                                                <optgroup label="{{ $category['title'] }}">
+                                                    @foreach ($category['subcategories'] as $subCategoryId => $subCategoryTitle)
+                                                        <option value="{{ $subCategoryId }}">{{ $subCategoryTitle }}</option>
+                                                    @endforeach
+                                                </optgroup>
                                             @endforeach
-                                        </optgroup>
-                                    @endforeach
-                                </select>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="city_id" class="form-label">Location</label>
+                                        <select name="city_id" id="city_id" class="form-control">
+                                            @foreach ($cities as $district => $districtCities)
+                                                <optgroup label="{{ $district }}">
+                                                    @foreach ($districtCities as $city)
+                                                        <option value="{{ $city->id }}">{{ $city->title }}</option>
+                                                    @endforeach
+                                                </optgroup>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="mb-3">
@@ -54,14 +63,14 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="mb-3">
                                         <label for="price" class="form-label">Price</label>
                                         <input type="number" id="price" name="price" class="form-control" min="1" step="1"
                                             placeholder="0.00">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="mb-3">
                                         <label for="condition_new" class="form-label">Condition</label>
                                         <div>
@@ -78,13 +87,13 @@
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="condition"
                                                     id="condition_parts_only" value="parts-only">
-                                                <label class="form-check-label" for="condition_parts_only">For Parts
+                                                <label class="form-check-label" for="condition_parts_only">Parts
                                                     Only</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-2">
                                     <div class="mb-3">
                                         <label for="is_price_negotiable" class="form-label">Is Price Negotiable</label>
                                         <div>
@@ -101,7 +110,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-2">
                                     <div class="mb-3">
                                         <label for="is_offers_accepted" class="form-label">Is Offers Accepted</label>
                                         <div>
@@ -118,7 +127,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-2">
                                     <div class="mb-3">
                                         <label for="min_offer" class="form-label">Minimum Offer</label>
                                         <input type="number" id="min_offer" name="min_offer" class="form-control" min="1" step="1"

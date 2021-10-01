@@ -15,6 +15,7 @@ class CreateOptionGroupsTable extends Migration
     {
         Schema::create('option_groups', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('sub_category_id');
             $table->string('title');
             $table->timestamps();
             $table->softDeletes();

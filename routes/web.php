@@ -60,3 +60,7 @@ Route::get('/admin', [HomeController::class, 'root'])->name('root');
 //Update User Details
 Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');
+# category options
+Route::get('/admin/option-groups', [HomeController::class, 'showOptionGroupsPage'])->name('admin.option-groups.add');
+Route::post('/admin/option-groups', [HomeController::class, 'createOptionGroup'])->name('admin.option-groups.create');
+Route::get('/admin/option-groups/{id}', [HomeController::class, 'showOptionGroupEditPage'])->name('admin.option-groups.edit');

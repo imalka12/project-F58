@@ -38,7 +38,7 @@ class LocationService {
             if(!array_key_exists($city->district->title, $list)) {
                 $list[$city->district->title] = [];
             }
-            
+
             $list[$city->district->title][] = $city;
         }
 
