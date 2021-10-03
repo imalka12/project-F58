@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OptionGroupCreateRequest;
+use App\Http\Requests\CategoryCreateRequest;
 use App\Models\OptionGroup;
 use App\Models\User;
 use App\Services\CategoryService;
@@ -145,7 +146,7 @@ class HomeController extends Controller
 
         return view('pages.admin.option-groups-create', compact('categories', 'optionGroups'));
     }
-
+    
     public function createOptionGroup(OptionGroupCreateRequest $request)
     {
         $this->optionGroups->create($request);

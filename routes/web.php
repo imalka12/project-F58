@@ -5,6 +5,7 @@ use App\Http\Controllers\Client\AuthController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\SiteController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -64,3 +65,7 @@ Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])-
 Route::get('/admin/option-groups', [HomeController::class, 'showOptionGroupsPage'])->name('admin.option-groups.add');
 Route::post('/admin/option-groups', [HomeController::class, 'createOptionGroup'])->name('admin.option-groups.create');
 Route::get('/admin/option-groups/{id}', [HomeController::class, 'showOptionGroupEditPage'])->name('admin.option-groups.edit');
+//category
+Route::get('/admin/subcategory', [SubCategoryController::class, 'showSubCategoryPage'])->name('admin.subcategory.add');
+Route::post('/admin/subcategory', [SubCategoryController::class, 'createSubCategories'])->name('admin.subcategory.create');
+Route::get('/admin/subcategory/{id}', [SubCategoryController::class, 'showSubCategoryEditPage'])->name('admin.subcategory.edit');
