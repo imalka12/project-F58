@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\SubCategoryCreateRequest;
 use App\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -47,6 +48,17 @@ class CategoryService {
         }
 
         return $categories;
+    }
+
+    public function createSubCategory(SubCategoryCreateRequest $request)
+    {
+        $data = $request->validated();
+        $this->categoryRepository->createSubCategory($data);
+    }
+
+    public function subCategoryList()
+    {
+        return $this->categoryRepository->getSubCategories();
     }
 
 }

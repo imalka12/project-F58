@@ -19,6 +19,12 @@ class AdminHelper {
                 'icon' => 'bx bx-spreadsheet',
                 'label' => 'Category Option Groups',
             ],
+            [
+                'key'=> 't-category',
+                'route'=> 'admin.subcategory.add',
+                'icon'=> 'bx bx-spreadsheet',
+                'label'=> 'Category'
+            ]
         ];
     }
 

@@ -6,9 +6,9 @@ use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\SiteController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OptionGroupController;
+use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use PhpOption\Option;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,3 +70,8 @@ Route::post('/admin/option-groups', [OptionGroupController::class, 'createOption
 Route::get('/admin/option-groups/{id}', [OptionGroupController::class, 'showOptionGroupEditPage'])->name('admin.option-groups.edit');
 Route::post('/admin/option-group/{id}', [OptionGroupController::class, 'updateOptionGroup'])->name('admin.option-groups.update');
 Route::post('/admin/option-groups/{optionGroup}/values', [OptionGroupController::class, 'createOptionGroupValues'])->name('admin.option-group-values.create');
+
+//category
+Route::get('/admin/subcategory', [SubCategoryController::class, 'showSubCategoryPage'])->name('admin.subcategory.add');
+Route::post('/admin/subcategory', [SubCategoryController::class, 'createSubCategories'])->name('admin.subcategory.create');
+Route::get('/admin/subcategory/{id}', [SubCategoryController::class, 'showSubCategoryEditPage'])->name('admin.subcategory.edit');

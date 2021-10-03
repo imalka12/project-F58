@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OptionGroupCreateRequest;
+use App\Http\Requests\CategoryCreateRequest;
 use App\Models\OptionGroup;
 use App\Models\User;
 use App\Services\CategoryService;
