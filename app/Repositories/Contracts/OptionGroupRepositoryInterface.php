@@ -22,4 +22,21 @@ interface OptionGroupRepositoryInterface {
      */
     public function getAll(): Collection;
 
+    /**
+     * Get OptionGroup by id
+     * @param string|int $id
+     * 
+     * @return OptionGroup $optionGroup
+     */
+    public function getById($id): OptionGroup;
+
+    /**
+     * Update OptionGroup
+     *
+     * @param [type] $id OptionGroup Id
+     * @param array $data Update data
+     * @return bool $updated
+     */
+    public function update(OptionGroup $id, array $data): bool;
+
 }

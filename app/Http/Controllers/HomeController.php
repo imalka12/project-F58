@@ -15,19 +15,15 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
-    private $categories;
-    private $optionGroups;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(CategoryService $categoryService, OptionGroupService $optionGroupService)
+    public function __construct()
     {
         $this->middleware('auth');
-        $this->categories = $categoryService;
-        $this->optionGroups = $optionGroupService;
     }
 
     /**
@@ -137,25 +133,4 @@ class HomeController extends Controller
             }
         }
     }
-
-    public function showOptionGroupsPage()
-    {
-        $categories = $this->categories->getCategoriesForSelect();
-        $optionGroups = $this->optionGroups->list();
-
-        return view('pages.admin.option-groups-create', compact('categories', 'optionGroups'));
-    }
-
-    public function createOptionGroup(OptionGroupCreateRequest $request)
-    {
-        $this->optionGroups->create($request);
-
-        return redirect()->route('admin.option-groups.add')->with('success', 'Option group created successfully.');
-    }
-
-    public function showOptionGroupEditPage(Request $request, $id)
-    {
-        
-    }
-
 }

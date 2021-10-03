@@ -5,8 +5,10 @@ use App\Http\Controllers\Client\AuthController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\SiteController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OptionGroupController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use PhpOption\Option;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,10 +59,14 @@ Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyClientEma
 
 // Administration Panel Routes
 Route::get('/admin', [HomeController::class, 'root'])->name('root');
+
 //Update User Details
 Route::post('/update-profile/{id}', [HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');
+
 # category options
-Route::get('/admin/option-groups', [HomeController::class, 'showOptionGroupsPage'])->name('admin.option-groups.add');
-Route::post('/admin/option-groups', [HomeController::class, 'createOptionGroup'])->name('admin.option-groups.create');
-Route::get('/admin/option-groups/{id}', [HomeController::class, 'showOptionGroupEditPage'])->name('admin.option-groups.edit');
+Route::get('/admin/option-groups', [OptionGroupController::class, 'showOptionGroupsPage'])->name('admin.option-groups.add');
+Route::post('/admin/option-groups', [OptionGroupController::class, 'createOptionGroup'])->name('admin.option-groups.create');
+Route::get('/admin/option-groups/{id}', [OptionGroupController::class, 'showOptionGroupEditPage'])->name('admin.option-groups.edit');
+Route::post('/admin/option-group/{id}', [OptionGroupController::class, 'updateOptionGroup'])->name('admin.option-groups.update');
+Route::post('/admin/option-groups/{optionGroup}/values', [OptionGroupController::class, 'createOptionGroupValues'])->name('admin.option-group-values.create');

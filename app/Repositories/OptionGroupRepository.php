@@ -15,10 +15,28 @@ class OptionGroupRepository implements OptionGroupRepositoryInterface {
         return OptionGroup::create($data);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getAll(): Collection
     {
         return OptionGroup::with('subCategory')
         ->orderBy('title', 'asc')
         ->get();
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getById($id): OptionGroup {
+        return OptionGroup::find($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function update(OptionGroup $optionGroup, array $data): bool
+    {
+        return $optionGroup->update($data);
     }
 }

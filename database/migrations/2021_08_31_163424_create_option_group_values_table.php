@@ -18,6 +18,7 @@ class CreateOptionGroupValuesTable extends Migration
             $table->unsignedBigInteger('option_group_id');
             $table->string('title');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
