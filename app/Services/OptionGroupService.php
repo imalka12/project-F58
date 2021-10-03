@@ -41,7 +41,7 @@ class OptionGroupService {
     public function createValue(OptionGroup $optionGroup, OptionGroupValueCreateRequest $request)
     {
         $data = $request->validated();
-        $optionGroup->optionGroupValues()->create($data);
+        return $optionGroup->optionGroupValues()->create($data);
     }
 
 }

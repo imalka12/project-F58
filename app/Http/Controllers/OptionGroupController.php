@@ -54,5 +54,6 @@ class OptionGroupController extends Controller
     public function createOptionGroupValues(OptionGroup $optionGroup, OptionGroupValueCreateRequest $request)
     {
         $this->optionGroups->createValue($optionGroup, $request);
+        return redirect()->route('admin.option-groups.edit', $optionGroup->id)->with('success', 'Option group value added successfully.');
     }
 }

@@ -57,6 +57,7 @@
                         Add New Option Group Value
                     </div>
                     <form action="{{ route('admin.option-group-values.create', $optionGroup->id) }}" method="post">
+                        @csrf
                         <div class="card-body">
                             <div class="mb-3">
                                 <label for="value-title" class="form-label">Title</label>
@@ -78,4 +79,8 @@
 @endsection
 
 @section('script')
-@endsection    
+<<<<<<< HEAD
+@endsection
+=======
+@endsection
+>>>>>>> 5b09219... added redirection to edit
