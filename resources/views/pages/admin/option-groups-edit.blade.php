@@ -79,8 +79,5 @@
 @endsection
 
 @section('script')
-<<<<<<< HEAD
 @endsection
-=======
-@endsection
->>>>>>> 5b09219... added redirection to edit
+
