@@ -43,7 +43,7 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-bordered table-striped table-hover">
+                        <table class="table table-bordered table-striped table-hover" id="categories-table">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -75,5 +75,15 @@
         </div>
     </div>
 
+@endsection
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('assets/libs/datatables/datatables.min.css') }}">
+@endsection
+
+@section('script')
+<script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+<script>
+    $('#categories-table').DataTable();
+</script>
 @endsection

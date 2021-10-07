@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\OptionGroup;
+use App\Models\OptionGroupValue;
 use App\Repositories\Contracts\OptionGroupRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -39,4 +40,36 @@ class OptionGroupRepository implements OptionGroupRepositoryInterface {
     {
         return $optionGroup->update($data);
     }
+
+    /**
+     * Delete Option Group
+     *
+     * @param OptionGroup $optionGroup
+     * @return boolean
+     */
+    public function delete(OptionGroup $optionGroup): bool {
+        return $optionGroup->delete();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getValueById($id): OptionGroupValue {
+        return OptionGroupValue::find($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function updateValue(OptionGroupValue $optionGroupValue, array $data): bool {
+        return $optionGroupValue->update($data);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteValue(OptionGroupValue $optionGroupValue): bool {
+        return $optionGroupValue->delete();
+    }
+
 }

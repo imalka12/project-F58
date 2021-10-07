@@ -53,31 +53,70 @@
                   </div>
 
                   <div class="card mt-4">
-                    <div class="card-header">
-                        Add New Option Group Value
+                    <div class="card-header bg-warning">
+                        Update Option Group Value
                     </div>
-                    <form action="{{ route('admin.option-group-values.create', $optionGroup->id) }}" method="post">
+                    <form action="{{ route('admin.option-groups-values.update', $optionGroupValue->id) }}" method="post">
                         @csrf
                         <div class="card-body">
                             <div class="mb-3">
                                 <label for="value-title" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="value-title" name="title" placeholder="Ex: Samsung" value="">
+                                <input type="text" class="form-control" id="value-title" name="title" placeholder="Ex: Samsung" value="{{ $optionGroupValue->title }}">
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary" id="create_category_value">Create</button>
+                            <button type="submit" class="btn btn-warning" id="update_category_value">Update</button>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="col-lg-8">
-                
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped table-hover" id="option-group-values-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Option Group Value</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($optionGroupValues as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->title }}</td>
+                                    <td>
+                                        <a href="{{ $item->id }}" class="btn btn-sm btn-primary">Edit</a>
+                                        <form action="{{ route('admin.option-groups-values.delete', $item->id) }}" 
+                                            method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                            @csrf
+                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="3">No values created yet.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
 @endsection
 
-@section('script')
+@section('css')
+<link rel="stylesheet" href="{{ asset('assets/libs/datatables/datatables.min.css') }}">
 @endsection
 
+@section('script')
+<script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+<script>
+    $('#option-group-values-table').DataTable();
+</script>
+@endsection

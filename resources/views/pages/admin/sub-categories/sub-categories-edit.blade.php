@@ -19,7 +19,7 @@
                     <div class="card-header">
                         Edit sub categories
                     </div>
-                    <form action="{{ route('admin.subcategory.update', $subCategory->id) }}" method="post">
+                    <form action="{{ route('admin.subcategory.update', $subCategory->id) }}" method="post" id="categories-table">
                         <div class="card-body">
                             <h4 class="card-text mb-3">Edit {{ $subCategory->title }}</h4>
 
@@ -53,5 +53,15 @@
     </div>
     </div>
 
+@endsection
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('assets/libs/datatables/datatables.min.css') }}">
+@endsection
+
+@section('script')
+<script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+<script>
+    $('#categories-table').DataTable();
+</script>
 @endsection

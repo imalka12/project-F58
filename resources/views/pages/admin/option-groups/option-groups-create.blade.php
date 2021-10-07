@@ -46,7 +46,7 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-bordered table-striped table-hover">
+                        <table class="table table-bordered table-striped table-hover" id="option-groups-table">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -63,7 +63,7 @@
                                     <td>{{ $optionGroup->title }}</td>
                                     <td>
                                         <a href="{{ route('admin.option-groups.edit', $optionGroup->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                        <form action="#" class="d-inline" method="post" onsubmit="return confirm('Are you sure you need to delete this option group?\n\nPlease note that all the associated values too will be deleted.\nPlease proceed with caution.');">
+                                        <form action="{{ route('admin.option-groups.delete', $optionGroup->id) }}" class="d-inline" method="post" onsubmit="return confirm('Are you sure you need to delete this option group?\n\nPlease note that all the associated values too will be deleted.\nPlease proceed with caution.');">
                                             @csrf
                                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                         </form>
@@ -80,5 +80,13 @@
 
 @endsection
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('assets/libs/datatables/datatables.min.css') }}">
+@endsection
+
 @section('script')
+<script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+<script>
+    $('#option-groups-table').DataTable();
+</script>
 @endsection

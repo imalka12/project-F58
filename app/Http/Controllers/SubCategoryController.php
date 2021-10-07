@@ -35,11 +35,12 @@ class SubCategoryController extends Controller
     {
         $categories = $this->categories->list();
         $subCategories = $this->categories->subCategoryList();
-        return view('pages.admin.sub-categories-add', compact('categories', 'subCategories'));
+        return view('pages.admin.sub-categories.sub-categories-add', compact('categories', 'subCategories'));
     }
 
     /**
      * Create new sub category
+     * @param SubCategoryCreateRequest $request
      */
     public function createSubCategories(SubCategoryCreateRequest $request)
     {
@@ -50,16 +51,21 @@ class SubCategoryController extends Controller
 
     /**
      * Show sub category edit page
+     * 
+     * @param string|int $id Sub category id
      */
-    public function showSubCategoryEditPage(Request $request , $id)
+    public function showSubCategoryEditPage($id)
     {
         $categories = $this->categories->getCategoriesForSelect();
         $subCategory = $this->categories->findSubCategory($id);
-        return view('pages.admin.sub-categories-edit' , compact('categories' , 'subCategory'));
+        return view('pages.admin.sub-categories.sub-categories-edit' , compact('categories' , 'subCategory'));
     }
 
     /**
      * Update sub category
+     * 
+     * @param SubCategoryUpdateRequest $request
+     * @param SubCategory $id
      */
     public function updateSubCategories(SubCategoryUpdateRequest $request, SubCategory $id)
     {
