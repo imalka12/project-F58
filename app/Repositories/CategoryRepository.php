@@ -16,12 +16,34 @@ class CategoryRepository implements CategoryRepositoryInterface {
         return Category::with('subCategories')->orderBy('title')->get();
     }
 
+    /**
+     * @inheritDoc
+     */
     public function createSubCategory(array $data): SubCategory {
         return SubCategory::create($data);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getSubCategories(): Collection
     {
         return SubCategory::with('category')->orderBy('title')->get();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSubCategoryById($id): SubCategory
+    {
+        return SubCategory::find($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function updateSubCategory(SubCategory $subCategory , array $data): bool
+    {
+        return $subCategory->update($data);
     }
 }

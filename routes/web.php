@@ -75,3 +75,4 @@ Route::post('/admin/option-groups/{optionGroup}/values', [OptionGroupController:
 Route::get('/admin/subcategory', [SubCategoryController::class, 'showSubCategoryPage'])->name('admin.subcategory.add');
 Route::post('/admin/subcategory', [SubCategoryController::class, 'createSubCategories'])->name('admin.subcategory.create');
 Route::get('/admin/subcategory/{id}', [SubCategoryController::class, 'showSubCategoryEditPage'])->name('admin.subcategory.edit');
+Route::post('/admin/subcategory/{id}' , [SubCategoryController::class, 'updateSubCategories'])->name('admin.subcategory.update');

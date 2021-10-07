@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Http\Requests\SubCategoryCreateRequest;
+use App\Http\Requests\SubCategoryUpdateRequest;
+use App\Models\Category;
+use App\Models\SubCategory;
 use App\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -26,7 +29,7 @@ class CategoryService {
     }
 
     /**
-     * Get a list of categories and sub-categories to use in an HTML element
+     * Get a list of categories and sub-categories to use in an HTML select element
      *
      * @return array $categories
      */
@@ -59,6 +62,17 @@ class CategoryService {
     public function subCategoryList()
     {
         return $this->categoryRepository->getSubCategories();
+    }
+
+    public function findSubCategory($id)
+    {
+        return $this->categoryRepository->getSubCategoryById($id);
+    }
+
+    public function updateSubCategory(SubCategory $subCategory , SubCategoryUpdateRequest $request)
+    {   
+        $data = $request->validated();
+        return $this->categoryRepository->updateSubCategory($subCategory , $data);
     }
 
 }

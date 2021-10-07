@@ -59,7 +59,7 @@
                                         <td> {{ $subCategory->category->title }} </td>
                                         <td> {{ $subCategory->title }}</td>
                                         <td>
-                                            <a href="{{ route('admin.option-groups.edit' , $subCategory->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                            <a href="{{ route('admin.subcategory.edit' , $subCategory->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                             <form action="#" class="d-inline" method="post">
                                                 @csrf
                                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>

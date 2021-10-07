@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -28,4 +29,19 @@ interface CategoryRepositoryInterface {
      */
     public function getSubCategories(): Collection;
 
+    /**
+     * get subcategory by id
+     * @param string|int $id
+     * @return SubCategory $subCategory
+     */
+    public function  getSubCategoryById($id): SubCategory;
+    
+    /**
+     * update subcategory
+     * 
+     * @param SubCategory $id Category Id
+     * @param array $data update data
+     * @return bool updated
+     */
+    public function updateSubCategory(SubCategory $subCategory , array $data): bool;
 }

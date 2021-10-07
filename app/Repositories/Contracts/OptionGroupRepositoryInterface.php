@@ -33,10 +33,10 @@ interface OptionGroupRepositoryInterface {
     /**
      * Update OptionGroup
      *
-     * @param [type] $id OptionGroup Id
+     * @param [type] OptionGroup $optionGroup
      * @param array $data Update data
      * @return bool $updated
      */
-    public function update(OptionGroup $id, array $data): bool;
+    public function update(OptionGroup $optionGroup, array $data): bool;
 
 }
