@@ -55,6 +55,12 @@ class AlterTablesAddForeignKeys extends Migration
             $table->foreign('payment_id')->references('id')->on('payments');
         });
 
+        Schema::table('advertisement_options', function (Blueprint $table) {
+            $table->foreign('advertisement_id')->references('id')->on('advertisements');
+            $table->foreign('option_group_id')->references('id')->on('option_groups');
+            $table->foreign('option_group_value_id')->references('id')->on('option_group_values');
+        });
+
         Schema::table('advertisement_images', function (Blueprint $table) {
             $table->foreign('advertisement_id')->references('id')->on('advertisements');
         });
@@ -111,6 +117,12 @@ class AlterTablesAddForeignKeys extends Migration
             $table->dropForeign(['city_id']);
             $table->dropForeign(['user_id']);
             $table->dropForeign(['payment_id']);
+        });
+
+        Schema::table('advertisement_options', function (Blueprint $table) {
+            $table->dropForeign(['advertisement_id']);
+            $table->dropForeign(['option_group_id']);
+            $table->dropForeign(['option_group_value_id']);
         });
 
         Schema::table('advertisement_images', function (Blueprint $table) {

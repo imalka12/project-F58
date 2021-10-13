@@ -73,7 +73,19 @@
                                                     <div class="mt-3 py-3">
                                                         <h4>Active Advertisements</h4>
 
-                                                        @if (count($advertisements->get('active')) == 0)
+                                                        @forelse ($advertisements->get('active') as $active)
+                                                        <div class="card border-success mt-3">
+                                                            <div class="card-body">
+                                                                <h4 class="card-text">{{ $active->title }}</h4>
+                                                                <small>Created at: {{ $active->created_at->format('Y-m-d h:i A') }}</small>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <a href="{{ route('advertisement.promote', $active->id) }}" class="btn btn-primary">
+                                                                    Promote Advertisement
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        @empty
                                                         <div class="text-center mt-5">
                                                             <div class="mb-3">
                                                                 <img src="{{ asset('assets/images/site-images/undraw_No_data_re_kwbl.svg') }}"
@@ -81,39 +93,61 @@
                                                             </div>
                                                             <p>Sorry, you have no active advertisements at the moment.</p>
                                                         </div>
-                                                        @else
-                                                            @foreach ($advertisements->get('active') as $active)
-                                                                <p>{{ $active->title }}</p>
-                                                            @endforeach
-                                                        @endif
+                                                        @endforelse
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane fade" id="ads-unpaid" role="tabpanel"
                                                     aria-labelledby="ads-unpaid-tab">
                                                     <div class="mt-3 py-3">
                                                         <h4>Unpaid Advertisements</h4>
-                                                        @if (count($advertisements->get('unpaid')) == 0)
-                                                            <p>You have no unpaid advertisements.</p>
-                                                        @else
-                                                            @foreach ($advertisements->get('unpaid') as $unpaid)
-                                                                <div class="card mt-3">
-                                                                    <div class="card-body">
-                                                                        <h4 class="card-text">{{ $unpaid->title }}</h4>
-                                                                        <small>Created at: {{ $unpaid->created_at->format('Y-m-d h:i A') }}</small>
-                                                                    </div>
-                                                                    <div class="card-footer">
-                                                                        <a class="btn btn-primary">Pay Now</a>
-                                                                    </div>
-                                                                </div>
-                                                            @endforeach
-                                                        @endif
+                                                        @forelse ($advertisements->get('unpaid') as $unpaid)
+                                                        <div class="card border-success mt-3">
+                                                            <div class="card-body">
+                                                                <h4 class="card-text">{{ $unpaid->title }}</h4>
+                                                                <small>Created at: {{ $unpaid->created_at->format('Y-m-d h:i A') }}</small>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <a href="{{ route('advertisement.pay', $unpaid->id) }}" class="btn btn-success">
+                                                                    Pay to publish
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        @empty
+                                                        <div class="text-center mt-5">
+                                                            <div class="mb-3">
+                                                                <img src="{{ asset('assets/images/site-images/undraw_No_data_re_kwbl.svg') }}"
+                                                                    alt="No advertisements graphic" width="200">
+                                                            </div>
+                                                            <p>You have no unpaid advertisements at the moment.</p>
+                                                        </div>
+                                                        @endforelse
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane fade" id="ads-expired" role="tabpanel"
                                                     aria-labelledby="ads-expired-tab">
                                                     <div class="mt-3 py-3">
                                                         <h4>Expired Advertisements</h4>
-                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga earum eum repudiandae architecto. Adipisci, doloremque laborum! Dolore iure error nihil quam, repellendus ratione inventore rem soluta libero? Ab, necessitatibus recusandae.</p>
+                                                        @forelse ($advertisements->get('expired') as $expired)
+                                                        <div class="card border-success mt-3">
+                                                            <div class="card-body">
+                                                                <h4 class="card-text">{{ $expired->title }}</h4>
+                                                                <small>Created at: {{ $expired->created_at->format('Y-m-d h:i A') }}</small>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <a href="{{ route('advertisement.pay', $expired->id) }}" class="btn btn-info">
+                                                                    Renew
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        @empty
+                                                        <div class="text-center mt-5">
+                                                            <div class="mb-3">
+                                                                <img src="{{ asset('assets/images/site-images/undraw_No_data_re_kwbl.svg') }}"
+                                                                    alt="No advertisements graphic" width="200">
+                                                            </div>
+                                                            <p>You have no expired advertisements at the moment.</p>
+                                                        </div>
+                                                        @endforelse
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,4 +168,7 @@
         @endif
     </div>
 
+@endsection
+
+@section('custom-css')
 @endsection

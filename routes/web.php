@@ -6,6 +6,7 @@ use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\SiteController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OptionGroupController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,13 @@ Route::middleware(['verified'])->group(function () {
     Route::post('client/profile', [ClientController::class, 'updateClientProfile'])->name('client.profile.update');
     Route::get('client/create-advertisement', [AdvertisementController::class, 'showPostAdvertisementPage'])->name('client.advertisement.show-create');
     Route::post('client/create-advertisement', [AdvertisementController::class, 'createAdvertisement'])->name('client.advertisement.create');
+    Route::get('client/create-advertisement-options/{advertisement}', [AdvertisementController::class, 'editAdvertisementOptions'])->name('client.advertisement.create-options');
+    Route::post('client/create-advertisement-options/{advertisement}', [AdvertisementController::class, 'createAdvertisementOptionValues'])->name('client.advertisement.create-options-values');
+    Route::get('client/create-advertisement-images/{advertisement}', [AdvertisementController::class, 'editAdvertisementImages'])->name('client.advertisement.add-images');
+    Route::post('client/create-advertisement-images/{advertisement}', [AdvertisementController::class, 'createAdvertisementImages'])->name('client.advertisement.create-images');
+    Route::get('advertisement/{advertisement}/pay', [AdvertisementController::class, 'showPaymentPage'])->name('advertisement.pay');
+    Route::post('advertisement/{advertisement}/pay', [PaymentController::class, 'processPayment'])->name('payment.process');
+    Route::get('advertisement/{advertisement}/promote', [AdvertisementController::class, 'showPromotePage'])->name('advertisement.promote');
 });
 
 # Email Verification Routes

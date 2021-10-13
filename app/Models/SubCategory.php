@@ -22,8 +22,23 @@ class SubCategory extends Model
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * Sub Category has many advertisements
+     *
+     * @return void
+     */
     public function advertisements()
     {
         return $this->hasMany(Advertisement::class);
+    }
+
+    /**
+     * Sub category has many option groups
+     *
+     * @return void
+     */
+    public function optionGroups()
+    {
+        return $this->hasMany(OptionGroup::class);
     }
 }

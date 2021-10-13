@@ -20,13 +20,5 @@ setTimeout(function () {
     alert.close();
   }
 }, 5000);
-
-if (ClassicEditor) {
-  ClassicEditor.create(document.querySelector(".ckeditor-editor")).then(function (editor) {
-    console.log(editor);
-  })["catch"](function (error) {
-    console.error(error);
-  });
-}
 /******/ })()
 ;

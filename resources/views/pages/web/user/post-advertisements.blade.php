@@ -2,6 +2,17 @@
 
 @section('custom-js')
     <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+    <script>
+    if (ClassicEditor) {
+        ClassicEditor.create(document.querySelector(".ckeditor-editor"))
+            .then((editor) => {
+                console.log(editor);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+    </script>
 @endsection
 
 @section('custom-css')
@@ -59,7 +70,7 @@
 
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
-                                <textarea id="description" name="description" class="ckeditor-editor"></textarea>
+                                <textarea id="description" name="description" class="form-control ckeditor-editor"></textarea>
                             </div>
 
                             <div class="row">
