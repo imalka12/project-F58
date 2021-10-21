@@ -94,3 +94,4 @@ Route::get('/admin/subcategory', [SubCategoryController::class, 'showSubCategory
 Route::post('/admin/subcategory', [SubCategoryController::class, 'createSubCategories'])->name('admin.subcategory.create');
 Route::get('/admin/subcategory/{id}', [SubCategoryController::class, 'showSubCategoryEditPage'])->name('admin.subcategory.edit');
 Route::post('/admin/subcategory/{id}' , [SubCategoryController::class, 'updateSubCategories'])->name('admin.subcategory.update');
+Route::post('admin/subcategory/delete/{subCategories}' , [SubCategoryController::class , 'deleteSubCategories'])->name('admin.subcategory.delete');

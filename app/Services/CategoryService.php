@@ -75,4 +75,9 @@ class CategoryService {
         return $this->categoryRepository->updateSubCategory($subCategory , $data);
     }
 
+    public function delete(SubCategory $subCategories)
+    {
+        return $this->categoryRepository->delete($subCategories);
+    }
+
 }

@@ -44,4 +44,12 @@ interface CategoryRepositoryInterface {
      * @return bool updated
      */
     public function updateSubCategory(SubCategory $subCategory , array $data): bool;
+
+    /**
+     * delete SubCategories
+     * 
+     * @param SubCategory $subCategories
+     * @return bool $deleted
+     */
+    public function delete(SubCategory $subCategories): bool;
 }
