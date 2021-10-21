@@ -30,6 +30,7 @@ class PaymentController extends Controller
             'request_code' => $request->stripeToken, 
             'response_code' => $charge->id, 
             'status' => $charge->status,
+            'type' => 'publish',
         ]);
 
         $advertisement->payment_id = $payment->id;
