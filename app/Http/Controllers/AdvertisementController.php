@@ -6,6 +6,9 @@ use App\Http\Requests\AdvertisementImagesCreateRequest;
 use App\Http\Requests\AdvertisementOptionValuesCreateRequest;
 use App\Http\Requests\CreateAdvertisementRequest;
 use App\Models\Advertisement;
+use App\Models\Category;
+use App\Models\City;
+use App\Models\SubCategory;
 use App\Services\AdvertisementService;
 use App\Services\CategoryService;
 use App\Services\LocationService;
@@ -88,6 +91,65 @@ class AdvertisementController extends Controller
     public function showPaymentPage(Advertisement $advertisement)
     {
         return view('pages.web.payments.payment-pay', compact('advertisement'));
+    }
+
+    /**
+     * Show ads page for the selected category
+     *
+     * @param Request $request
+     * @param Category $category
+     * @return void
+     */
+    public function showAdsByCategoryPage(Request $request, Category $category)
+    {
+        $cityId = $request->get('city');
+        $selectedCity = new City();
+        $selectedCity->id = 0;
+        $selectedCity->title = 'Sri Lanka';
+        if(!empty($cityId) && $cityId != 'all') {
+            $selectedCity = $this->locations->findCityById($cityId);
+        }
+
+        $subCategoryId = $request->get('sub_category');
+        $selectedSubCategory = new SubCategory();
+        $selectedSubCategory->id = 0;
+        $selectedSubCategory->title = 'Anything';
+        if(! empty($subCategoryId) && $subCategoryId != 'all') {
+            $selectedSubCategory = $this->categories->findSubCategory($subCategoryId);
+        }
+
+        $allSubCategories = $this->categories->getCategoriesForSelect();
+        $categories = $this->categories->list();
+        $cities = $this->locations->getCitiesForSelects();
+        $advertisementsByCategory = $this->advertisements->getAdsByCategory($category);
+        $subCategories = $category->subCategories;
+        
+        return view('pages.web.ads.by-single-category', compact('categories', 'subCategories' ,'cities', 'advertisementsByCategory', 'category', 'selectedCity', 'selectedSubCategory'));
+    }
+
+    public function showAllAdsPage(Request $request)
+    {
+        $cityId = $request->get('city');
+        $selectedCity = new City();
+        $selectedCity->id = 0;
+        $selectedCity->title = 'Sri Lanka';
+        if(!empty($cityId) && $cityId != 'all') {
+            $selectedCity = $this->locations->findCityById($cityId);
+        }
+
+        $subCategoryId = $request->get('sub_category');
+        $selectedSubCategory = new SubCategory();
+        $selectedSubCategory->id = 0;
+        $selectedSubCategory->title = 'All Categories';
+        if(! empty($subCategoryId) && $subCategoryId != 'all') {
+            $selectedSubCategory = $this->categories->findSubCategory($subCategoryId);
+        }
+
+        $categories = $this->categories->list();
+        $subCategories = $this->categories->getCategoriesForSelect();
+        $cities = $this->locations->getCitiesForSelects();
+        $advertisements = $this->advertisements->getAllAds();
+        return view('pages.web.ads.all', compact('categories', 'subCategories' ,'cities', 'advertisements', 'selectedCity', 'selectedSubCategory'));
     }
 
 }

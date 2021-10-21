@@ -11,7 +11,6 @@ class Advertisement extends Model
     use HasFactory, SoftDeletes;
 
     public $fillable = [
-        'type',
         'sub_category_id',
         'city_id',
         'title',
@@ -26,6 +25,7 @@ class Advertisement extends Model
         'is_approved',
         'user_id',
         'is_promoted',
+        'payment_id',
     ];
 
     /**
@@ -78,5 +78,8 @@ class Advertisement extends Model
         return $this->hasMany(AdvertisementImage::class);
     }
 
-
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

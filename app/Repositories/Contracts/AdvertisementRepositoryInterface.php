@@ -5,6 +5,9 @@ namespace App\Repositories\Contracts;
 use App\Models\Advertisement;
 use App\Models\AdvertisementImage;
 use App\Models\AdvertisementOption;
+use App\Models\Category;
+use App\Models\SubCategory;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 interface AdvertisementRepositoryInterface {
@@ -74,4 +77,27 @@ interface AdvertisementRepositoryInterface {
      * @return AdvertisementImage
      */
     public function createAdvertisementImage(Advertisement $advertisement, array $data): AdvertisementImage;
+
+    /**
+     * Get ads by category
+     *
+     * @param Category $category; except unpaid or expired
+     * @return LengthAwarePaginator
+     */
+    public function getByCategory(Category $category): LengthAwarePaginator;
+
+    /**
+     * Get ads by sub category; except unpaid or expired
+     *
+     * @param SubCategory $subCategory
+     * @return LengthAwarePaginator
+     */
+    public function getBySubCategory(SubCategory $subCategory): LengthAwarePaginator;
+
+    /**
+     * Get all advertisements; except unpaid or expired
+     *
+     * @return LengthAwarePaginator
+     */
+    public function getAllAdvertisements(): LengthAwarePaginator;
 }

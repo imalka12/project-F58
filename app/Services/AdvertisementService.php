@@ -7,8 +7,11 @@ use App\Http\Requests\AdvertisementOptionValuesCreateRequest;
 use App\Http\Requests\CreateAdvertisementRequest;
 use App\Models\Advertisement;
 use App\Models\AdvertisementOption;
+use App\Models\Category;
+use App\Models\SubCategory;
 use App\Repositories\AdvertisementRepository;
 use App\Repositories\OptionGroupRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class AdvertisementService {
     
@@ -78,11 +81,32 @@ class AdvertisementService {
     public function createAdvertisementImages(AdvertisementImagesCreateRequest $request, Advertisement $advertisement)
     {
         foreach ($request->files as $fileName => $file) {
-            $image_path = $request->file($fileName)->store('public/ad-images');
+            $image_path = $request->file($fileName)->store('public/advs-images');
             $this->advertisementRepository->createAdvertisementImage($advertisement, [
                 'image' => basename($image_path),
             ]);
         }
+    }
+
+    /**
+     * Get advertisements matching the selected category
+     *
+     * @param Category $category
+     * @return LengthAwarePaginator
+     */
+    public function getAdsByCategory(Category $category)
+    {
+        return $this->advertisementRepository->getByCategory($category);
+    }
+
+    /**
+     * Get all ads
+     *
+     * @return LengthAwarePaginator
+     */
+    public function getAllAds()
+    {
+        return $this->advertisementRepository->getAllAdvertisements();
     }
 
 }

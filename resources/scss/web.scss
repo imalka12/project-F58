@@ -88,3 +88,17 @@ body {
 .ck-editor__editable_inline {
     min-height: 200px;
 }
+
+#category_list_sidebar {
+    list-style-type: none;
+    padding-left: 0rem;
+    .category_list_sidebar_link {
+        a {
+            text-decoration: none;
+        }
+    }
+}
+
+.advertisement_block {
+    background-color: #e9f0f7;
+}

@@ -15,4 +15,11 @@ class LocationRepository implements LocationRepositoryInterface {
         return City::orderBy('title')->get();
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function findCityById($id): City {
+        return City::find($id);
+    }
+
 }

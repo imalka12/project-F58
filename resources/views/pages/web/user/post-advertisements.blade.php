@@ -16,14 +16,44 @@
 @endsection
 
 @section('custom-css')
+    <style>
+        @-webkit-keyframes slide-fade {
+            0% {
+                opacity: 1;
+                left: 0
+            }
+            100% {
+                opacity: .1;
+                left: 14px
+            }
+        }
+        @keyframes slide-fade {
+            0% {
+                opacity: 1;
+                left: 0
+            }
+            100% {
+                opacity: .1;
+                left: 14px
+            }
+        }
 
+        .animated_slide_left i.fas {
+            position: relative;
+            padding: 0 5px;
+        }
+        .animated_slide_left::hover i.fas {
+            -webkit-animation: slide-fade 1s linear infinite;
+            animation: slide-fade 1s linear infinite;
+        }
+    </style>
 @endsection
 
 @section('contents')
     <div class="container p-5">
         <div class="row">
             <div class="col-lg-12">
-                <a href="{{ route('client.profile') }}" class="btn btn-outline-primary float-end">Go back to profile</a>
+                <a href="{{ route('client.profile') }}" class="btn btn-outline-primary float-end animated_slide_left"> <i class='fas fa-chevron-left' ></i> Go back to profile</a>
             </div>
             <div class="col-lg-12 mt-5">
                 <div class="card">

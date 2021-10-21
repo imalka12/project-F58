@@ -45,4 +45,9 @@ class LocationService {
         return $list;
     }
 
+    public function findCityById($id)
+    {
+        return $this->locationRepository->findCityById($id);
+    }
+
 }

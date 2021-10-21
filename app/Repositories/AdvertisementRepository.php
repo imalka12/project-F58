@@ -5,8 +5,11 @@ namespace App\Repositories;
 use App\Models\Advertisement;
 use App\Models\AdvertisementImage;
 use App\Models\AdvertisementOption;
+use App\Models\Category;
 use App\Models\OptionGroup;
+use App\Models\SubCategory;
 use App\Repositories\Contracts\AdvertisementRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class AdvertisementRepository implements AdvertisementRepositoryInterface {
@@ -76,6 +79,46 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface {
      */
     public function createAdvertisementImage(Advertisement $advertisement, array $data): AdvertisementImage {
         return $advertisement->advertisementImages()->create($data);
+    }
+
+    /**
+     * Get ads by category
+     *
+     * @param Category $category
+     * @return LengthAwarePaginator
+     */
+    public function getByCategory(Category $category): LengthAwarePaginator {
+        return Advertisement::join('sub_categories', 'sub_categories.id', '=', 'advertisements.sub_category_id')
+        ->join('categories', 'categories.id', '=', 'sub_categories.category_id')
+        ->select('advertisements.*')
+        ->where('categories.id', $category->id)
+        ->whereNotNull('advertisements.payment_id')
+        ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
+        ->with(['advertisementImages', 'payments'])
+        ->paginate(25);
+    }
+
+    /**
+     * Get ads by sub category
+     *
+     * @param SubCategory $subCategory
+     * @return LengthAwarePaginator
+     */
+    public function getBySubCategory(SubCategory $subCategory): LengthAwarePaginator {
+        return Advertisement::where('sub_category_id', $subCategory)
+        ->whereNotNull('advertisements.payment_id')
+        ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
+        ->with(['advertisementImages', 'payments'])
+        ->select('advertisements.*')
+        ->paginate(25);
+    }
+
+    public function getAllAdvertisements(): LengthAwarePaginator {
+        return Advertisement::whereNotNull('advertisements.payment_id')
+        ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
+        ->with(['advertisementImages', 'payments'])
+        ->select('advertisements.*')
+        ->paginate(25);
     }
 
 }

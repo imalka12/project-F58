@@ -42,6 +42,10 @@ Route::post('clients/signup', [AuthController::class, 'processClientSignUp'])->n
 Route::post('clients/login', [AuthController::class, 'processClientLogin'])->name('client.process-login');
 Route::post('clients/logout', [AuthController::class, 'processClientLogout'])->name('client.process-logout');
 
+// categories and ads view pages
+Route::get('ads', [AdvertisementController::class, 'showAllAdsPage'])->name('ads.all');
+Route::get('ads/{category}', [AdvertisementController::class, 'showAdsByCategoryPage'])->name('ads.category.single');
+
 // Client Profile Routes
 Route::middleware(['verified'])->group(function () {
     Route::get('client/profile', [ClientController::class, 'showProfilePage'])->name('client.profile');
