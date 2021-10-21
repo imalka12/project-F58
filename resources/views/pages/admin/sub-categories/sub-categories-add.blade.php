@@ -60,7 +60,7 @@
                                         <td> {{ $subCategory->title }}</td>
                                         <td>
                                             <a href="{{ route('admin.subcategory.edit' , $subCategory->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                            <form action="#" class="d-inline" method="post">
+                                            <form action="{{ route('admin.subcategory.delete' , $subCategory->id ) }}" class="d-inline" method="post" onsubmit="return confirm('Are you sure you need to delete this subCategory?\n\nPlease note that all the associated values too will be deleted.\nPlease proceed with caution.');">
                                                 @csrf
                                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                             </form>

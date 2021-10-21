@@ -46,4 +46,12 @@ class CategoryRepository implements CategoryRepositoryInterface {
     {
         return $subCategory->update($data);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(SubCategory $subCategories): bool
+    {
+        return $subCategories->delete();
+    }
 }

@@ -73,4 +73,17 @@ class SubCategoryController extends Controller
         return redirect()->route('admin.subcategory.edit', $id)->with('success', 'Sub category updated successfully.');
     }
 
+    /**
+     * Delete sub category
+     * 
+     * @param SubCategory $subCategories
+     * @return void
+     */
+    public function deleteSubCategories(SubCategory $subCategories)
+    {
+        $this->categories->delete($subCategories);
+        return redirect()->route('admin.subcategory.create')->with('success', 'SubCategory deleted successfully.');
+        
+    }
+
 }
