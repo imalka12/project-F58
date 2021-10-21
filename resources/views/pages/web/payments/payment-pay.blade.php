@@ -16,7 +16,7 @@
                         <p>Item: <strong>{{ $advertisement->title }}</strong></p>
                         <div class="text-primary mt-5">
                             <h6>Pay Amount</h6>
-                            <h3>LKR 150.00</h3>
+                            <h3>LKR {{ number_format(config('system.payments.advertisement_publish'), 2) }}</h3>
                         </div>
                     </div>
                     <div class="col-lg-6 py-3">
@@ -27,7 +27,7 @@
                             <div class="alert alert-danger"></div>
                         </div>
 
-                        <form id="payment_form" action="#" method="post" data-has-token="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}">
+                        <form id="payment_form" action="{{ route('payment.process', $advertisement->id) }}" method="post" data-has-token="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}">
                             @csrf
 
                             <div class="mb-2">
