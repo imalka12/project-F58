@@ -59,7 +59,9 @@ Route::middleware(['verified'])->group(function () {
     Route::get('advertisement/{advertisement}/pay', [AdvertisementController::class, 'showPaymentPage'])->name('advertisement.pay');
     Route::post('advertisement/{advertisement}/pay', [PaymentController::class, 'processPayment'])->name('payment.process');
     Route::get('advertisement/{advertisement}/promote', [AdvertisementController::class, 'showPromotePage'])->name('advertisement.promote.show');
-    Route::post('advertisement/{advertisement}/promote', [AdvertisementController::class, 'showPromotePage'])->name('advertisement.promote.process');
+    Route::post('advertisement/{advertisement}/promote', [PaymentController::class, 'processPromotePayment'])->name('advertisement.promote.process');
+    Route::get('advertisement/{advertisement}/renew', [AdvertisementController::class, 'showRenewPage'])->name('advertisement.renew.show');
+    Route::post('advertisement/{advertisement}/renew', [PaymentController::class, 'processRenewPayment'])->name('advertisement.renew.process');
 });
 
 # Email Verification Routes

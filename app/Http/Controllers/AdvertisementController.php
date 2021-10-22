@@ -152,4 +152,28 @@ class AdvertisementController extends Controller
         return view('pages.web.ads.all', compact('categories', 'subCategories' ,'cities', 'advertisements', 'selectedCity', 'selectedSubCategory'));
     }
 
+
+    /**
+     * Show stripe payment page for the selected advertisement to promote ads
+     *
+     * @param Advertisement $advertisement
+     * @return void
+     */
+    public function showPromotePage(Advertisement $advertisement)
+    {
+        return view('pages.web.payments.promote-pay', compact('advertisement'));
+    }
+
+
+    /**
+     * Show stripe payment page for the selected advertisement to renew ads
+     *
+     * @param Advertisement $advertisement
+     * @return void
+     */
+    public function showRenewPage(Advertisement $advertisement)
+    {
+        return view('pages.web.payments.renew-pay', compact('advertisement'));
+    }
+
 }

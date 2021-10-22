@@ -80,7 +80,7 @@
                                                                 <small>Created at: {{ $active->created_at->format('Y-m-d h:i A') }}</small>
                                                             </div>
                                                             <div class="card-footer">
-                                                                <a href="{{ route('advertisement.promote', $active->id) }}" class="btn btn-primary">
+                                                                <a href="{{ route('advertisement.promote.show', $active->id) }}" class="btn btn-primary">
                                                                     Promote Advertisement
                                                                 </a>
                                                             </div>
@@ -134,7 +134,7 @@
                                                                 <small>Created at: {{ $expired->created_at->format('Y-m-d h:i A') }}</small>
                                                             </div>
                                                             <div class="card-footer">
-                                                                <a href="{{ route('advertisement.pay', $expired->id) }}" class="btn btn-info">
+                                                                <a href="{{ route('advertisement.renew.show', $expired->id) }}" class="btn btn-info">
                                                                     Renew
                                                                 </a>
                                                             </div>

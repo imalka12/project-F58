@@ -38,7 +38,7 @@ class AdvertisementFactory extends Factory
             'is_price_negotiable' => false,
             'is_offers_accepted' => false,
             'min_offer' => 0.0,
-            'expire_at' => Carbon::now()->addWeek()->format('Y-m-d H:i:s'),
+            'expire_at' => now()->addWeek()->format('Y-m-d H:i:s'),
             'renewed_at' => null,
             'is_approved' => false,
             'user_id' => '',
