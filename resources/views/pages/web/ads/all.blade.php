@@ -29,7 +29,7 @@
                         @foreach ($subCategories as $category)
                             <optgroup label="{{ $category['title'] }}">
                                 @foreach ($category['subcategories'] as $subCategoryId => $subCategoryTitle)
-                                    <option value="{{ $subCategoryId }}">{{ $subCategoryTitle }}</option>
+                                    <option value="{{ $subCategoryId }}" {{ $selectedSubCategory->id == $subCategoryId ? 'selected' : '' }}>{{ $subCategoryTitle }}</option>
                                 @endforeach
                             </optgroup>
                         @endforeach
@@ -37,11 +37,19 @@
                 </div>
             </div>
             <div class="col-lg-5">
-                <div class="input-group mb-3 pt-3">
-                    <input type="text" class="form-control" placeholder="What are you looking for?"
-                        aria-label="What are you looking for?" aria-describedby="search-field">
-                    <button class="btn btn-primary" type="submit" id="search-field">Search</button>
-                </div>
+                <form action="{{ url()->current() }}" method="get" id="ads-search-form">
+                    <div class="input-group mb-3 pt-3">
+                        @if($selectedCity->id != 0) 
+                        <input type="hidden" name="city" value="{{ $selectedCity->id }}">
+                        @endif
+                        @if($selectedSubCategory->id != 0)
+                        <input type="hidden" name="sub_category" value="{{ $selectedSubCategory->id }}">
+                        @endif
+                        <input type="text" class="form-control" placeholder="What are you looking for?"
+                            aria-label="What are you looking for?" aria-describedby="search" id="search" name="search">
+                        <button class="btn btn-primary" type="submit" id="search-field">Search</button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row">
@@ -63,12 +71,12 @@
                 <div id="category_list_wrapper" class="mb-5">
                     <ul id="category_list_sidebar">
                         <li class="category_list_sidebar_link mb-2">
-                            <a href="{{ route('ads.all') }}" class="d-block clearfix"> All Categories
+                            <a href="{{ route('ads.all', ['city' => $selectedCity->id]) }}" class="d-block clearfix"> All Categories
                             </a>
                         </li>
                         @foreach ($categories as $parentCategory)
                             <li class="category_list_sidebar_link mb-2">
-                                <a href="{{ route('ads.category.single', $parentCategory->id) }}"
+                                <a href="{{ route('ads.category.single', [$parentCategory->id, 'city' => $selectedCity->id]) }}"
                                     class="d-block clearfix">
                                     <span class="float-start">
                                         <img src="{{ asset('assets/images/category-icons/24/' . $parentCategory->icon) }}"

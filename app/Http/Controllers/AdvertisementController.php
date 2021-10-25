@@ -116,19 +116,32 @@ class AdvertisementController extends Controller
         $selectedSubCategory->title = 'Anything';
         if(! empty($subCategoryId) && $subCategoryId != 'all') {
             $selectedSubCategory = $this->categories->findSubCategory($subCategoryId);
+            $category = $selectedSubCategory->category;
         }
 
         $allSubCategories = $this->categories->getCategoriesForSelect();
         $categories = $this->categories->list();
         $cities = $this->locations->getCitiesForSelects();
-        $advertisementsByCategory = $this->advertisements->getAdsByCategory($category);
         $subCategories = $category->subCategories;
+
+
+        $searchStr = $request->get('search') ?? false;
+        $searchSubCategory = $selectedSubCategory->id == 0 ? false : $selectedSubCategory;
+        $searchCity = $selectedCity->id == 0 ? false : $selectedCity;
+        
+        $advertisementsByCategory = $this->advertisements->getAdsFiltered($category, $searchSubCategory, $searchCity, $searchStr);
+
+        // $advertisementsByCategory = $this->advertisements->getAdsByCategory($category);
         
         return view('pages.web.ads.by-single-category', compact('categories', 'subCategories' ,'cities', 'advertisementsByCategory', 'category', 'selectedCity', 'selectedSubCategory'));
     }
 
     public function showAllAdsPage(Request $request)
     {
+        $categories = $this->categories->list();
+        $subCategories = $this->categories->getCategoriesForSelect();
+        $cities = $this->locations->getCitiesForSelects();
+
         $cityId = $request->get('city');
         $selectedCity = new City();
         $selectedCity->id = 0;
@@ -141,14 +154,19 @@ class AdvertisementController extends Controller
         $selectedSubCategory = new SubCategory();
         $selectedSubCategory->id = 0;
         $selectedSubCategory->title = 'All Categories';
+        $category = false;
         if(! empty($subCategoryId) && $subCategoryId != 'all') {
             $selectedSubCategory = $this->categories->findSubCategory($subCategoryId);
+            $category = $selectedSubCategory->category;
         }
 
-        $categories = $this->categories->list();
-        $subCategories = $this->categories->getCategoriesForSelect();
-        $cities = $this->locations->getCitiesForSelects();
-        $advertisements = $this->advertisements->getAllAds();
+        $searchStr = $request->get('search') ?? false;
+        $searchSubCategory = $selectedSubCategory->id == 0 ? false : $selectedSubCategory;
+        $searchCity = $selectedCity->id == 0 ? false : $selectedCity;
+        
+        $advertisements = $this->advertisements->getAdsFiltered($category, $searchSubCategory, $searchCity, $searchStr);
+
+        // $advertisements = $this->advertisements->getAllAds();
         return view('pages.web.ads.all', compact('categories', 'subCategories' ,'cities', 'advertisements', 'selectedCity', 'selectedSubCategory'));
     }
 

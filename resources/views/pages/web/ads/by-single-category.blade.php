@@ -7,12 +7,15 @@
                 <div class="input-group mb-3">
                     <span class="input-group-text bg-transparent border-0"><img
                             src="{{ asset('assets/images/website-icons/pin16.png') }}" alt="Location"></span>
-                    <select name="city" id="city" class="form-select bg-transparent border-0 page-filter" style="cursor: pointer">
+                    <select name="city" id="city" class="form-select bg-transparent border-0 page-filter"
+                        style="cursor: pointer">
                         <option value="all" {{ $selectedCity->id == 0 ? 'selected' : '' }}>Sri Lanka</option>
                         @foreach ($cities as $district => $districtCities)
                             <optgroup label="{{ $district }} District">
                                 @foreach ($districtCities as $city)
-                                    <option value="{{ $city->id }}" {{ $selectedCity->id == $city->id ? 'selected' : '' }}>{{ $city->title }}</option>
+                                    <option value="{{ $city->id }}"
+                                        {{ $selectedCity->id == $city->id ? 'selected' : '' }}>{{ $city->title }}
+                                    </option>
                                 @endforeach
                             </optgroup>
                         @endforeach
@@ -25,19 +28,30 @@
                             src="{{ asset('assets/images/website-icons/tag16.png') }}" alt="Location"></span>
                     <select name="sub_category" id="sub_category" class="form-select bg-transparent border-0 page-filter"
                         style="cursor: pointer">
-                        <option value="all" {{ $selectedSubCategory->id == 0 ? 'selected' : '' }}>All {{ Str::plural($category->title) }}</option>
+                        <option value="all" {{ $selectedSubCategory->id == 0 ? 'selected' : '' }}>All
+                            {{ Str::plural($category->title) }}</option>
                         @foreach ($subCategories as $subCategory)
-                            <option value="{{ $subCategory->id }}" {{ $selectedSubCategory->id == $subCategory->id ? 'selected' : '' }}>{{ $subCategory->title }}</option>
+                            <option value="{{ $subCategory->id }}"
+                                {{ $selectedSubCategory->id == $subCategory->id ? 'selected' : '' }}>
+                                {{ $subCategory->title }}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
             <div class="col-lg-5">
-                <div class="input-group mb-3 pt-3">
-                    <input type="text" class="form-control" placeholder="What are you looking for?"
-                        aria-label="What are you looking for?" aria-describedby="search-field">
-                    <button class="btn btn-primary" type="submit" id="search-field">Search</button>
-                </div>
+                <form action="{{ url()->current() }}" method="get" id="ads-search-form">
+                    <div class="input-group mb-3 pt-3">
+                        @if($selectedCity->id != 0) 
+                        <input type="hidden" name="city" value="{{ $selectedCity->id }}">
+                        @endif
+                        @if($selectedSubCategory->id != 0)
+                        <input type="hidden" name="sub_category" value="{{ $selectedSubCategory->id }}">
+                        @endif
+                        <input type="text" class="form-control" placeholder="What are you looking for?"
+                            aria-label="What are you looking for?" aria-describedby="search" id="search" name="search">
+                        <button class="btn btn-primary" type="submit" id="search-field">Search</button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row">
@@ -59,12 +73,13 @@
                 <div id="category_list_wrapper" class="mb-5">
                     <ul id="category_list_sidebar">
                         <li class="category_list_sidebar_link mb-2">
-                            <a href="{{ route('ads.all') }}" class="d-block clearfix"> All Categories
+                            <a href="{{ route('ads.all', ['city' => $selectedCity->id]) }}" class="d-block clearfix"> All
+                                Categories
                             </a>
                         </li>
                         @foreach ($categories as $parentCategory)
                             <li class="category_list_sidebar_link mb-2">
-                                <a href="{{ route('ads.category.single', $parentCategory->id) }}"
+                                <a href="{{ route('ads.category.single', [$parentCategory->id, 'city' => $selectedCity->id]) }}"
                                     class="d-block clearfix {{ $category->id === $parentCategory->id ? 'text-success' : '' }}">
                                     <span class="float-start">
                                         <img src="{{ asset('assets/images/category-icons/24/' . $parentCategory->icon) }}"
@@ -79,7 +94,9 @@
                 </div>
             </div>
             <div class="col-lg-9 pt-3">
-                <h4>Buy, Sell, Rent or Find <span class="text-primary">{{ $selectedSubCategory->title }}</span> in <span class="text-success">{{ $selectedCity->title }}</span></h4>
+                <h4>Buy, Sell, Rent or Find <span class="text-primary">{{ $selectedSubCategory->title }}</span> in
+                    <span class="text-success">{{ $selectedCity->title }}</span>
+                </h4>
                 @if (!$advertisementsByCategory->isEmpty())
                     <small class="text-muted">Showing 1-25 of {{ $advertisementsByCategory->count() }} ads</small>
                 @endif
@@ -92,9 +109,9 @@
                         </div>
                         <div class="content ps-3">
                             <h4>{{ $advertisement->title }}</h4>
-                            <p>{{ $advertisement->city->title }}, {{ $advertisement->subCategory->title }} <br/>
+                            <p>{{ $advertisement->city->title }}, {{ $advertisement->subCategory->title }} <br />
                                 Rs. {{ number_format($advertisement->price, 2) }}<br />
-                                <small>{{ $advertisement->payments->first()->created_at->diffForHumans()}}</small>
+                                <small>{{ $advertisement->payments->first()->created_at->diffForHumans() }}</small>
                             </p>
                         </div>
                     </div>
@@ -122,20 +139,20 @@
 @endsection
 
 @section('custom-js')
-<script>
-    let url = '{{ url()->current() }}';
+    <script>
+        let url = '{{ url()->current() }}';
 
-    $('.page-filter').change(function(e) {
-        let ar = [];
+        $('.page-filter').change(function(e) {
+            let ar = [];
 
-        let all = $('.page-filter');
-        $.each(all, function(i, element) {
-            let el = $(element);
-            ar.push(el[0].id + '=' + escape(el[0].value));
+            let all = $('.page-filter');
+            $.each(all, function(i, element) {
+                let el = $(element);
+                ar.push(el[0].id + '=' + escape(el[0].value));
+            });
+
+            let query = ar.join('&');
+            window, location.replace(url + '?' + query);
         });
-
-        let query = ar.join('&');
-        window,location.replace(url + '?' + query);
-    });
-</script>
+    </script>
 @endsection

@@ -8,6 +8,7 @@ use App\Http\Requests\CreateAdvertisementRequest;
 use App\Models\Advertisement;
 use App\Models\AdvertisementOption;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\SubCategory;
 use App\Repositories\AdvertisementRepository;
 use App\Repositories\OptionGroupRepository;
@@ -34,7 +35,7 @@ class AdvertisementService {
         $data = $request->validated();
 
         $data['user_id'] = auth()->user()->id;
-        $data['expire_at'] = now()->addWeek()->format('Y-m-d H:i:s');
+        $data['expire_at'] = null;
 
         return $this->advertisementRepository->create($data);
     }
@@ -107,6 +108,22 @@ class AdvertisementService {
     public function getAllAds()
     {
         return $this->advertisementRepository->getAllAdvertisements();
+    }
+
+    /**
+     * Get advertisements matching the selected city
+     *
+     * @param City $city
+     * @return LengthAwarePaginator
+     */
+    public function getAdsByCity(City $city)
+    {
+        # code...
+    }
+
+    public function getAdsFiltered($category = 'all', $subCategory = 'all', $city = 'all', $search = '')
+    {
+        return $this->advertisementRepository->searchAdvertisements($category, $subCategory, $city, $search);
     }
 
 }
