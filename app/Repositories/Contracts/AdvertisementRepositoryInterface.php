@@ -6,6 +6,7 @@ use App\Models\Advertisement;
 use App\Models\AdvertisementImage;
 use App\Models\AdvertisementOption;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\SubCategory;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -95,9 +96,40 @@ interface AdvertisementRepositoryInterface {
     public function getBySubCategory(SubCategory $subCategory): LengthAwarePaginator;
 
     /**
+     * Get ads by the city
+     *
+     * @param City $city
+     * @return LengthAwarePaginator
+     */
+    public function getByCity(City $city):LengthAwarePaginator;
+
+    /**
      * Get all advertisements; except unpaid or expired
      *
      * @return LengthAwarePaginator
      */
     public function getAllAdvertisements(): LengthAwarePaginator;
+
+    /**
+     * Perform a full-text Scout search for advertisements by given parameters
+     *
+     * @param Category|boolean $category
+     * @param SubCategory|boolean $subCategory
+     * @param City|boolean $city
+     * @param string|boolean $searchWords
+     * @return LengthAwarePaginator
+     */
+    public function searchAdvertisements($category = false, $subCategory = false, $city = false, $searchWords = false): LengthAwarePaginator;
+
+    /**
+     * Perform an Eloquent search for the Advertisements
+     *
+     * @param boolean $category
+     * @param boolean $subCategory
+     * @param boolean $city
+     * @param boolean $searchWords
+     * @return LengthAwarePaginator
+     */
+    public function searchAdvertisementsEloquent($category = false, $subCategory = false, $city = false, $searchWords = false, $sortKey = 'date_newest'): LengthAwarePaginator;
+
 }

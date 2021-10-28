@@ -35,6 +35,7 @@ class PaymentController extends Controller
 
         $advertisement->payment_id = $payment->id;
         $advertisement->is_approved = true;
+        $advertisement->expire_at = now()->addWeeks(3)->format('Y-m-d H:i:s');
         $advertisement->save();
 
         return redirect()->route('client.profile')->with('success', 'Payment has been successfully processed.');
