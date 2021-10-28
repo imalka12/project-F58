@@ -137,18 +137,41 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface {
     /**
      * @inheritDoc
      */
-    public function searchAdvertisements($category = false, $subCategory = false, $city = false, $searchWords = false): LengthAwarePaginator {
+    public function searchAdvertisements($category = false, $subCategory = false, $city = false, $searchWords = false, $sortKey = 'date_newest'): LengthAwarePaginator {
         $search = Advertisement::search($searchWords);
-        if($category) {
-            $search = $search->where('category_id', $category->id);
-        }
+        // if($category) {
+        //     $search = $search->where('category_id', $category->id);
+        // }
         if($subCategory) {
             $search = $search->where('sub_category_id', $subCategory->id);
         }
         if($city) {
             $search = $search->where('city_id', $city->id);
         }
+
         return $search->paginate(25);
+    }
+
+    public function searchAdvertisementsEloquent($category = false, $subCategory = false, $city = false, $searchWords = false, $sortKey = 'date_newest'): LengthAwarePaginator {
+        return Advertisement::join('cities', 'cities.id', '=', 'advertisements.city_id')
+        ->join('sub_categories', 'sub_categories.id', '=', 'advertisements.sub_category_id')
+        ->when($searchWords, function($query, $searchWords){
+            return $query->whereRaw('MATCH(advertisements.title, advertisements.description) AGAINST(? IN NATURAL LANGUAGE MODE)', $searchWords);
+        })
+        ->when($category, function($query, $category) {
+            return $query->where('sub_categories.category_id', $category->id);
+        })
+        ->when($subCategory, function($query, $subCategory) {
+            return $query->where('sub_categories.id', $subCategory->id);
+        })
+        ->when($city, function($query, $city) {
+            return $query->where('cities.id', $city->id);
+        })
+        ->whereNotNull('advertisements.payment_id')
+        ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
+        ->with(['advertisementImages', 'payments'])
+        ->select('advertisements.*')
+        ->paginate(25);
     }
 
 }

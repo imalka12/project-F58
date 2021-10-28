@@ -217,11 +217,7 @@ class CategoryOptionsSeeder extends Seeder
             // Vehicle Transmission (Manual/Automatic/Tiptronic/Other)
             // Vehicle Condition (Brand-New/Reconditioned/Used)
             // Vehicle Body Type (Saloon/Hatchback/Station Wagon/Convertible/Coupe/Sports/SUV/4X4/MPV/Other)
-
-
         ];
-
-
         // CategoryOption::create(['title' => 'Brand']);
     }
 }

@@ -118,12 +118,13 @@ class AdvertisementService {
      */
     public function getAdsByCity(City $city)
     {
-        # code...
+        return $this->advertisementRepository->getByCity($city);
     }
 
-    public function getAdsFiltered($category = 'all', $subCategory = 'all', $city = 'all', $search = '')
+    public function getAdsFiltered($category = 'all', $subCategory = 'all', $city = 'all', $search = '', $sortKey = 'date_newest')
     {
-        return $this->advertisementRepository->searchAdvertisements($category, $subCategory, $city, $search);
+        return $this->advertisementRepository->searchAdvertisementsEloquent($category, $subCategory, $city, $search);
+        // return $this->advertisementRepository->searchAdvertisements($category, $subCategory, $city, $search);
     }
 
 }

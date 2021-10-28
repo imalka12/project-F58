@@ -20,7 +20,8 @@ class AdvertisementController extends Controller
     private $locations;
     private $advertisements;
 
-    public function __construct(CategoryService $categoryService, LocationService $locationService, AdvertisementService $advertisementService) {
+    public function __construct(CategoryService $categoryService, LocationService $locationService, AdvertisementService $advertisementService)
+    {
         $this->categories = $categoryService;
         $this->locations = $locationService;
         $this->advertisements = $advertisementService;
@@ -52,7 +53,7 @@ class AdvertisementController extends Controller
         $advertisement = $this->advertisements->create($request);
 
         return redirect()->route('client.advertisement.create-options', $advertisement->id)
-        ->with('success', 'Advertisement created successfully. Please add more details about your item.');
+            ->with('success', 'Advertisement created successfully. Please add more details about your item.');
     }
 
     public function editAdvertisementOptions(Advertisement $advertisement)
@@ -64,10 +65,10 @@ class AdvertisementController extends Controller
 
     public function createAdvertisementOptionValues(AdvertisementOptionValuesCreateRequest $request, Advertisement $advertisement)
     {
-        $this->advertisements->createOptionValues($request,$advertisement);
+        $this->advertisements->createOptionValues($request, $advertisement);
 
         return redirect()->route('client.advertisement.add-images', $advertisement)
-        ->with('success', 'Option values saved successfully. Please add item images.');
+            ->with('success', 'Option values saved successfully. Please add item images.');
     }
 
     public function editAdvertisementImages(Advertisement $advertisement)
@@ -106,7 +107,7 @@ class AdvertisementController extends Controller
         $selectedCity = new City();
         $selectedCity->id = 0;
         $selectedCity->title = 'Sri Lanka';
-        if(!empty($cityId) && $cityId != 'all') {
+        if (!empty($cityId) && $cityId != 'all') {
             $selectedCity = $this->locations->findCityById($cityId);
         }
 
@@ -114,28 +115,37 @@ class AdvertisementController extends Controller
         $selectedSubCategory = new SubCategory();
         $selectedSubCategory->id = 0;
         $selectedSubCategory->title = 'Anything';
-        if(! empty($subCategoryId) && $subCategoryId != 'all') {
+        if (!empty($subCategoryId) && $subCategoryId != 'all') {
             $selectedSubCategory = $this->categories->findSubCategory($subCategoryId);
             $category = $selectedSubCategory->category;
         }
+
+        $selectedSortKey = $request->get('sort_key');
+        $sortKeys = $this->getSortKeyList();
 
         $allSubCategories = $this->categories->getCategoriesForSelect();
         $categories = $this->categories->list();
         $cities = $this->locations->getCitiesForSelects();
         $subCategories = $category->subCategories;
 
-
         $searchStr = $request->get('search') ?? false;
         $searchSubCategory = $selectedSubCategory->id == 0 ? false : $selectedSubCategory;
         $searchCity = $selectedCity->id == 0 ? false : $selectedCity;
-        
+
         $advertisementsByCategory = $this->advertisements->getAdsFiltered($category, $searchSubCategory, $searchCity, $searchStr);
 
         // $advertisementsByCategory = $this->advertisements->getAdsByCategory($category);
-        
-        return view('pages.web.ads.by-single-category', compact('categories', 'subCategories' ,'cities', 'advertisementsByCategory', 'category', 'selectedCity', 'selectedSubCategory'));
+
+        return view('pages.web.ads.by-single-category', compact('categories', 'subCategories', 'cities', 'advertisementsByCategory', 
+        'category', 'selectedCity', 'selectedSubCategory', 'searchStr', 'sortKeys', 'selectedSortKey'));
     }
 
+    /**
+     * Show all ads page
+     *
+     * @param Request $request
+     * @return void
+     */
     public function showAllAdsPage(Request $request)
     {
         $categories = $this->categories->list();
@@ -146,7 +156,7 @@ class AdvertisementController extends Controller
         $selectedCity = new City();
         $selectedCity->id = 0;
         $selectedCity->title = 'Sri Lanka';
-        if(!empty($cityId) && $cityId != 'all') {
+        if (!empty($cityId) && $cityId != 'all') {
             $selectedCity = $this->locations->findCityById($cityId);
         }
 
@@ -155,19 +165,37 @@ class AdvertisementController extends Controller
         $selectedSubCategory->id = 0;
         $selectedSubCategory->title = 'All Categories';
         $category = false;
-        if(! empty($subCategoryId) && $subCategoryId != 'all') {
+        if (!empty($subCategoryId) && $subCategoryId != 'all') {
             $selectedSubCategory = $this->categories->findSubCategory($subCategoryId);
             $category = $selectedSubCategory->category;
         }
 
+        $selectedSortKey = $request->get('sort_key');
+        $sortKeys = $this->getSortKeyList();
+
         $searchStr = $request->get('search') ?? false;
         $searchSubCategory = $selectedSubCategory->id == 0 ? false : $selectedSubCategory;
         $searchCity = $selectedCity->id == 0 ? false : $selectedCity;
-        
+
         $advertisements = $this->advertisements->getAdsFiltered($category, $searchSubCategory, $searchCity, $searchStr);
 
         // $advertisements = $this->advertisements->getAllAds();
-        return view('pages.web.ads.all', compact('categories', 'subCategories' ,'cities', 'advertisements', 'selectedCity', 'selectedSubCategory'));
+        return view('pages.web.ads.all', compact('categories', 'subCategories', 'cities', 'advertisements', 'selectedCity', 
+        'selectedSubCategory', 'searchStr', 'sortKeys', 'selectedSortKey'));
     }
 
+    /**
+     * Returns an array containing the sort keys used in advertisement listing and searching
+     *
+     * @return array $sortKeys
+     */
+    private function getSortKeyList()
+    {
+        return [
+            'date_newest' => 'Date: Newest',
+            'date_oldest' => 'Date: Oldest',
+            'price_high_to_low' => 'Price: High to Low',
+            'price_low_to_high' => 'Price: Low to High',
+        ];
+    }
 }

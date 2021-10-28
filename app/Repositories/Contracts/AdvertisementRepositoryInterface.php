@@ -111,7 +111,7 @@ interface AdvertisementRepositoryInterface {
     public function getAllAdvertisements(): LengthAwarePaginator;
 
     /**
-     * Search advertisements by given parameters
+     * Perform a full-text Scout search for advertisements by given parameters
      *
      * @param Category|boolean $category
      * @param SubCategory|boolean $subCategory
@@ -120,5 +120,16 @@ interface AdvertisementRepositoryInterface {
      * @return LengthAwarePaginator
      */
     public function searchAdvertisements($category = false, $subCategory = false, $city = false, $searchWords = false): LengthAwarePaginator;
+
+    /**
+     * Perform an Eloquent search for the Advertisements
+     *
+     * @param boolean $category
+     * @param boolean $subCategory
+     * @param boolean $city
+     * @param boolean $searchWords
+     * @return LengthAwarePaginator
+     */
+    public function searchAdvertisementsEloquent($category = false, $subCategory = false, $city = false, $searchWords = false, $sortKey = 'date_newest'): LengthAwarePaginator;
 
 }

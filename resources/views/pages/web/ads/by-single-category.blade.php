@@ -25,7 +25,7 @@
             <div class="col-lg-4 border-end pt-3">
                 <div class="input-group mb-3">
                     <span class="input-group-text bg-transparent border-0"><img
-                            src="{{ asset('assets/images/website-icons/tag16.png') }}" alt="Location"></span>
+                            src="{{ asset('assets/images/website-icons/tag16.png') }}" alt="Category"></span>
                     <select name="sub_category" id="sub_category" class="form-select bg-transparent border-0 page-filter"
                         style="cursor: pointer">
                         <option value="all" {{ $selectedSubCategory->id == 0 ? 'selected' : '' }}>All
@@ -59,16 +59,16 @@
                 <h5>Sort Results By</h5>
                 <form action="" method="post">
                     <div class="mt-3 mb-3">
-                        <select name="sort_key" id="sort_key" class="form-select">
-                            <option value="date_newest">Date: Newest</option>
-                            <option value="date_oldest">Date: Oldest</option>
-                            <option value="price_high_to_low">Price: High to Low</option>
-                            <option value="price_low_to_high">Price: Low to High</option>
+                        <select name="sort_key" id="sort_key" class="form-select page-filter">
+                            @foreach ($sortKeys as $key => $value)
+                            <option value="{{ $key }}" {{ $selectedSortKey == $key ? 'selected' : '' }}>{{ $value }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </form>
 
                 <div class="border-top mb-3"></div>
+
                 <h5>Sort Results By</h5>
                 <div id="category_list_wrapper" class="mb-5">
                     <ul id="category_list_sidebar">
@@ -121,8 +121,11 @@
                             <img src="{{ asset('assets/images/category-icons/64/' . $category->icon) }}"
                                 alt="{{ $category->title }}" class="me-1">
                         </div>
-                        <h2>No advertisements for <span class="text-primary">{{ $category->title }}</span> category.
-                        </h2>
+                        @if (empty($searchStr))
+                        <h2>No advertisements.</h2>
+                        @else
+                        <h2>No advertisements found matching <span class="text-secondary">&quot;{{ $searchStr }}&quot;</span>.</h2> 
+                        @endif
                     </div>
                 @endforelse
 
