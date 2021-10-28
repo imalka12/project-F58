@@ -21,24 +21,30 @@
                         @csrf
 
                         <div class="row">
-                            @foreach ($options as $optionGroup)
-                                <div class="col-lg-3">
-                                    <div class="mt-3">
-                                        <label for="{{ $optionGroup->id }}"
-                                            class="form-label">{{ $optionGroup->title }}</label>
-                                        <select class="form-select" id="{{ $optionGroup->id }}"
-                                            name="option_groups[{{ $optionGroup->id }}]" required>
-                                            <option value="" selected>Select {{ $optionGroup->title }}</option>
-                                            @foreach ($optionGroup->optionGroupValues as $optionValue)
-                                                <option value="{{ $optionValue->id }}">{{ $optionValue->title }}</option>
-                                            @endforeach
-                                        </select>
+                            @forelse ($options as $optionGroup)
+                            <div class="col-lg-3">
+                                <div class="mt-3">
+                                    <label for="{{ $optionGroup->id }}"
+                                        class="form-label">{{ $optionGroup->title }}</label>
+                                    <select class="form-select" id="{{ $optionGroup->id }}"
+                                        name="option_groups[{{ $optionGroup->id }}]" required>
+                                        <option value="" selected>Select {{ $optionGroup->title }}</option>
+                                        @foreach ($optionGroup->optionGroupValues as $optionValue)
+                                            <option value="{{ $optionValue->id }}">{{ $optionValue->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            @empty
+                                <div class="col-lg-12">
+                                    <div class="alert alert-info m-5">
+                                        No selectable options available for the category.
                                     </div>
                                 </div>
-                            @endforeach
+                            @endforelse
                         </div>
                         <div class="col-lg-12 mt-3">
-                            <button type="submit" class="btn btn-primary" id="update_advertisement_options">Save Options and Proceed to Images</button>
+                            <button type="submit" class="btn btn-primary" id="update_advertisement_options">Save and Proceed to Images</button>
                         </div>
                     </form>
 

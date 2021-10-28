@@ -67,6 +67,10 @@ class AdvertisementService {
     {
         $optionGroupValues = $request->post('option_groups');
 
+        if(empty($optionGroupValues)) {
+            return false;
+        }
+
         $adOptions = [];
 
         foreach ($optionGroupValues as $optionGroupId => $optionGroupValueId) {
