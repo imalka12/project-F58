@@ -228,4 +228,9 @@ class AdvertisementController extends Controller
             'price_low_to_high' => 'Price: Low to High',
         ];
     }
+
+    public function showSingleAdView(Advertisement $advertisement)
+    {
+        return view('pages.web.ads.single', compact('advertisement'));
+    }
 }

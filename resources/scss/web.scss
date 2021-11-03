@@ -102,3 +102,23 @@ body {
 .advertisement_block {
     background-color: #e9f0f7;
 }
+
+.adv-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+#advertisement-images-carousel .carousel-inner {
+    text-align: center;
+    background-color: rgb(191, 191, 191);
+    .single-ad-carousel-image {
+        max-width: 600px;
+        min-width: 400px;
+        min-height: 400px;
+        max-height: 600px;
+    }
+}
+
+.client-telephone {
+    font-size: 1.3em;
+}

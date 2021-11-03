@@ -96,6 +96,7 @@
                 @endif
                 <div class="border-top mb-3 mt-3"></div>
                 @forelse ($advertisements as $advertisement)
+                <a class="adv-link" href="{{ route('ads.view.single', $advertisement->id) }}" style="text-decoration: none;">
                     <div class="advertisement_block border rounded p-3 d-flex justify-content-start mb-3">
                         <div class="thumbnail border rounded">
                             <img src="{{ asset('storage/advs-images/' . $advertisement->advertisementImages->first()->image) }}"
@@ -109,6 +110,7 @@
                             </p>
                         </div>
                     </div>
+                </a>
                 @empty
                     <div class="text-center p-5 mt-5">
                         @if (empty($searchStr))
