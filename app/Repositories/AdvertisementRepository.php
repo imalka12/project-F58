@@ -174,4 +174,20 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface {
         ->paginate(25);
     }
 
+    
+    /**
+     * @inheritDoc
+     */
+    public function update(Advertisement $advertisement, array $data):bool {
+        return $advertisement->update($data);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function updateOptions(Advertisement $advertisement , array $advertisementOptions):iterable {
+        $advertisement->advertisementOptions()->delete();
+        return $advertisement->advertisementOptions()->saveMany($advertisementOptions);        
+    }
+
 }

@@ -132,4 +132,21 @@ interface AdvertisementRepositoryInterface {
      */
     public function searchAdvertisementsEloquent($category = false, $subCategory = false, $city = false, $searchWords = false, $sortKey = 'date_newest'): LengthAwarePaginator;
 
+    /**
+     * Update advertisement
+     * 
+     * @param Advertisement $advertisement
+     * @param array $data
+     * @return bool
+     */
+    public function update(Advertisement $advertisement, array $data):bool;
+
+    /**
+     * Update client created advertisement options
+     *
+     * @param Advertisement $advertisement
+     * @param array $data
+     * @return array $updated
+     */
+    public function updateOptions(Advertisement $advertisement , array $data):iterable;
 }

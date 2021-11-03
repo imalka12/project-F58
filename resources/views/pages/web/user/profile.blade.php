@@ -110,6 +110,9 @@
                                                                 <a href="{{ route('advertisement.pay', $unpaid->id) }}" class="btn btn-success">
                                                                     Pay to publish
                                                                 </a>
+                                                                <a href="{{ route('advertisement.unpaid.edit.page', $unpaid->id) }}" class="btn btn-warning">
+                                                                    Edit advertisement
+                                                                </a>
                                                             </div>
                                                         </div>
                                                         @empty

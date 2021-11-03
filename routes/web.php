@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OptionGroupController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SubCategoryController;
+use App\Models\Advertisement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -62,7 +63,13 @@ Route::middleware(['verified'])->group(function () {
     Route::post('advertisement/{advertisement}/promote', [PaymentController::class, 'processPromotePayment'])->name('advertisement.promote.process');
     Route::get('advertisement/{advertisement}/renew', [AdvertisementController::class, 'showRenewPage'])->name('advertisement.renew.show');
     Route::post('advertisement/{advertisement}/renew', [PaymentController::class, 'processRenewPayment'])->name('advertisement.renew.process');
+    Route::get('advertisement/{advertisement}/edit' , [AdvertisementController::class , 'showEditUnpaidAdvertisement'])->name('advertisement.unpaid.edit.page');
+    Route::post('advertisement/{advertisement}/edit' , [AdvertisementController::class , 'saveEditUnpaidAdvertisement'])->name('advertisement.unpaid.edit.save');
+    Route::get('advertisement/edit-advertisement-options/{advertisement}', [AdvertisementController::class, 'showEditCreatedAdvertisementOptions'])->name('advertisement.unpaid.options.edit.page');
+    Route::post('advertisement/edit-advertisement-options/{advertisement}', [AdvertisementController::class, 'saveEditUnpaidAdvertisementOptions'])->name('advertisement.unpaid.options.edit.save');
 });
+
+
 
 # Email Verification Routes
 // 1. show email notification page
@@ -98,3 +105,4 @@ Route::post('/admin/subcategory', [SubCategoryController::class, 'createSubCateg
 Route::get('/admin/subcategory/{id}', [SubCategoryController::class, 'showSubCategoryEditPage'])->name('admin.subcategory.edit');
 Route::post('/admin/subcategory/{id}' , [SubCategoryController::class, 'updateSubCategories'])->name('admin.subcategory.update');
 Route::post('admin/subcategory/delete/{subCategories}' , [SubCategoryController::class , 'deleteSubCategories'])->name('admin.subcategory.delete');
+

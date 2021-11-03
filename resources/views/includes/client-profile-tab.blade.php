@@ -12,7 +12,7 @@
 
                 <div class="alert alert-info clearfix mb-5">
                     <h3 class="float-start">Hey, Do you have something to sell?</h3>
-                    <a href="#" class="btn btn-outline-primary float-end">Post an Ad</a>
+                    <a href="{{ route('client.advertisement.create') }}" class="btn btn-outline-primary float-end">Post an Ad</a>
                 </div>
 
                 <p>Fields with <span class="text-danger">*</span> are required.</p>

@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Http\Requests\AdvertisementImagesCreateRequest;
 use App\Http\Requests\AdvertisementOptionValuesCreateRequest;
 use App\Http\Requests\CreateAdvertisementRequest;
+use App\Http\Requests\UpdateAdvertisementRequest;
+use App\Http\Requests\UpdateOptionGroupValueRequest;
 use App\Models\Advertisement;
 use App\Models\AdvertisementOption;
 use App\Models\Category;
@@ -65,11 +67,11 @@ class AdvertisementService {
 
     public function createOptionValues(AdvertisementOptionValuesCreateRequest $request, Advertisement $advertisement)
     {
-        $optionGroupValues = $request->post('option_groups');
+        $optionGroupValues = $request->validated();
 
         $adOptions = [];
 
-        foreach ($optionGroupValues as $optionGroupId => $optionGroupValueId) {
+        foreach ($optionGroupValues['option_groups'] as $optionGroupId => $optionGroupValueId) {
             $adOption = new AdvertisementOption;
             $adOption->option_group_id = $optionGroupId;
             $adOption->option_group_value_id = $optionGroupValueId;
@@ -125,6 +127,28 @@ class AdvertisementService {
     {
         return $this->advertisementRepository->searchAdvertisementsEloquent($category, $subCategory, $city, $search);
         // return $this->advertisementRepository->searchAdvertisements($category, $subCategory, $city, $search);
+    }
+
+    public function update(Advertisement $advertisement, UpdateAdvertisementRequest $updateAdvertisementRequest)
+    {
+        $data = $updateAdvertisementRequest->validated();
+        return $this->advertisementRepository->update($advertisement, $data);
+    }
+
+    public function updateOptions(Advertisement $advertisement, UpdateOptionGroupValueRequest $updateOptionGroupValueRequest)
+    {
+        $optionGroupValues = $updateOptionGroupValueRequest->validated();
+
+        $adOptions = [];
+
+        foreach ($optionGroupValues['option_groups'] as $optionGroupId => $optionGroupValueId) {
+            $adOption = new AdvertisementOption;
+            $adOption->option_group_id = $optionGroupId;
+            $adOption->option_group_value_id = $optionGroupValueId;
+            $adOptions[] = $adOption;
+        }
+
+        return $this->advertisementRepository->updateOptions($advertisement , $adOptions);
     }
 
 }

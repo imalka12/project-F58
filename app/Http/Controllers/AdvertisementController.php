@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdvertisementImagesCreateRequest;
 use App\Http\Requests\AdvertisementOptionValuesCreateRequest;
 use App\Http\Requests\CreateAdvertisementRequest;
+use App\Http\Requests\UpdateAdvertisementRequest;
+use App\Http\Requests\UpdateOptionGroupValueRequest;
 use App\Models\Advertisement;
 use App\Models\Category;
 use App\Models\City;
@@ -221,4 +223,71 @@ class AdvertisementController extends Controller
             'price_low_to_high' => 'Price: Low to High',
         ];
     }
+
+     /**
+     * show client created advertisement to edit 
+     * 
+     * @param Advertisement $advertisement
+     * @return void
+     */
+    public function showEditUnpaidAdvertisement(Advertisement $advertisement)
+    {
+        $categories = $this->categories->getCategoriesForSelect();
+        $cities = $this->locations->getCitiesForSelects();
+
+        return view('pages.web.user.edit-unpaid-advertisement' , compact('categories', 'cities' , 'advertisement'));
+    }
+
+    /**
+     * update client edited advertisement
+     * 
+     * @param Advertisement $advertisement
+     * @param UpdateAdvertisementRequest $updateAdvertisementRequest
+     * @return void
+     */
+    public function saveEditUnpaidAdvertisement(Advertisement $advertisement , UpdateAdvertisementRequest $updateAdvertisementRequest)
+    {
+        $this->advertisements->update($advertisement , $updateAdvertisementRequest);
+
+        return redirect()->route('advertisement.unpaid.options.edit.page' , $advertisement->id)
+            ->with('success', 'Advertisement edited successfully. You can edit options from here or You can continue with same options you selected before.');   
+    }
+
+    /**
+     * show client created advertisement option page to edit
+     * 
+     * @param Advertisement $advertisement
+     * @return void
+     */
+
+    public function showEditCreatedAdvertisementOptions(Advertisement $advertisement)
+    {
+        $options = $this->advertisements->getAvailableOptionsForAdvertisement($advertisement);
+
+        $advertisementOptions = $advertisement->advertisementOptions;
+        
+        $selectedOptions = [];
+        foreach($advertisementOptions as $option) {
+            $selectedOptions[$option->option_group_id] = $option->option_group_value_id;
+        }
+
+        return view('pages.web.user.edit-unpaid-advertisement-options' , compact('advertisement' , 'options', 'selectedOptions'));
+    }
+
+    /**
+     * Update client edited advertisement options
+     * 
+     * @param Advertisement $advertisement
+     * @param UpdateAdvertisementRequest $updateAdvertisementRequest
+     * @return void
+     */
+    public function saveEditUnpaidAdvertisementOptions(Advertisement $advertisement , UpdateOptionGroupValueRequest $updateOptionGroupValueRequest)
+    {
+        $this->advertisements->updateOptions($advertisement , $updateOptionGroupValueRequest);
+
+        return redirect()->route('client.profile' , $advertisement->id)
+            ->with('success', 'Advertisement options edited successfully. You can edit uploaded images from here or You can continue with previous selected images.');   
+    }
+
+   
 }
