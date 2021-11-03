@@ -29,6 +29,10 @@ class Advertisement extends Model
         'payment_id',
     ];
 
+    protected $attributes = [
+        'published_at' => null
+    ];
+
     /**
      * Advertisement belongs to SubCategory
      *
@@ -82,7 +86,7 @@ class Advertisement extends Model
     /**
      * Advertisement has many Payments
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function payments()
     {
@@ -101,6 +105,29 @@ class Advertisement extends Model
         $array['subCategory'] = $this->subCategory->toArray();
         $array['category'] = $this->subCategory->category->toArray();
         return $array;
+    }
+
+    /**
+     * Get te published_at attribute value
+     *
+     * @return mixed
+     */
+    public function getPublishedAtAttribute()
+    {
+        // if no payments available
+        if($this->payments->isEmpty()) {
+            return null;
+        }
+
+        // get publish payment date
+        $payment = $this->payments()->whereType('publish')->whereStatus('succeeded')->first();
+        // check if a payment is NOT there
+        if(empty($payment)) {
+           return null; 
+        }
+
+        // get the payment entry created date
+        return $payment->created_at;
     }
 
 }

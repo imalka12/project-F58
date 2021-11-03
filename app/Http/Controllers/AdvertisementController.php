@@ -296,5 +296,8 @@ class AdvertisementController extends Controller
             ->with('success', 'Advertisement options edited successfully. You can edit uploaded images from here or You can continue with previous selected images.');   
     }
 
-   
+    public function showSingleAdView(Advertisement $advertisement)
+    {
+        return view('pages.web.ads.single', compact('advertisement'));
+    }
 }

@@ -102,19 +102,21 @@
                 @endif
                 <div class="border-top mb-3 mt-3"></div>
                 @forelse ($advertisementsByCategory as $advertisement)
-                    <div class="advertisement_block border rounded p-3 d-flex justify-content-start mb-3">
-                        <div class="thumbnail border rounded">
-                            <img src="{{ asset('storage/advs-images/' . $advertisement->advertisementImages->first()->image) }}"
-                                alt="" width="100" height="100">
+                    <a class="adv-link" href="{{ route('ads.view.single', $advertisement->id) }}" style="text-decoration: none;">
+                        <div class="advertisement_block border rounded p-3 d-flex justify-content-start mb-3">
+                            <div class="thumbnail border rounded">
+                                <img src="{{ asset('storage/advs-images/' . $advertisement->advertisementImages->first()->image) }}"
+                                    alt="" width="100" height="100">
+                            </div>
+                            <div class="content ps-3">
+                                <h4>{{ $advertisement->title }}</h4>
+                                <p>{{ $advertisement->city->title }}, {{ $advertisement->subCategory->title }} <br />
+                                    Rs. {{ number_format($advertisement->price, 2) }}<br />
+                                    <small>{{ $advertisement->payments->first()->created_at->diffForHumans() }}</small>
+                                </p>
+                            </div>
                         </div>
-                        <div class="content ps-3">
-                            <h4>{{ $advertisement->title }}</h4>
-                            <p>{{ $advertisement->city->title }}, {{ $advertisement->subCategory->title }} <br />
-                                Rs. {{ number_format($advertisement->price, 2) }}<br />
-                                <small>{{ $advertisement->payments->first()->created_at->diffForHumans() }}</small>
-                            </p>
-                        </div>
-                    </div>
+                    </a>
                 @empty
                     <div class="text-center p-5 mt-5">
                         <div class="mb-5">
