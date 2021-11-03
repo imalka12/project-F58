@@ -69,6 +69,10 @@ class AdvertisementService {
     {
         $optionGroupValues = $request->validated();
 
+        if(empty($optionGroupValues)) {
+            return false;
+        }
+
         $adOptions = [];
 
         foreach ($optionGroupValues['option_groups'] as $optionGroupId => $optionGroupValueId) {

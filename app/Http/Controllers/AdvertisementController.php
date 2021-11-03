@@ -54,6 +54,13 @@ class AdvertisementController extends Controller
     {
         $advertisement = $this->advertisements->create($request);
 
+        if(empty($advertisement->subCategory->optionGroups)) {
+            // redirect to images page
+            return redirect()->route('client.advertisement.add-images', $advertisement)
+            ->with('success', 'Option values saved successfully. Please add item images.');
+        }
+
+        // has option groups for the sub category;
         return redirect()->route('client.advertisement.create-options', $advertisement->id)
             ->with('success', 'Advertisement created successfully. Please add more details about your item.');
     }
