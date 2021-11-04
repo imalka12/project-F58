@@ -169,6 +169,26 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface {
         })
         ->whereNotNull('advertisements.payment_id')
         ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
+        ->when($sortKey, function($query, $sortKey){
+            switch($sortKey) {
+            case 'date_newest': {
+                return $query->orderBy('advertisements.published_at', 'desc');
+            }
+            break;
+            case 'date_oldest': {
+                return $query->orderBy('advertisements.published_at', 'asc');
+            }
+            break;
+            case 'price_high_to_low': {
+                return $query->orderBy('advertisements.price', 'desc');
+            }
+            break;
+            case 'price_low_to_high': {
+                return $query->orderBy('advertisements.price', 'asc');
+            }
+            break;
+        }
+        })
         ->with(['advertisementImages', 'payments'])
         ->select('advertisements.*')
         ->paginate(25);

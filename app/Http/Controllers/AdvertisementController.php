@@ -37,7 +37,6 @@ class AdvertisementController extends Controller
     public function showPostAdvertisementPage()
     {
         $categories = $this->categories->getCategoriesForSelect();
-        // dd($categories);
 
         $cities = $this->locations->getCitiesForSelects();
 
@@ -129,7 +128,7 @@ class AdvertisementController extends Controller
             $category = $selectedSubCategory->category;
         }
 
-        $selectedSortKey = $request->get('sort_key');
+        $selectedSortKey = $request->get('sort_key', 'date_newest');
         $sortKeys = $this->getSortKeyList();
 
         $allSubCategories = $this->categories->getCategoriesForSelect();
@@ -141,12 +140,12 @@ class AdvertisementController extends Controller
         $searchSubCategory = $selectedSubCategory->id == 0 ? false : $selectedSubCategory;
         $searchCity = $selectedCity->id == 0 ? false : $selectedCity;
 
-        $advertisementsByCategory = $this->advertisements->getAdsFiltered($category, $searchSubCategory, $searchCity, $searchStr);
+        $advertisementsByCategory = $this->advertisements->getAdsFiltered($category, $searchSubCategory, $searchCity, $searchStr, $selectedSortKey);
 
-        // $advertisementsByCategory = $this->advertisements->getAdsByCategory($category);
+        $categoriesWithAdsCount = $this->categories->getCategoriesWithAdsCount();
 
         return view('pages.web.ads.by-single-category', compact('categories', 'subCategories', 'cities', 'advertisementsByCategory', 
-        'category', 'selectedCity', 'selectedSubCategory', 'searchStr', 'sortKeys', 'selectedSortKey'));
+        'category', 'selectedCity', 'selectedSubCategory', 'searchStr', 'sortKeys', 'selectedSortKey', 'categoriesWithAdsCount'));
     }
 
     /**
@@ -158,6 +157,7 @@ class AdvertisementController extends Controller
     public function showAllAdsPage(Request $request)
     {
         $categories = $this->categories->list();
+        $categoriesWithAdsCount = $this->categories->getCategoriesWithAdsCount();
         $subCategories = $this->categories->getCategoriesForSelect();
         $cities = $this->locations->getCitiesForSelects();
 
@@ -179,18 +179,18 @@ class AdvertisementController extends Controller
             $category = $selectedSubCategory->category;
         }
 
-        $selectedSortKey = $request->get('sort_key');
+        $selectedSortKey = $request->get('sort_key', 'date_newest');
         $sortKeys = $this->getSortKeyList();
 
         $searchStr = $request->get('search') ?? false;
         $searchSubCategory = $selectedSubCategory->id == 0 ? false : $selectedSubCategory;
         $searchCity = $selectedCity->id == 0 ? false : $selectedCity;
 
-        $advertisements = $this->advertisements->getAdsFiltered($category, $searchSubCategory, $searchCity, $searchStr);
+        $advertisements = $this->advertisements->getAdsFiltered($category, $searchSubCategory, $searchCity, $searchStr, $selectedSortKey);
 
         // $advertisements = $this->advertisements->getAllAds();
         return view('pages.web.ads.all', compact('categories', 'subCategories', 'cities', 'advertisements', 'selectedCity', 
-        'selectedSubCategory', 'searchStr', 'sortKeys', 'selectedSortKey'));
+        'selectedSubCategory', 'searchStr', 'sortKeys', 'selectedSortKey', 'categoriesWithAdsCount'));
     }
 
     /**

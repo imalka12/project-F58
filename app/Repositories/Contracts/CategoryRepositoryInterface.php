@@ -52,4 +52,11 @@ interface CategoryRepositoryInterface {
      * @return bool $deleted
      */
     public function delete(SubCategory $subCategories): bool;
+
+    /**
+     * Get Categories with advertisements count linked via Sub Category and Advertisement
+     *
+     * @return Collection
+     */
+    public function categoriesWithAdsCount(): Collection;
 }

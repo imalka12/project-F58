@@ -56,7 +56,7 @@
                         <span class="client-telephone">{{ $advertisement->user->profile->telephone }}</span>
                     </li>
                     <li class="list-group-item">
-                        <small>Published on {{ $advertisement->published_at->format('Y-m-d') }}</small>
+                        <small>Published on {{ $advertisement->publishedAt()->format('Y-m-d') }}</small>
                     </li>
                 </ul>
 

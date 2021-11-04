@@ -80,4 +80,9 @@ class CategoryService {
         return $this->categoryRepository->delete($subCategories);
     }
 
+    public function getCategoriesWithAdsCount()
+    {
+        return $this->categoryRepository->categoriesWithAdsCount();
+    }
+
 }

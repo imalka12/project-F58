@@ -73,16 +73,16 @@
                             <a href="{{ route('ads.all', ['city' => $selectedCity->id]) }}" class="d-block clearfix"> All Categories
                             </a>
                         </li>
-                        @foreach ($categories as $parentCategory)
+                        @foreach ($categoriesWithAdsCount as $parentCategory)
                             <li class="category_list_sidebar_link mb-2">
-                                <a href="{{ route('ads.category.single', [$parentCategory->id, 'city' => $selectedCity->id]) }}"
+                                <a href="{{ route('ads.category.single', [$parentCategory->id, 'city' => $selectedCity->id, 'sort_key' => $selectedSortKey]) }}"
                                     class="d-block clearfix">
                                     <span class="float-start">
                                         <img src="{{ asset('assets/images/category-icons/24/' . $parentCategory->icon) }}"
                                             alt="{{ $parentCategory->title }}" class="me-1">
                                         {{ $parentCategory->title }}
                                     </span>
-                                    <span class="badge bg-light text-dark float-end mt-1">14</span>
+                                    <span class="badge bg-light text-dark float-end mt-1">{{ $parentCategory->ads_count }}</span>
                                 </a>
                             </li>
                         @endforeach

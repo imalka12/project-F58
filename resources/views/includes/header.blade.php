@@ -22,7 +22,7 @@
 </div>
 @endif
 
-<nav class="topnav py-2 border-bottom">
+<nav class="topnav py-2">
     <div class="container d-flex flex-wrap">
         <ul class="nav me-auto">
             <li class="nav-item"><a href="{{ route('site.about') }}" class="nav-link link-dark px-2">About</a></li>

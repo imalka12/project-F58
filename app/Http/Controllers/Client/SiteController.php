@@ -22,9 +22,10 @@ class SiteController extends Controller
     {
         // get categories
         $categories = $this->categories->list();
+        $categoriesWithAdsCount = $this->categories->getCategoriesWithAdsCount();
 
         // Return home page inside pages. web folder
-        return view('pages.web.home', compact('categories'));
+        return view('pages.web.home', compact('categories', 'categoriesWithAdsCount'));
     }
 
     /**

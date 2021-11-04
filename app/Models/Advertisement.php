@@ -29,10 +29,6 @@ class Advertisement extends Model
         'payment_id',
     ];
 
-    protected $attributes = [
-        'published_at' => null
-    ];
-
     /**
      * Advertisement belongs to SubCategory
      *
@@ -112,7 +108,7 @@ class Advertisement extends Model
      *
      * @return mixed
      */
-    public function getPublishedAtAttribute()
+    public function publishedAt()
     {
         // if no payments available
         if($this->payments->isEmpty()) {

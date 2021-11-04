@@ -129,8 +129,7 @@ class AdvertisementService {
 
     public function getAdsFiltered($category = 'all', $subCategory = 'all', $city = 'all', $search = '', $sortKey = 'date_newest')
     {
-        return $this->advertisementRepository->searchAdvertisementsEloquent($category, $subCategory, $city, $search);
-        // return $this->advertisementRepository->searchAdvertisements($category, $subCategory, $city, $search);
+        return $this->advertisementRepository->searchAdvertisementsEloquent($category, $subCategory, $city, $search, $sortKey);
     }
 
     public function update(Advertisement $advertisement, UpdateAdvertisementRequest $updateAdvertisementRequest)

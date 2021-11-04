@@ -13,7 +13,7 @@ class CategoryRepository implements CategoryRepositoryInterface {
      * @inheritDoc
      */
     public function all(): Collection {
-        return Category::with('subCategories')->orderBy('title')->get();
+        return Category::with('subCategories', 'subCategories.advertisements')->orderBy('title')->get();
     }
 
     /**
@@ -53,5 +53,15 @@ class CategoryRepository implements CategoryRepositoryInterface {
     public function delete(SubCategory $subCategories): bool
     {
         return $subCategories->delete();
+    }
+
+    public function categoriesWithAdsCount(): Collection {
+        return Category::selectRaw('
+        (
+            SELECT COUNT(advertisements.id) FROM advertisements 
+            INNER JOIN sub_categories ON sub_categories.category_id = categories.id 
+            WHERE advertisements.sub_category_id = sub_categories.id
+        ) AS ads_count,
+        categories. *')->orderBy('categories.title')->get();
     }
 }

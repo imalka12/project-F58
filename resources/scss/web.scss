@@ -14,31 +14,17 @@ body {
 #home-search-big {
     background-color: #5274d9;
     color: white;
-    #home-search-form {
-        width: 1000px;
-        margin: 0px auto;
-        border-radius: 50px;
-        border: 2px solid #ffffff;
-        font-size: 1.5rem;
-        background-color: #ffffff;
-        padding-left: 20px;
-        #home-search-anything {
-            display: inline-block;
-            width: 910px;
-            border: none;
-            outline: none;
-            padding: 15px 20px;
-             :focus {
-                box-shadow: inset 0px 0px 10px 5px;
-            }
-        }
-        #search-button {
-            display: inline-block;
-            width: 40px;
-            background: none;
-            outline: none;
-            border: none;
-        }
+    #home-search-form {}
+}
+
+#home-search-form {
+    #home-search-anything {
+        border-radius: 150px;
+        padding: 15px;
+        text-align: center;
+    }
+    #home-search-anything:focus {
+        box-shadow: rgb(195, 224, 255) inset 0px 0px 5px 3px;
     }
 }
 
@@ -121,4 +107,43 @@ body {
 
 .client-telephone {
     font-size: 1.3em;
+}
+
+@media only screen and (max-width: 600px) {
+    #home-search-form {
+        padding-bottom: 30px;
+    }
+    #home-search-anything {
+        font-size: inherit;
+    }
+    #home-hero-img {
+        margin-bottom: 60px;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    #home-search-form {
+        padding-bottom: 30px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    #home-search-form {
+        padding-bottom: 10px;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    #home-search-form {
+        padding-bottom: 0px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    #home-search-form {
+        padding-bottom: 0px;
+    }
+    #home-search-anything {
+        font-size: 1.5em;
+    }
 }
