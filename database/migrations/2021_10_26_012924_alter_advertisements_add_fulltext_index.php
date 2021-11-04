@@ -14,7 +14,7 @@ class AlterAdvertisementsAddFulltextIndex extends Migration
      */
     public function up()
     {
-        DB::statement('ALTER TABLE advertisements ADD FULLTEXT search_ads(title, description)');
+        DB::statement('CREATE FULLTEXT INDEX search_ads ON advertisements(title,description)');
     }
 
     /**
@@ -24,6 +24,6 @@ class AlterAdvertisementsAddFulltextIndex extends Migration
      */
     public function down()
     {
-        DB::statement('DROP INDEX search_ads ON advertisements');
+        DB::statement('ALTER TABLE advertisements DROP INDEX search_ads');
     }
 }
