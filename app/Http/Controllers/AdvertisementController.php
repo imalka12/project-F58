@@ -51,6 +51,11 @@ class AdvertisementController extends Controller
      */
     public function createAdvertisement(CreateAdvertisementRequest $request)
     {
+        // do not allow to create advertisement if user profile is incomplete
+        if(auth()->user()->profile->isIncomplete()) {
+            return redirect()->route('client.profile');
+        }
+
         $advertisement = $this->advertisements->create($request);
 
         if(empty($advertisement->subCategory->optionGroups)) {
