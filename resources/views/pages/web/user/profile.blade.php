@@ -94,6 +94,10 @@
                                                                             class="btn btn-primary">
                                                                             Promote Advertisement
                                                                         </a>
+                                                                        <a href="{{ route('ads.view.single', $active->id) }}"
+                                                                            class="btn btn-success">
+                                                                            View
+                                                                        </a>
                                                                     </div>
                                                                 </div>
                                                             @empty
@@ -129,6 +133,11 @@
                                                                             class="btn btn-warning">
                                                                             Edit advertisement
                                                                         </a>
+                                                                        <form action="{{ route('selected.advertisement.delete', $unpaid->id) }}" 
+                                                                            method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                                                            @csrf
+                                                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             @empty
@@ -159,6 +168,11 @@
                                                                             class="btn btn-info">
                                                                             Renew
                                                                         </a>
+                                                                        <form action="{{ route('selected.advertisement.delete', $expired->id) }}" 
+                                                                            method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                                                            @csrf
+                                                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             @empty

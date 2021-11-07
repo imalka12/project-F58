@@ -210,4 +210,10 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface {
         return $advertisement->advertisementOptions()->saveMany($advertisementOptions);        
     }
 
+    public function find($id): Advertisement {
+        return Advertisement::whereId($id)->delete();
+    }
+
+
+
 }

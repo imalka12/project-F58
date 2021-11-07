@@ -8,6 +8,7 @@ use App\Models\AdvertisementOption;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\SubCategory;
+use Collator;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -149,4 +150,6 @@ interface AdvertisementRepositoryInterface {
      * @return array $updated
      */
     public function updateOptions(Advertisement $advertisement , array $data):iterable;
+
+    public function find($id): Advertisement;
 }

@@ -305,4 +305,10 @@ class AdvertisementController extends Controller
     {
         return view('pages.web.ads.single', compact('advertisement'));
     }
+
+    public function deleteSelectedAdvertisement(Advertisement $advertisement)
+    {
+        $advertisement->delete();
+        return redirect()->route('client.profile' , $advertisement->id)->with('success' , 'Advertisement deleted successfully.');
+    }
 }

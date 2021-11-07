@@ -68,6 +68,8 @@ Route::middleware(['verified'])->group(function () {
     Route::post('advertisement/{advertisement}/edit' , [AdvertisementController::class , 'saveEditUnpaidAdvertisement'])->name('advertisement.unpaid.edit.save');
     Route::get('advertisement/edit-advertisement-options/{advertisement}', [AdvertisementController::class, 'showEditCreatedAdvertisementOptions'])->name('advertisement.unpaid.options.edit.page');
     Route::post('advertisement/edit-advertisement-options/{advertisement}', [AdvertisementController::class, 'saveEditUnpaidAdvertisementOptions'])->name('advertisement.unpaid.options.edit.save');
+
+    Route::post('advertisement/delete/{advertisement}' , [AdvertisementController::class , 'deleteSelectedAdvertisement'])->name('selected.advertisement.delete');
 });
 
 
