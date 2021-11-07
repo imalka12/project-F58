@@ -60,7 +60,7 @@ class CategoryRepository implements CategoryRepositoryInterface {
         (
             SELECT COUNT(advertisements.id) FROM advertisements 
             INNER JOIN sub_categories ON sub_categories.category_id = categories.id 
-            WHERE advertisements.sub_category_id = sub_categories.id
+            WHERE advertisements.sub_category_id = sub_categories.id and advertisements.is_approved = true
         ) AS ads_count,
         categories. *')->orderBy('categories.title')->get();
     }

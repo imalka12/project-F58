@@ -8,11 +8,13 @@ use App\Models\AdvertisementOption;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\SubCategory;
+use Collator;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-interface AdvertisementRepositoryInterface {
-    
+interface AdvertisementRepositoryInterface
+{
+
     /**
      * Creates new Advertisement entry
      *
@@ -101,7 +103,7 @@ interface AdvertisementRepositoryInterface {
      * @param City $city
      * @return LengthAwarePaginator
      */
-    public function getByCity(City $city):LengthAwarePaginator;
+    public function getByCity(City $city): LengthAwarePaginator;
 
     /**
      * Get all advertisements; except unpaid or expired
@@ -119,7 +121,12 @@ interface AdvertisementRepositoryInterface {
      * @param string|boolean $searchWords
      * @return LengthAwarePaginator
      */
-    public function searchAdvertisements($category = false, $subCategory = false, $city = false, $searchWords = false): LengthAwarePaginator;
+    public function searchAdvertisements(
+        $category = false,
+        $subCategory = false,
+        $city = false,
+        $searchWords = false
+    ): LengthAwarePaginator;
 
     /**
      * Perform an Eloquent search for the Advertisements
@@ -130,16 +137,22 @@ interface AdvertisementRepositoryInterface {
      * @param boolean $searchWords
      * @return LengthAwarePaginator
      */
-    public function searchAdvertisementsEloquent($category = false, $subCategory = false, $city = false, $searchWords = false, $sortKey = 'date_newest'): LengthAwarePaginator;
+    public function searchAdvertisementsEloquent(
+        $category = false,
+        $subCategory = false,
+        $city = false,
+        $searchWords = false,
+        $sortKey = 'date_newest'
+    ): LengthAwarePaginator;
 
     /**
      * Update advertisement
-     * 
+     *
      * @param Advertisement $advertisement
      * @param array $data
      * @return bool
      */
-    public function update(Advertisement $advertisement, array $data):bool;
+    public function update(Advertisement $advertisement, array $data): bool;
 
     /**
      * Update client created advertisement options
@@ -148,5 +161,13 @@ interface AdvertisementRepositoryInterface {
      * @param array $data
      * @return array $updated
      */
-    public function updateOptions(Advertisement $advertisement , array $data):iterable;
+    public function updateOptions(Advertisement $advertisement, array $data): iterable;
+
+    /**
+     * Delete the given advertisement entry
+     *
+     * @param mixed $id
+     * @return boolean
+     */
+    public function delete($id): bool;
 }

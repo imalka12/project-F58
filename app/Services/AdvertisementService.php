@@ -16,12 +16,14 @@ use App\Repositories\AdvertisementRepository;
 use App\Repositories\OptionGroupRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class AdvertisementService {
-    
+class AdvertisementService
+{
+
     public $advertisementRepository;
     public $optionGroupRepository;
 
-    public function __construct(AdvertisementRepository $advertisementRepository, OptionGroupRepository $optionGroupRepository) {
+    public function __construct(AdvertisementRepository $advertisementRepository, OptionGroupRepository $optionGroupRepository)
+    {
         $this->advertisementRepository = $advertisementRepository;
         $this->optionGroupRepository = $optionGroupRepository;
     }
@@ -69,7 +71,7 @@ class AdvertisementService {
     {
         $optionGroupValues = $request->validated();
 
-        if(empty($optionGroupValues)) {
+        if (empty($optionGroupValues)) {
             return false;
         }
 
@@ -138,8 +140,17 @@ class AdvertisementService {
         return $this->advertisementRepository->update($advertisement, $data);
     }
 
-    public function updateOptions(Advertisement $advertisement, UpdateOptionGroupValueRequest $updateOptionGroupValueRequest)
-    {
+    /**
+     * Update advertisement options
+     *
+     * @param Advertisement $advertisement
+     * @param UpdateOptionGroupValueRequest $updateOptionGroupValueRequest
+     * @return iterable
+     */
+    public function updateOptions(
+        Advertisement $advertisement,
+        UpdateOptionGroupValueRequest $updateOptionGroupValueRequest
+    ): iterable {
         $optionGroupValues = $updateOptionGroupValueRequest->validated();
 
         $adOptions = [];
@@ -151,7 +162,21 @@ class AdvertisementService {
             $adOptions[] = $adOption;
         }
 
-        return $this->advertisementRepository->updateOptions($advertisement , $adOptions);
+        return $this->advertisementRepository->updateOptions($advertisement, $adOptions);
     }
 
+    /**
+     * Delete the advertisement
+     *
+     * @param Advertisement $advertisement
+     * @return mixed
+     */
+    public function delete(Advertisement $advertisement)
+    {
+        if (! $advertisement) {
+            return false;
+        }
+
+        return $this->advertisementRepository->delete($advertisement->id);
+    }
 }

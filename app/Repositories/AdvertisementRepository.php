@@ -13,99 +13,110 @@ use App\Repositories\Contracts\AdvertisementRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class AdvertisementRepository implements AdvertisementRepositoryInterface {
+class AdvertisementRepository implements AdvertisementRepositoryInterface
+{
 
     /**
      * @inheritDoc
      */
-    public function create(array $data): Advertisement {
+    public function create(array $data): Advertisement
+    {
         return Advertisement::create($data);
     }
 
     /**
      * @inheritDoc
      */
-    public function getByUser($userId): Collection {
+    public function getByUser($userId): Collection
+    {
         return Advertisement::whereUserId($userId)->get();
     }
 
     /**
      * @inheritDoc
      */
-    public function getActiveAdvertisementsByUser($userId): Collection {
+    public function getActiveAdvertisementsByUser($userId): Collection
+    {
         return Advertisement::whereNotNull('payment_id')
-        ->where('user_id', $userId)
-        ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
-        ->with(['subCategory', 'city'])
-        ->get();
+            ->where('user_id', $userId)
+            ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
+            ->with(['subCategory', 'city'])
+            ->get();
     }
 
     /**
      * @inheritDoc
      */
-    public function getUnpaidAdvertisementsByUser($userId): Collection {
+    public function getUnpaidAdvertisementsByUser($userId): Collection
+    {
         return Advertisement::whereNull('payment_id')
-        ->where('user_id', $userId)
-        ->with(['subCategory', 'city'])
-        ->get();
+            ->where('user_id', $userId)
+            ->with(['subCategory', 'city'])
+            ->get();
     }
 
     /**
      * @inheritDoc
      */
-    public function getExpiredAdvertisementsByUser($userId): Collection {
+    public function getExpiredAdvertisementsByUser($userId): Collection
+    {
         return Advertisement::where('expire_at', '<', now()->format('Y-m-d H:i:s'))
-        ->where('user_id', $userId)
-        ->whereNotNull('payment_id')
-        ->with(['subCategory', 'city'])
-        ->get();
+            ->where('user_id', $userId)
+            ->whereNotNull('payment_id')
+            ->with(['subCategory', 'city'])
+            ->get();
     }
 
     /**
      * @inheritDoc
      */
-    public function getOptionGroupsForAdvertisementCategory(Advertisement $advertisement): Collection {
+    public function getOptionGroupsForAdvertisementCategory(Advertisement $advertisement): Collection
+    {
         return OptionGroup::with('optionGroupValues')->where('sub_category_id', $advertisement->sub_category_id)->get();
     }
 
     /**
      * @inheritDoc
      */
-    public function createAdvertisementOptions(Advertisement $advertisement, array $advertisementOptions): iterable {
+    public function createAdvertisementOptions(Advertisement $advertisement, array $advertisementOptions): iterable
+    {
         return $advertisement->advertisementOptions()->saveMany($advertisementOptions);
     }
 
     /**
      * @inheritDoc
      */
-    public function createAdvertisementImage(Advertisement $advertisement, array $data): AdvertisementImage {
+    public function createAdvertisementImage(Advertisement $advertisement, array $data): AdvertisementImage
+    {
         return $advertisement->advertisementImages()->create($data);
     }
 
     /**
      * @inheritDoc
      */
-    public function getByCategory(Category $category): LengthAwarePaginator {
+    public function getByCategory(Category $category): LengthAwarePaginator
+    {
         return Advertisement::join('sub_categories', 'sub_categories.id', '=', 'advertisements.sub_category_id')
-        ->join('categories', 'categories.id', '=', 'sub_categories.category_id')
-        ->select('advertisements.*')
-        ->where('categories.id', $category->id)
-        ->whereNotNull('advertisements.payment_id')
-        ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
-        ->with(['advertisementImages', 'payments'])
-        ->paginate(25);
+            ->join('categories', 'categories.id', '=', 'sub_categories.category_id')
+            ->select('advertisements.*')
+            ->where('categories.id', $category->id)
+            ->whereNotNull('advertisements.payment_id')
+            ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
+            ->with(['advertisementImages', 'payments'])
+            ->paginate(25);
     }
 
     /**
      * @inheritDoc
      */
-    public function getBySubCategory(SubCategory $subCategory): LengthAwarePaginator {
+    public function getBySubCategory(SubCategory $subCategory): LengthAwarePaginator
+    {
         return Advertisement::where('sub_category_id', $subCategory)
-        ->whereNotNull('advertisements.payment_id')
-        ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
-        ->with(['advertisementImages', 'payments'])
-        ->select('advertisements.*')
-        ->paginate(25);
+            ->whereNotNull('advertisements.payment_id')
+            ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
+            ->with(['advertisementImages', 'payments'])
+            ->select('advertisements.*')
+            ->paginate(25);
     }
 
     /**
@@ -114,100 +125,114 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface {
      * @param City $city
      * @return LengthAwarePaginator
      */
-    public function getByCity(City $city): LengthAwarePaginator {
+    public function getByCity(City $city): LengthAwarePaginator
+    {
         return Advertisement::where('city_id', $city->id)
-        ->whereNotNull('advertisements.payment_id')
-        ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
-        ->with(['advertisementImages', 'payments'])
-        ->select('advertisements.*')
-        ->paginate(25);
+            ->whereNotNull('advertisements.payment_id')
+            ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
+            ->with(['advertisementImages', 'payments'])
+            ->select('advertisements.*')
+            ->paginate(25);
     }
 
     /**
      * @inheritDoc
      */
-    public function getAllAdvertisements(): LengthAwarePaginator {
+    public function getAllAdvertisements(): LengthAwarePaginator
+    {
         return Advertisement::whereNotNull('advertisements.payment_id')
-        ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
-        ->with(['advertisementImages', 'payments'])
-        ->select('advertisements.*')
-        ->paginate(25);
+            ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
+            ->with(['advertisementImages', 'payments'])
+            ->select('advertisements.*')
+            ->paginate(25);
     }
 
     /**
      * @inheritDoc
      */
-    public function searchAdvertisements($category = false, $subCategory = false, $city = false, $searchWords = false, $sortKey = 'date_newest'): LengthAwarePaginator {
+    public function searchAdvertisements(
+        $category = false,
+        $subCategory = false,
+        $city = false,
+        $searchWords = false,
+        $sortKey = 'date_newest'
+    ): LengthAwarePaginator {
         $search = Advertisement::search($searchWords);
         // if($category) {
         //     $search = $search->where('category_id', $category->id);
         // }
-        if($subCategory) {
+        if ($subCategory) {
             $search = $search->where('sub_category_id', $subCategory->id);
         }
-        if($city) {
+        if ($city) {
             $search = $search->where('city_id', $city->id);
         }
 
         return $search->paginate(25);
     }
 
-    public function searchAdvertisementsEloquent($category = false, $subCategory = false, $city = false, $searchWords = false, $sortKey = 'date_newest'): LengthAwarePaginator {
+    public function searchAdvertisementsEloquent($category = false, $subCategory = false, $city = false, $searchWords = false, $sortKey = 'date_newest'): LengthAwarePaginator
+    {
         return Advertisement::join('cities', 'cities.id', '=', 'advertisements.city_id')
-        ->join('sub_categories', 'sub_categories.id', '=', 'advertisements.sub_category_id')
-        ->when($searchWords, function($query, $searchWords){
-            return $query->whereRaw('MATCH(advertisements.title, advertisements.description) AGAINST(? IN NATURAL LANGUAGE MODE)', $searchWords);
-        })
-        ->when($category, function($query, $category) {
-            return $query->where('sub_categories.category_id', $category->id);
-        })
-        ->when($subCategory, function($query, $subCategory) {
-            return $query->where('sub_categories.id', $subCategory->id);
-        })
-        ->when($city, function($query, $city) {
-            return $query->where('cities.id', $city->id);
-        })
-        ->whereNotNull('advertisements.payment_id')
-        ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
-        ->when($sortKey, function($query, $sortKey){
-            switch($sortKey) {
-            case 'date_newest': {
-                return $query->orderBy('advertisements.published_at', 'desc');
-            }
-            break;
-            case 'date_oldest': {
-                return $query->orderBy('advertisements.published_at', 'asc');
-            }
-            break;
-            case 'price_high_to_low': {
-                return $query->orderBy('advertisements.price', 'desc');
-            }
-            break;
-            case 'price_low_to_high': {
-                return $query->orderBy('advertisements.price', 'asc');
-            }
-            break;
-        }
-        })
-        ->with(['advertisementImages', 'payments'])
-        ->select('advertisements.*')
-        ->paginate(25);
+            ->join('sub_categories', 'sub_categories.id', '=', 'advertisements.sub_category_id')
+            ->when($searchWords, function ($query, $searchWords) {
+                return $query->whereRaw('MATCH(advertisements.title, advertisements.description) AGAINST(? IN NATURAL LANGUAGE MODE)', $searchWords);
+            })
+            ->when($category, function ($query, $category) {
+                return $query->where('sub_categories.category_id', $category->id);
+            })
+            ->when($subCategory, function ($query, $subCategory) {
+                return $query->where('sub_categories.id', $subCategory->id);
+            })
+            ->when($city, function ($query, $city) {
+                return $query->where('cities.id', $city->id);
+            })
+            ->whereNotNull('advertisements.payment_id')
+            ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
+            ->when($sortKey, function ($query, $sortKey) {
+                switch ($sortKey) {
+                    case 'date_newest':
+                        return $query->orderBy('advertisements.published_at', 'desc');
+                        break;
+                    case 'date_oldest':
+                        return $query->orderBy('advertisements.published_at', 'asc');
+                        break;
+                    case 'price_high_to_low':
+                        return $query->orderBy('advertisements.price', 'desc');
+                        break;
+                    case 'price_low_to_high':
+                        return $query->orderBy('advertisements.price', 'asc');
+                        break;
+                }
+            })
+            ->with(['advertisementImages', 'payments'])
+            ->select('advertisements.*')
+            ->paginate(25);
     }
 
-    
+
     /**
      * @inheritDoc
      */
-    public function update(Advertisement $advertisement, array $data):bool {
+    public function update(Advertisement $advertisement, array $data): bool
+    {
         return $advertisement->update($data);
     }
 
     /**
      * @inheritDoc
      */
-    public function updateOptions(Advertisement $advertisement , array $advertisementOptions):iterable {
+    public function updateOptions(Advertisement $advertisement, array $advertisementOptions): iterable
+    {
         $advertisement->advertisementOptions()->delete();
-        return $advertisement->advertisementOptions()->saveMany($advertisementOptions);        
+        return $advertisement->advertisementOptions()->saveMany($advertisementOptions);
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function delete($id): bool
+    {
+        return Advertisement::whereId($id)->delete();
+    }
 }

@@ -22,8 +22,11 @@ class AdvertisementController extends Controller
     private $locations;
     private $advertisements;
 
-    public function __construct(CategoryService $categoryService, LocationService $locationService, AdvertisementService $advertisementService)
-    {
+    public function __construct(
+        CategoryService $categoryService,
+        LocationService $locationService,
+        AdvertisementService $advertisementService
+    ) {
         $this->categories = $categoryService;
         $this->locations = $locationService;
         $this->advertisements = $advertisementService;
@@ -52,16 +55,16 @@ class AdvertisementController extends Controller
     public function createAdvertisement(CreateAdvertisementRequest $request)
     {
         // do not allow to create advertisement if user profile is incomplete
-        if(auth()->user()->profile->isIncomplete()) {
+        if (auth()->user()->profile->isIncomplete()) {
             return redirect()->route('client.profile');
         }
 
         $advertisement = $this->advertisements->create($request);
 
-        if(empty($advertisement->subCategory->optionGroups)) {
+        if (empty($advertisement->subCategory->optionGroups)) {
             // redirect to images page
             return redirect()->route('client.advertisement.add-images', $advertisement)
-            ->with('success', 'Option values saved successfully. Please add item images.');
+                ->with('success', 'Option values saved successfully. Please add item images.');
         }
 
         // has option groups for the sub category;
@@ -149,8 +152,19 @@ class AdvertisementController extends Controller
 
         $categoriesWithAdsCount = $this->categories->getCategoriesWithAdsCount();
 
-        return view('pages.web.ads.by-single-category', compact('categories', 'subCategories', 'cities', 'advertisementsByCategory', 
-        'category', 'selectedCity', 'selectedSubCategory', 'searchStr', 'sortKeys', 'selectedSortKey', 'categoriesWithAdsCount'));
+        return view('pages.web.ads.by-single-category', compact(
+            'categories',
+            'subCategories',
+            'cities',
+            'advertisementsByCategory',
+            'category',
+            'selectedCity',
+            'selectedSubCategory',
+            'searchStr',
+            'sortKeys',
+            'selectedSortKey',
+            'categoriesWithAdsCount'
+        ));
     }
 
     /**
@@ -194,8 +208,18 @@ class AdvertisementController extends Controller
         $advertisements = $this->advertisements->getAdsFiltered($category, $searchSubCategory, $searchCity, $searchStr, $selectedSortKey);
 
         // $advertisements = $this->advertisements->getAllAds();
-        return view('pages.web.ads.all', compact('categories', 'subCategories', 'cities', 'advertisements', 'selectedCity', 
-        'selectedSubCategory', 'searchStr', 'sortKeys', 'selectedSortKey', 'categoriesWithAdsCount'));
+        return view('pages.web.ads.all', compact(
+            'categories',
+            'subCategories',
+            'cities',
+            'advertisements',
+            'selectedCity',
+            'selectedSubCategory',
+            'searchStr',
+            'sortKeys',
+            'selectedSortKey',
+            'categoriesWithAdsCount'
+        ));
     }
 
     /**
@@ -236,9 +260,8 @@ class AdvertisementController extends Controller
         ];
     }
 
-     /**
-     * show client created advertisement to edit 
-     * 
+    /**
+     * Show client created advertisement to edit
      * @param Advertisement $advertisement
      * @return void
      */
@@ -247,27 +270,29 @@ class AdvertisementController extends Controller
         $categories = $this->categories->getCategoriesForSelect();
         $cities = $this->locations->getCitiesForSelects();
 
-        return view('pages.web.user.edit-unpaid-advertisement' , compact('categories', 'cities' , 'advertisement'));
+        return view('pages.web.user.edit-unpaid-advertisement', compact('categories', 'cities', 'advertisement'));
     }
 
     /**
-     * update client edited advertisement
-     * 
+     * Update client edited advertisement
      * @param Advertisement $advertisement
      * @param UpdateAdvertisementRequest $updateAdvertisementRequest
      * @return void
      */
-    public function saveEditUnpaidAdvertisement(Advertisement $advertisement , UpdateAdvertisementRequest $updateAdvertisementRequest)
-    {
-        $this->advertisements->update($advertisement , $updateAdvertisementRequest);
+    public function saveEditUnpaidAdvertisement(
+        Advertisement $advertisement,
+        UpdateAdvertisementRequest $updateAdvertisementRequest
+    ) {
+        $this->advertisements->update($advertisement, $updateAdvertisementRequest);
 
-        return redirect()->route('advertisement.unpaid.options.edit.page' , $advertisement->id)
-            ->with('success', 'Advertisement edited successfully. You can edit options from here or You can continue with same options you selected before.');   
+        return redirect()->route('advertisement.unpaid.options.edit.page', $advertisement->id)
+            ->with('success', 'Advertisement edited successfully. You can edit options 
+            from here or You can continue with same options you selected before.');
     }
 
     /**
      * show client created advertisement option page to edit
-     * 
+     *
      * @param Advertisement $advertisement
      * @return void
      */
@@ -277,32 +302,51 @@ class AdvertisementController extends Controller
         $options = $this->advertisements->getAvailableOptionsForAdvertisement($advertisement);
 
         $advertisementOptions = $advertisement->advertisementOptions;
-        
+
         $selectedOptions = [];
-        foreach($advertisementOptions as $option) {
+        foreach ($advertisementOptions as $option) {
             $selectedOptions[$option->option_group_id] = $option->option_group_value_id;
         }
 
-        return view('pages.web.user.edit-unpaid-advertisement-options' , compact('advertisement' , 'options', 'selectedOptions'));
+        return view('pages.web.user.edit-unpaid-advertisement-options', compact('advertisement', 'options', 'selectedOptions'));
     }
 
     /**
      * Update client edited advertisement options
-     * 
+     *
      * @param Advertisement $advertisement
      * @param UpdateAdvertisementRequest $updateAdvertisementRequest
      * @return void
      */
-    public function saveEditUnpaidAdvertisementOptions(Advertisement $advertisement , UpdateOptionGroupValueRequest $updateOptionGroupValueRequest)
+    public function saveEditUnpaidAdvertisementOptions(Advertisement $advertisement, UpdateOptionGroupValueRequest $updateOptionGroupValueRequest)
     {
-        $this->advertisements->updateOptions($advertisement , $updateOptionGroupValueRequest);
+        $this->advertisements->updateOptions($advertisement, $updateOptionGroupValueRequest);
 
-        return redirect()->route('client.profile' , $advertisement->id)
-            ->with('success', 'Advertisement options edited successfully. You can edit uploaded images from here or You can continue with previous selected images.');   
+        return redirect()->route('client.profile', $advertisement->id)
+            ->with('success', 'Advertisement options edited successfully. You can edit uploaded images from here or You can continue with previous selected images.');
     }
 
+    /**
+     * Show single advertisement view
+     *
+     * @param Advertisement $advertisement
+     * @return void
+     */
     public function showSingleAdView(Advertisement $advertisement)
     {
         return view('pages.web.ads.single', compact('advertisement'));
+    }
+
+    /**
+     * Delete advertisement and return to profile page
+     *
+     * @param Advertisement $advertisement
+     * @return mixed
+     */
+    public function deleteSelectedAdvertisement(Advertisement $advertisement)
+    {
+        $this->advertisements->delete($advertisement);
+
+        return redirect()->route('client.profile', $advertisement->id)->with('success', 'Advertisement deleted successfully.');
     }
 }

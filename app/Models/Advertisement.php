@@ -111,19 +111,18 @@ class Advertisement extends Model
     public function publishedAt()
     {
         // if no payments available
-        if($this->payments->isEmpty()) {
+        if ($this->payments->isEmpty()) {
             return null;
         }
 
         // get publish payment date
         $payment = $this->payments()->whereType('publish')->whereStatus('succeeded')->first();
         // check if a payment is NOT there
-        if(empty($payment)) {
-           return null; 
+        if (empty($payment)) {
+            return null;
         }
 
         // get the payment entry created date
         return $payment->created_at;
     }
-
 }
