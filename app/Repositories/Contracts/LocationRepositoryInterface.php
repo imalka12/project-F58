@@ -21,5 +21,4 @@ interface LocationRepositoryInterface {
      * @return City
      */
     public function findCityById($id): City;
-
 }

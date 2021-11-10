@@ -136,7 +136,11 @@
                                                                         <form action="{{ route('selected.advertisement.delete', $unpaid->id) }}" 
                                                                             method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
                                                                             @csrf
+<<<<<<< HEAD
                                                                             <button class="btn btn-danger">Delete</button>
+=======
+                                                                            <button class="btn btn-sm btn-danger">Delete</button>
+>>>>>>> 99745b8... client advertisement delete function in unpaid and expired
                                                                         </form>
                                                                     </div>
                                                                 </div>
