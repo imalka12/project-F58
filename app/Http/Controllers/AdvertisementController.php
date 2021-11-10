@@ -337,7 +337,6 @@ class AdvertisementController extends Controller
         return view('pages.web.ads.single', compact('advertisement'));
     }
 
-<<<<<<< HEAD
     /**
      * Delete advertisement and return to profile page
      *
@@ -349,11 +348,5 @@ class AdvertisementController extends Controller
         $this->advertisements->delete($advertisement);
 
         return redirect()->route('client.profile', $advertisement->id)->with('success', 'Advertisement deleted successfully.');
-=======
-    public function deleteSelectedAdvertisement(Advertisement $advertisement)
-    {
-        $advertisement->delete();
-        return redirect()->route('client.profile' , $advertisement->id)->with('success' , 'Advertisement deleted successfully.');
->>>>>>> 99745b8... client advertisement delete function in unpaid and expired
     }
 }
