@@ -45,8 +45,33 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function profile() {
+    /**
+     * A user has a profile
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function profile()
+    {
         return $this->hasOne(Profile::class);
     }
 
+    /**
+     * A user has many advertisements
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function advertisements()
+    {
+        return $this->hasMany(Advertisement::class);
+    }
+
+    /**
+     * A user has many payments
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

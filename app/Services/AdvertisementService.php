@@ -22,8 +22,10 @@ class AdvertisementService
     public $advertisementRepository;
     public $optionGroupRepository;
 
-    public function __construct(AdvertisementRepository $advertisementRepository, OptionGroupRepository $optionGroupRepository)
-    {
+    public function __construct(
+        AdvertisementRepository $advertisementRepository,
+        OptionGroupRepository $optionGroupRepository
+    ) {
         $this->advertisementRepository = $advertisementRepository;
         $this->optionGroupRepository = $optionGroupRepository;
     }

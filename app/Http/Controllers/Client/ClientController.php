@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\AdvertisementService;
 use App\Services\ClientAuthService;
 use App\Services\LocationService;
+use App\Services\PaymentService;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -16,11 +17,18 @@ class ClientController extends Controller
     private $clientAuth;
     private $locations;
     private $advertisements;
+    private $payments;
 
-    public function __construct(ClientAuthService $clientAuthService, LocationService $locationService, AdvertisementService $advertisementService) {
+    public function __construct(
+        ClientAuthService $clientAuthService,
+        LocationService $locationService,
+        AdvertisementService $advertisementService,
+        PaymentService $paymentService
+    ) {
         $this->clientAuth = $clientAuthService;
         $this->locations = $locationService;
         $this->advertisements = $advertisementService;
+        $this->payments = $paymentService;
     }
 
     /**
@@ -32,14 +40,21 @@ class ClientController extends Controller
     {
         $user = $this->clientAuth->getLoggedInUserWithProfile();
 
-        if($user->role_id == 3) {
+        if ($user->role_id == 3) {
             return redirect()->route('root');
         }
 
         $cities = $this->locations->getCitiesForSelects();
         $advertisements = $this->advertisements->getAllAdsCategorizedForCurrentUser();
+        $payments = $this->payments->getAllPaymentsForCurrentUser();
 
-        return view('pages.web.user.profile', compact('user', 'cities', 'advertisements'));
+        $paymentTypes = [
+            'publish' => 'to publish',
+            'promote' => 'to promote',
+            'renew' => 'to renew',
+        ];
+
+        return view('pages.web.user.profile', compact('user', 'cities', 'advertisements', 'payments', 'paymentTypes'));
     }
 
     /**
