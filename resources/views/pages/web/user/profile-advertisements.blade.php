@@ -43,18 +43,20 @@
                                 <h4>Active Advertisements</h4>
 
                                 @forelse ($advertisements->get('active') as $active)
-                                    <div class="card border-success mt-3">
+                                    <div class="card border-success mt-3 {{ $active->is_promoted ? 'promoted-ad-block' : '' }}">
                                         <div class="card-body">
+                                            {!! $active->is_promoted ? '<small class="text-warning"><strong>Promoted Ad</strong></small>' : '' !!}
                                             <h4 class="card-text">{{ $active->title }}
                                             </h4>
-                                            <small>Created at:
-                                                {{ $active->created_at->format('Y-m-d h:i A') }}</small>
+                                            <small>Created at: {{ $active->created_at->format('Y-m-d h:i A') }}</small>
                                         </div>
                                         <div class="card-footer">
+                                            @if (! $active->is_promoted)
                                             <a href="{{ route('advertisement.promote.show', $active->id) }}"
                                                 class="btn btn-primary">
                                                 Promote Advertisement
                                             </a>
+                                            @endif
                                             <a href="{{ route('ads.view.single', $active->id) }}"
                                                 class="btn btn-success">
                                                 View

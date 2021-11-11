@@ -3,7 +3,7 @@
         <h2>Payments</h2>
 
         @forelse ($payments as $payment)
-            <div class="card mb-2">
+            <div class="card mb-2 {{ $payment->type == 'promote' ? 'promoted-ad-block' : '' }}">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-2 col-md-3 col-sm-6">
@@ -16,7 +16,7 @@
                                 <small>{{ $payment->created_at->diffForHumans() }}</small>
                                 <h4 class="card-title">LKR {{ number_format($payment->amount / 100, 2) }}</h4>
                                 <p class="card-text">
-                                    Paid {{ $paymentTypes[$payment->type] }} 
+                                    Paid <strong>{{ $paymentTypes[$payment->type] }}</strong> 
                                     Advertisement: {{ $payment->advertisement->title }} <br />
                                     <small>Ref. No. : 
                                         <span class="badge bg-primary">{{ $payment->response_code }}</span>

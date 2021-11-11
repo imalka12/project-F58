@@ -17,6 +17,6 @@ class PaymentRepository implements PaymentRepositoryInterface
      */
     public function getPaymentsForUser(User $user): Collection
     {
-        return Payment::where('user_id', $user->id)->with('advertisement')->get();
+        return Payment::where('user_id', $user->id)->with('advertisement')->orderBy('created_at', 'desc')->get();
     }
 }
