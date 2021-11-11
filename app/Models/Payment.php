@@ -13,6 +13,6 @@ class Payment extends Model
 
     public function advertisement()
     {
-        return $this->belongsTo(Advertisement::class);
+        return $this->belongsTo(Advertisement::class)->withTrashed();
     }
 }

@@ -13,6 +13,9 @@
                         </div>
                         <div class="col-lg-10 col-md-9 col-sm-6">
                             <div class="ms-3">
+                                @if (! empty($payment->advertisement->deleted_at))
+                                    <small class="text-danger">Deleted Advertisement</small><br />
+                                @endif
                                 <small>{{ $payment->created_at->diffForHumans() }}</small>
                                 <h4 class="card-title">LKR {{ number_format($payment->amount / 100, 2) }}</h4>
                                 <p class="card-text">
