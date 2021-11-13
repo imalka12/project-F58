@@ -170,4 +170,12 @@ interface AdvertisementRepositoryInterface
      * @return boolean
      */
     public function delete($id): bool;
+
+    /**
+     * Delete advertisement image entry
+     *
+     * @param string|int $id
+     * @return boolean
+     */
+    public function deleteImage($id);
 }

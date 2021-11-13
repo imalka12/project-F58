@@ -24,7 +24,7 @@ class AdvertisementImagesCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'image_1' => 'required|file|mimes:png,jpg',
+            'image_1' => 'sometimes|file|mimes:png,jpg',
             'image_2' => 'nullable|file|mimes:png,jpg',
             'image_3' => 'nullable|file|mimes:png,jpg',
             'image_4' => 'nullable|file|mimes:png,jpg',

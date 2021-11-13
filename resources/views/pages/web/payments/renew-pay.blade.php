@@ -96,6 +96,10 @@ $form.submit(function(e){
     if (!$form.data('has-token')) {
         e.preventDefault();
 
+        // handle disabling button and showing loading text
+        $('#submit-payment-card-details').html('Sending...');
+        $('#submit-payment-card-details').prop('disabled', true);
+
         let expiry = $('#expiry').val().split('/');
 
         Stripe.setPublishableKey($form.data('stripe-publishable-key'));

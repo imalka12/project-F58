@@ -8,6 +8,7 @@ use App\Http\Requests\CreateAdvertisementRequest;
 use App\Http\Requests\UpdateAdvertisementRequest;
 use App\Http\Requests\UpdateOptionGroupValueRequest;
 use App\Models\Advertisement;
+use App\Models\AdvertisementImage;
 use App\Models\AdvertisementOption;
 use App\Models\Category;
 use App\Models\City;
@@ -15,6 +16,7 @@ use App\Models\SubCategory;
 use App\Repositories\AdvertisementRepository;
 use App\Repositories\OptionGroupRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Storage;
 
 class AdvertisementService
 {
@@ -180,5 +182,19 @@ class AdvertisementService
         }
 
         return $this->advertisementRepository->delete($advertisement->id);
+    }
+
+    public function deleteAdvertisementImage(AdvertisementImage $advertisementImage)
+    {
+        if (! Storage::exists('public/advs-images/' . $advertisementImage->image)) {
+            return false;
+        }
+
+        $deleted = Storage::delete('public/advs-images/' . $advertisementImage->image);
+        if (! $deleted) {
+            return false;
+        }
+
+        return $this->advertisementRepository->deleteImage($advertisementImage->id);
     }
 }

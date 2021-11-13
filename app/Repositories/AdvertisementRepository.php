@@ -171,12 +171,18 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
         return $search->paginate(25);
     }
 
-    public function searchAdvertisementsEloquent($category = false, $subCategory = false, $city = false, $searchWords = false, $sortKey = 'date_newest'): LengthAwarePaginator
-    {
+    public function searchAdvertisementsEloquent(
+        $category = false,
+        $subCategory = false,
+        $city = false,
+        $searchWords = false,
+        $sortKey = 'date_newest'
+    ): LengthAwarePaginator {
         return Advertisement::join('cities', 'cities.id', '=', 'advertisements.city_id')
             ->join('sub_categories', 'sub_categories.id', '=', 'advertisements.sub_category_id')
             ->when($searchWords, function ($query, $searchWords) {
-                return $query->whereRaw('MATCH(advertisements.title, advertisements.description) AGAINST(? IN NATURAL LANGUAGE MODE)', $searchWords);
+                return $query->whereRaw('MATCH(advertisements.title, advertisements.description) 
+                AGAINST(? IN NATURAL LANGUAGE MODE)', $searchWords);
             })
             ->when($category, function ($query, $category) {
                 return $query->where('sub_categories.category_id', $category->id);
@@ -234,5 +240,16 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
     public function delete($id): bool
     {
         return Advertisement::whereId($id)->delete();
+    }
+
+    /**
+     * Delete advertisement image entry
+     *
+     * @param string|int $id
+     * @return boolean
+     */
+    public function deleteImage($id)
+    {
+        return AdvertisementImage::find($id)->delete();
     }
 }

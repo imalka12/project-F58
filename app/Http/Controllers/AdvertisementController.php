@@ -8,6 +8,7 @@ use App\Http\Requests\CreateAdvertisementRequest;
 use App\Http\Requests\UpdateAdvertisementRequest;
 use App\Http\Requests\UpdateOptionGroupValueRequest;
 use App\Models\Advertisement;
+use App\Models\AdvertisementImage;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\SubCategory;
@@ -322,8 +323,9 @@ class AdvertisementController extends Controller
     {
         $this->advertisements->updateOptions($advertisement, $updateOptionGroupValueRequest);
 
-        return redirect()->route('client.profile', $advertisement->id)
-            ->with('success', 'Advertisement options edited successfully. You can edit uploaded images from here or You can continue with previous selected images.');
+        return redirect()->route('advertisement.unpaid.images.edit.page', $advertisement->id)
+            ->with('success', 'Advertisement options edited successfully. 
+            You can remove any previously uploaded images, add new ones or continue with previous selected images.');
     }
 
     /**
@@ -348,5 +350,48 @@ class AdvertisementController extends Controller
         $this->advertisements->delete($advertisement);
 
         return redirect()->route('client.profile', $advertisement->id)->with('success', 'Advertisement deleted successfully.');
+    }
+
+    /**
+     * Show the view to edit the images of an unpaid advertisement
+     *
+     * @param Request $request
+     * @param Advertisement $advertisement
+     * @return Illuminate\View\View|Illuminate\Contracts\View\Factory
+     */
+    public function showEditUnpaidAdImagesView(Request $request, Advertisement $advertisement)
+    {
+        if ($advertisement->is_approved) {
+            return redirect()->route('client.profile', $advertisement->id)->with('error', 'Advertisement is not approved yet.');
+        }
+
+        return view('pages.web.user.edit-unpaid-advertisement-images', compact('advertisement'));
+    }
+
+    /**
+     * Update images for the advertisement
+     *
+     * @param AdvertisementImagesCreateRequest $request
+     * @param Advertisement $advertisement
+     * @return RedirectResponse
+     */
+    public function updateUnpaidAdImages(AdvertisementImagesCreateRequest $request, Advertisement $advertisement)
+    {
+        $this->advertisements->createAdvertisementImages($request, $advertisement);
+
+        return redirect()->route('client.profile')->with('success', 'Advertisement created successfully.');
+    }
+
+    public function deleteUnpaidAdImage(Request $request, AdvertisementImage $advertisementImage)
+    {
+        $advertisement = $advertisementImage->advertisement;
+        
+        $deleted = $this->advertisements->deleteAdvertisementImage($advertisementImage);
+        if (! $deleted) {
+            return redirect()->route('advertisement.unpaid.images.edit.page', $advertisement->id)
+            ->with('error', 'Failed to delete advertisement image. Please try again later.');
+        }
+
+        return redirect()->route('advertisement.unpaid.images.edit.page', $advertisement->id)->with('success', 'Image deleted successfully.');
     }
 }

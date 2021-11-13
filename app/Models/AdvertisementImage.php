@@ -20,5 +20,4 @@ class AdvertisementImage extends Model
     {
         return $this->belongsTo(Advertisement::class);
     }
-
 }
