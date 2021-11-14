@@ -11,7 +11,8 @@ class SiteController extends Controller
 {
     private $categories;
 
-    public function __construct(CategoryService $categoryService) {
+    public function __construct(CategoryService $categoryService)
+    {
         $this->categories = $categoryService;
     }
 
@@ -59,5 +60,4 @@ class SiteController extends Controller
     {
         return view('pages.web.contact');
     }
-
 }

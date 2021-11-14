@@ -4,7 +4,8 @@ namespace App\Repositories\Contracts;
 
 use App\Models\User;
 
-interface UserRepositoryInterface {
+interface UserRepositoryInterface
+{
 
     /**
      * Create a User
@@ -35,8 +36,13 @@ interface UserRepositoryInterface {
      *
      * @param string $column Search column
      * @param [type] $key Search key
-     * @return User $user
+     * @return null|User $user
      */
-    public function findBy(string $column, $key): User;
+    public function findBy(string $column, $key): ?User;
 
+    /**
+     * Delete user profile
+     * @return boolean
+     */
+    public function delete($user): bool;
 }

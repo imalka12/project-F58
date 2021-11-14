@@ -148,6 +148,11 @@ Route::middleware(['verified'])->group(function () {
         'advertisement/delete-advertisement-images/{advertisementImage}',
         [AdvertisementController::class, 'deleteUnpaidAdImage']
     )->name('advertisement.unpaid.images.delete');
+
+    Route::post(
+        'delete/user/profile/{user}',
+        [ClientController::class, 'deleteUserProfile']
+    )->name('user.profile.delete');
 });
 
 # Email Verification Routes
