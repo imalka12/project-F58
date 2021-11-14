@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
+    private $users;
 
     /**
      * Create a new controller instance.
@@ -112,7 +113,7 @@ class HomeController extends Controller
             return response()->json([
                 'isSuccess' => false,
                 'Message' => "Your Current password does not matches with the password you provided. Please try again."
-            ], 200); // Status code 
+            ], 200);
         } else {
             $user = User::find($id);
             $user->password = Hash::make($request->get('password'));

@@ -43,7 +43,7 @@
                             @include('pages.web.user.profile-payments')
                         </div>
                         <div class="tab-pane fade" id="settings" role="tabpanel">
-                            <h2>Settings</h2>
+                            @include('pages.web.user.profile-settings')
                         </div>
                     </div>
                 </div>

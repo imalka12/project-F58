@@ -11,11 +11,13 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class ClientAuthService {
-    
+class ClientAuthService
+{
+
     protected $userRepository;
 
-    public function __construct(UserRepository $userRepository) {
+    public function __construct(UserRepository $userRepository)
+    {
         $this->userRepository = $userRepository;
     }
 
@@ -25,7 +27,8 @@ class ClientAuthService {
      * @param array $data
      * @return void
      */
-    public function signUp(ClientSignupRequest $request) {
+    public function signUp(ClientSignupRequest $request)
+    {
         $data = $request->validated();
 
         // has password
@@ -33,7 +36,7 @@ class ClientAuthService {
 
         // create user and profile
         $user = $this->userRepository->create($data);
-        
+
         // log in the user - with remember set to true
         Auth::login($user, true);
 
@@ -47,15 +50,16 @@ class ClientAuthService {
      * @param User $user
      * @return bool $isLoggedIn Returns true if logged in, false otherwise
      */
-    public function login(ClientLoginRequest $request) {
+    public function login(ClientLoginRequest $request)
+    {
         // get validated data
         $data = $request->validated();
 
         // get the user for the email address
         $user = $this->userRepository->findBy('email', $data['email']);
-        
+
         // return false if user not found
-        if(is_null($user)) {
+        if (is_null($user)) {
             return false;
         }
 
@@ -63,7 +67,7 @@ class ClientAuthService {
         $passwordVerified = Hash::check($data['password'], $user->password);
 
         // return to login page if password is incorrect
-        if(!$passwordVerified) {
+        if (!$passwordVerified) {
             return false;
         }
 
@@ -80,10 +84,11 @@ class ClientAuthService {
      *
      * @return void
      */
-    public function setActive() {
+    public function setActive()
+    {
         // get current logged in user
         $userId = auth()->user()->id;
-        
+
         $user = $this->userRepository->find($userId);
 
         $this->userRepository->setActive($user);
@@ -108,7 +113,7 @@ class ClientAuthService {
     public function getLoggedInUserWithProfile()
     {
         $loggedInUser = auth()->user();
-        if(! $loggedInUser) {
+        if (!$loggedInUser) {
             return null;
         }
 
@@ -140,4 +145,14 @@ class ClientAuthService {
         ]);
     }
 
+    /**
+     * Deletes user profile
+     *
+     * @param User $user
+     * @return void
+     */
+    public function deleteUser(User $user)
+    {
+        return $this->userRepository->delete($user->id);
+    }
 }

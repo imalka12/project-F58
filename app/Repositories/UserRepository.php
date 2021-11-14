@@ -6,18 +6,20 @@ use App\Models\Role;
 use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
 
-class UserRepository implements UserRepositoryInterface {
+class UserRepository implements UserRepositoryInterface
+{
 
     /**
      * @inheritDoc
      */
-    public function create(array $data): User {
+    public function create(array $data): User
+    {
         // set the default Role
         $data['role_id'] = Role::getDefault()->id;
         $data['status'] = 'inactive';
 
         $user = User::create($data);
-        
+
         // create profile for User
         $user->profile()->create();
 
@@ -27,7 +29,8 @@ class UserRepository implements UserRepositoryInterface {
     /**
      * @inheritDoc
      */
-    public function setActive(User $user): void {
+    public function setActive(User $user): void
+    {
         // update status to active
         $user->status = 'active';
         $user->save();
@@ -36,14 +39,24 @@ class UserRepository implements UserRepositoryInterface {
     /**
      * @inheritDoc
      */
-    public function find($id): User {
+    public function find($id): User
+    {
         return User::whereId($id)->with('profile')->first();
     }
-    
+
     /**
      * @inheritDoc
      */
-    public function findBy(string $column, $key): User {
+    public function findBy(string $column, $key): ?User
+    {
         return User::where($column, $key)->with('profile')->first();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete($user): bool
+    {
+        return User::whereId($user)->delete();
     }
 }

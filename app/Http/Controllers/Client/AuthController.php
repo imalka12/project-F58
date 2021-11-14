@@ -17,12 +17,13 @@ class AuthController extends Controller
 
     protected $clientAuth;
 
-    public function __construct(ClientAuthService $clientAuth ) {
+    public function __construct(ClientAuthService $clientAuth)
+    {
         $this->clientAuth = $clientAuth;
-        
-        if(Auth::check()) {
+
+        if (Auth::check()) {
             // redirect to admin panel if admin user
-            if(Auth::user()->role_id == 3) {
+            if (Auth::user()->role_id == 3) {
                 return redirect()->route('root');
             }
         }
@@ -58,27 +59,27 @@ class AuthController extends Controller
     public function showVerifyEmailNotificationPage()
     {
         // if admin, redirect to admin panel
-        if(Auth::user()->role_id == 3) {
+        if (Auth::user()->role_id == 3) {
             return redirect()->route('root');
         }
-        
+
         // if admin and already verified, redirect to admin panel
-        if(Auth::user()->email_verified_at != null && Auth::user()->role_id == 3) {
+        if (Auth::user()->email_verified_at != null && Auth::user()->role_id == 3) {
             return redirect()->route('root');
         }
 
         // if email not verified, show notification page
-        if(Auth::user()->email_verified_at == null){
+        if (Auth::user()->email_verified_at == null) {
             return view('pages.web.auth.verify-email');
         }
 
         // if general user and email verified, show profile.
         return redirect()->route('client.profile');
-    }     
+    }
 
     /**
      * Process the sign up for a website user
-     * 
+     *
      * @param ClientSignupRequest $clientSignupRequest
      */
     public function processClientSignUp(ClientSignupRequest $request)
@@ -89,12 +90,13 @@ class AuthController extends Controller
         // redirect to email address verification notice page
         return redirect()->route('verification.notice');
     }
-    
+
     /**
      * Verify email address
      * @param EmailVerificationRequest $request
      */
-    public function verifyClientEmail(EmailVerificationRequest $request) {
+    public function verifyClientEmail(EmailVerificationRequest $request)
+    {
         // verify the email address
         $request->fulfill();
 
@@ -102,7 +104,7 @@ class AuthController extends Controller
 
         // return to client profile page after
         return redirect()->route('client.profile')
-                ->with('success', 'Thank you for verifying your email address. Your account is now verified and active.');
+            ->with('success', 'Thank you for verifying your email address. Your account is now verified and active.');
     }
 
     /**
@@ -111,10 +113,11 @@ class AuthController extends Controller
      * @param Request $request
      * @return void
      */
-    public function resendClientEmailVerificationEmail(Request $request) {
+    public function resendClientEmailVerificationEmail(Request $request)
+    {
         // trigger resend email for email verification
         $request->user()->sendEmailVerificationNotification();
-    
+
         // go back to email verification page with link sent message.
         return back()->with('success', 'Verification link sent!');
     }
@@ -129,8 +132,9 @@ class AuthController extends Controller
     {
         $isLoggedIn = $this->clientAuth->login($request);
 
-        if(!$isLoggedIn) {
-            return redirect()->route('client.login')->with('error', 'Failed to login. Please check your username and password and try again.');
+        if (! $isLoggedIn) {
+            return redirect()->route('client.login')
+            ->with('error', 'Failed to login. Please check your username and password and try again.');
         }
 
         // redirect user to user profile
@@ -147,7 +151,7 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('site.home')->with('info', 'You are now successfully logged out.');
+        return redirect()->route('site.home')
+        ->with('info', 'You are now successfully logged out.');
     }
-
 }

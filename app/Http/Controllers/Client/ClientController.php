@@ -11,6 +11,7 @@ use App\Services\ClientAuthService;
 use App\Services\LocationService;
 use App\Services\PaymentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -69,5 +70,24 @@ class ClientController extends Controller
 
         return redirect()->route('client.profile')
             ->with('success', 'Profile updated successfully.');
+    }
+
+
+    /**
+     * Delete user profile
+     *
+     * @param User $id
+     *
+     */
+    public function deleteUserProfile(User $user)
+    {
+        $this->clientAuth->deleteUser($user);
+
+        // TODO: send email to user email address
+
+        // logout the currently logged user.
+        Auth::logout();
+
+        return redirect()->route('site.home')->with('success', 'Your profile deleted successfully.');
     }
 }

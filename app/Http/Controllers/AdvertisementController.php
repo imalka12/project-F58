@@ -394,4 +394,5 @@ class AdvertisementController extends Controller
 
         return redirect()->route('advertisement.unpaid.images.edit.page', $advertisement->id)->with('success', 'Image deleted successfully.');
     }
+
 }
