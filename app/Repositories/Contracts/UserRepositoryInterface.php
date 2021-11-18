@@ -40,9 +40,21 @@ interface UserRepositoryInterface
      */
     public function findBy(string $column, $key): ?User;
 
+<<<<<<< HEAD
     /**
      * Delete user profile
      * @return boolean
      */
     public function delete($user): bool;
 }
+=======
+
+    /**
+     * Delete user profile
+     * 
+     * 
+     */
+    public function delete($user) : bool;
+
+}
+>>>>>>> 378766ca4f6f1dfa04b1f942ec9f23af899ad376

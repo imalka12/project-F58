@@ -135,4 +135,17 @@ class HomeController extends Controller
             }
         }
     }
+
+    /**
+     * Detele user profile
+     * 
+     * @param User $id
+     * 
+     */
+    public function deleteUserProfile(User $user)
+    {
+        $this->users->delete($user);
+
+        return redirect()->route('/')->with('success' , 'Your profile deleted successfully');
+    }
 }
