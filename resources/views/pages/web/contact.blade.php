@@ -40,23 +40,28 @@
                         </address>
                     </div>
                     <div class="col-lg-8">
-                        <form action="/" method="post">
+                        <form action="{{ route('site.contact') }}" method="post">
                             @csrf
                             <div class="row justify-content-center">
                                 <div class="col-lg-10">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" placeholder="City" aria-label="City"
-                                            id="floatingTextarea">
-                                        <label for="floatingTextarea">Your Name</label>
+                                        <input type="text" class="form-control" placeholder="Your name" aria-label="name"
+                                            id="name" name="name" required>
+                                        <label for="name">
+                                            Your Name <small>(required)</small>
+                                        </label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                                        <label for="floatingInput">Your Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" 
+                                        placeholder="Your email address" required>
+                                        <label for="email">Your Email <small>(required)</small></label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
-                                            style="height: 150px"></textarea>
-                                        <label for="floatingTextarea">Message</label>
+                                        <textarea class="form-control" placeholder="Leave a comment here" id="message"
+                                            name="message" style="height: 150px" required></textarea>
+                                        <label for="message">
+                                            Message <small>(required)</small>
+                                        </label>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Send Message</button>
                                 </div>

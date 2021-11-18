@@ -29,7 +29,7 @@
             <li class="nav-item"><a href="{{ route('site.pricing') }}" class="nav-link link-dark px-2">Pricing</a>
             </li>
             <li class="nav-item"><a href="{{ route('site.faq') }}" class="nav-link link-dark px-2">FAQs</a></li>
-            <li class="nav-item"><a href="{{ route('site.contact') }}" class="nav-link link-dark px-2">Contacts</a>
+            <li class="nav-item"><a href="{{ route('site.contact') }}" class="nav-link link-dark px-2">Contact Us</a>
             </li>
         </ul>
         <ul class="nav">

@@ -15,7 +15,7 @@ class SubCategoryController extends Controller
     private $categories;
     private $optionGroups;
 
-    
+
     /**
      * Create a new controller instance.
      *
@@ -46,36 +46,36 @@ class SubCategoryController extends Controller
     {
         $this->categories->createSubCategory($request);
 
-        return redirect()->route('admin.subcategory.add')->with('success' , 'Category created successfully.');
+        return redirect()->route('admin.subcategory.add')->with('success', 'Category created successfully.');
     }
 
     /**
      * Show sub category edit page
-     * 
+     *
      * @param string|int $id Sub category id
      */
     public function showSubCategoryEditPage($id)
     {
         $categories = $this->categories->getCategoriesForSelect();
         $subCategory = $this->categories->findSubCategory($id);
-        return view('pages.admin.sub-categories.sub-categories-edit' , compact('categories' , 'subCategory'));
+        return view('pages.admin.sub-categories.sub-categories-edit', compact('categories', 'subCategory'));
     }
 
     /**
      * Update sub category
-     * 
+     *
      * @param SubCategoryUpdateRequest $request
      * @param SubCategory $id
      */
     public function updateSubCategories(SubCategoryUpdateRequest $request, SubCategory $id)
     {
-        $this->categories->updateSubCategory($id , $request);
+        $this->categories->updateSubCategory($id, $request);
         return redirect()->route('admin.subcategory.edit', $id)->with('success', 'Sub category updated successfully.');
     }
 
     /**
      * Delete sub category
-     * 
+     *
      * @param SubCategory $subCategories
      * @return void
      */
@@ -83,7 +83,5 @@ class SubCategoryController extends Controller
     {
         $this->categories->delete($subCategories);
         return redirect()->route('admin.subcategory.create')->with('success', 'SubCategory deleted successfully.');
-        
     }
-
 }

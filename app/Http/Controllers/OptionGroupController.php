@@ -104,7 +104,7 @@ class OptionGroupController extends Controller
         $this->optionGroups->createValue($optionGroup, $request);
 
         return redirect()->route('admin.option-groups.edit', $optionGroup->id)
-        ->with('success', 'Option group value added successfully.');
+            ->with('success', 'Option group value added successfully.');
     }
 
     /**
@@ -119,8 +119,15 @@ class OptionGroupController extends Controller
         $categories = $this->categories->getCategoriesForSelect();
         $optionGroupValues = $this->optionGroups->getValuesForOptionGroup($optionGroup);
 
-        return view('pages.admin.option-groups.option-group-values-edit', 
-        compact('optionGroup', 'categories', 'optionGroupValues', 'optionGroupValue'));
+        return view(
+            'pages.admin.option-groups.option-group-values-edit',
+            compact(
+                'optionGroup',
+                'categories',
+                'optionGroupValues',
+                'optionGroupValue'
+            )
+        );
     }
 
     /**
@@ -134,7 +141,7 @@ class OptionGroupController extends Controller
     {
         $this->optionGroups->updateValue($optionGroupValue, $request);
         return redirect()->route('admin.option-groups.edit', $optionGroupValue->optionGroup->id)
-        ->with('success', 'Option group value updated successfully.');
+            ->with('success', 'Option group value updated successfully.');
     }
 
     /**
@@ -147,7 +154,6 @@ class OptionGroupController extends Controller
     {
         $this->optionGroups->deleteValue($optionGroupValue);
         return redirect()->route('admin.option-groups.edit', $optionGroupValue->optionGroup->id)
-        ->with('success', 'Option group value deleted successfully.');
+            ->with('success', 'Option group value deleted successfully.');
     }
-
 }

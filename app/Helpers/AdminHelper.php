@@ -2,7 +2,8 @@
 
 namespace App\Helpers;
 
-class AdminHelper {
+class AdminHelper
+{
 
     public static function getAdminSidebarLinks()
     {
@@ -20,12 +21,17 @@ class AdminHelper {
                 'label' => 'Category Option Groups',
             ],
             [
-                'key'=> 't-category',
-                'route'=> 'admin.subcategory.add',
-                'icon'=> 'bx bx-spreadsheet',
-                'label'=> 'Category'
+                'key' => 't-category',
+                'route' => 'admin.subcategory.add',
+                'icon' => 'bx bx-spreadsheet',
+                'label' => 'Category'
+            ],
+            [
+                'key' => 't-contact-form-submissions',
+                'route' => 'admin.contact-form-submissions',
+                'icon' => 'bx bx-envelope',
+                'label' => 'Contact Form Submissions'
             ]
         ];
     }
-
 }
