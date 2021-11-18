@@ -22,6 +22,7 @@
 
                         <div class="row">
                             @foreach ($options as $optionGroup)
+                            @if (count($optionGroup->optionGroupValues) > 0)
                                 <div class="col-lg-3">
                                     <div class="mt-3">
                                         <label for="{{ $optionGroup->id }}"
@@ -39,6 +40,7 @@
                                         </select>
                                     </div>
                                 </div>
+                            @endif
                             @endforeach
                         </div>
                         <div class="col-lg-12 mt-3">

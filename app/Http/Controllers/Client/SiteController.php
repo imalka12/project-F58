@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Services\CategoryService;
-use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
