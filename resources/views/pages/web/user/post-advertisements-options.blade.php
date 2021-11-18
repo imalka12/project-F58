@@ -22,6 +22,7 @@
 
                         <div class="row">
                             @forelse ($options as $optionGroup)
+                            @if (count($optionGroup->optionGroupValues) > 0)
                             <div class="col-lg-3">
                                 <div class="mt-3">
                                     <label for="{{ $optionGroup->id }}"
@@ -35,6 +36,7 @@
                                     </select>
                                 </div>
                             </div>
+                            @endif
                             @empty
                                 <div class="col-lg-12">
                                     <div class="alert alert-info m-5">
