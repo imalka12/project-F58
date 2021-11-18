@@ -150,13 +150,8 @@ Route::middleware(['verified'])->group(function () {
     )->name('advertisement.unpaid.images.delete');
 
     Route::post(
-<<<<<<< HEAD
         'delete/user/profile/{user}',
         [ClientController::class, 'deleteUserProfile']
-=======
-        'delete/user/profile/{user}' , 
-        [HomeController::class, 'deleteUserProfile']
->>>>>>> 378766ca4f6f1dfa04b1f942ec9f23af899ad376
     )->name('user.profile.delete');
 });
 
