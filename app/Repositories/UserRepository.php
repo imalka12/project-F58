@@ -52,7 +52,6 @@ class UserRepository implements UserRepositoryInterface
         return User::where($column, $key)->with('profile')->first();
     }
 
-<<<<<<< HEAD
     /**
      * @inheritDoc
      */
@@ -61,10 +60,3 @@ class UserRepository implements UserRepositoryInterface
         return User::whereId($user)->delete();
     }
 }
-=======
-    public function delete($user) : bool
-    {
-        return User::whereId($user)->delete();
-    }
-}
->>>>>>> 378766ca4f6f1dfa04b1f942ec9f23af899ad376

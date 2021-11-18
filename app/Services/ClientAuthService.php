@@ -145,7 +145,6 @@ class ClientAuthService
         ]);
     }
 
-<<<<<<< HEAD
     /**
      * Deletes user profile
      *
@@ -157,11 +156,3 @@ class ClientAuthService
         return $this->userRepository->delete($user->id);
     }
 }
-=======
-    public function delete(User $user)
-    {
-        return $this->userRepository->delete($user->id);
-    }
-
-}
->>>>>>> 378766ca4f6f1dfa04b1f942ec9f23af899ad376
