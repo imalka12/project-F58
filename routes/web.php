@@ -41,7 +41,10 @@ Route::get('pricing', [SiteController::class, 'pricing'])->name('site.pricing');
 
 Route::get('contact-us', [SiteController::class, 'contact'])->name('site.contact');
 
-Route::post('contact-us', [ContactFormSubmissionController::class, 'processContactFormSubmission'])->name('site.contact.submission');
+Route::post(
+    'contact-us',
+    [SiteController::class, 'processContactFormSubmission']
+)->name('site.contact.submission');
 
 // Client Login / Signup & Logout Routes
 Route::get('clients/login', [AuthController::class, 'showLoginPage'])->name('client.login');

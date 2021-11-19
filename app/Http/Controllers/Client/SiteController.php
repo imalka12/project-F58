@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContactFormSubmissionRequest;
+use App\Models\ContactFormSubmission;
 use App\Services\CategoryService;
 
 class SiteController extends Controller
@@ -57,5 +59,26 @@ class SiteController extends Controller
     public function contact()
     {
         return view('pages.web.contact');
+    }
+
+    /**
+     * Process contact form submission
+     *
+     * @param ContactFormSubmissionRequest $request
+     * @return void
+     */
+    public function processContactFormSubmission(ContactFormSubmissionRequest $request)
+    {
+        // validate
+        $data = $request->validated();
+
+        // save data
+        ContactFormSubmission::create($data);
+
+        // TODO: send response email
+
+        // redirect with success message
+        return redirect()->route('site.contact')
+        ->with('success', 'Your contact request submitted successfully.');
     }
 }
