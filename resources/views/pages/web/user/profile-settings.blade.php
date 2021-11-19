@@ -9,7 +9,7 @@
             <div class="card-body">
                 <p>You can delete your user account from <strong>Quick Ads</strong> easily by clicking the button below.</p>
                 <p>Please note that after your account is deleted, you cannot log in using the old username and password.</p>
-                <form action="{{ route('user.profile.delete', $user->id) }}" 
+                <form action="{{ route('user.profile.delete.confirmation', $user->id) }}" 
                     method="POST" class="d-inline" onsubmit="return confirm('Are you sure that you want to delete your profile?\nThis action is irreversible.\n\nPlease proceed with caution.')">
                     @csrf
                     <button class="btn btn-danger">Delete My Account</button>
