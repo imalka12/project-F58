@@ -156,6 +156,11 @@ Route::middleware(['verified'])->group(function () {
     )->name('advertisement.unpaid.images.delete');
 
     Route::post(
+        'user/profile-delete/{user}',
+        [ClientController::class, 'processDeleteRequest']
+    )->name('user.profile.delete.confirmation');
+
+    Route::get(
         'delete/user/profile/{user}',
         [ClientController::class, 'deleteUserProfile']
     )->name('user.profile.delete');

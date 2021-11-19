@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientProfileUpdateRequest;
+use App\Mail\UserAccountDeletionRequested;
 use App\Models\User;
 use App\Services\AdvertisementService;
 use App\Services\ClientAuthService;
 use App\Services\LocationService;
 use App\Services\PaymentService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class ClientController extends Controller
 {
@@ -71,6 +75,19 @@ class ClientController extends Controller
             ->with('success', 'Profile updated successfully.');
     }
 
+    /**
+     * Handle client account deletion request
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function processDeleteRequest(Request $request, User $user)
+    {
+        $this->sendConfirmationEmail($user);
+
+        // redirect
+        return redirect()->route('site.home')->with('success', 'Please check your email for a confirmation email.');
+    }
 
     /**
      * Delete user profile
@@ -78,15 +95,40 @@ class ClientController extends Controller
      * @param User $id
      *
      */
-    public function deleteUserProfile(User $user)
+    public function deleteUserProfile(Request $request, User $user)
     {
+        if (! $request->hasValidSignature()) {
+            abort(401);
+        }
+
         $this->clientAuth->deleteUser($user);
 
-        // TODO: send email to user email address
+        $this->sendDeletedEmail($user);
 
         // logout the currently logged user.
         Auth::logout();
 
         return redirect()->route('site.home')->with('success', 'Your profile deleted successfully.');
+    }
+
+    /**
+     * Send confirmation email to user for deleting his account
+     *
+     * @param User $user
+     */
+    private function sendConfirmationEmail(User $user)
+    {
+        // send email
+        Mail::to($user->email)->send(new UserAccountDeletionRequested($user));
+    }
+
+    /**
+     * Send email to user that his account has been deleted
+     *
+     * @param User $user
+     */
+    private function sendDeletedEmail(User $user)
+    {
+        # code...
     }
 }
