@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactFormSubmissionRequest;
+use App\Mail\ContactFormSubmitted;
 use App\Models\ContactFormSubmission;
 use App\Services\CategoryService;
+use Illuminate\Support\Facades\Mail;
 
 class SiteController extends Controller
 {
@@ -76,6 +78,8 @@ class SiteController extends Controller
         ContactFormSubmission::create($data);
 
         // TODO: send response email
+        Mail::to($data['email'])
+        ->send(new ContactFormSubmitted($data['name'], $data['email']));
 
         // redirect with success message
         return redirect()->route('site.contact')
