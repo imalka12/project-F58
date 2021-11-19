@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientProfileUpdateRequest;
-use App\Models\City;
 use App\Models\User;
 use App\Services\AdvertisementService;
 use App\Services\ClientAuthService;

@@ -13,8 +13,9 @@
 </head>
 
 @section('body')
+
     <body data-sidebar="dark">
-@show
+    @show
     <!-- Begin page -->
     <div id="layout-wrapper">
         @include('layouts.topbar')
@@ -29,19 +30,22 @@
                         @if (session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <strong>Success!</strong> {{ @session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
                             </div>
                         @endif
                         @if (session('info'))
                             <div class="alert alert-info alert-dismissible fade show" role="alert">
                                 <strong>Success!</strong> {{ @session('info') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
                             </div>
                         @endif
                         @if (session('error'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <strong>Error!</strong> {{ @session('error') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
                             </div>
                         @endif
                     </div>
@@ -56,10 +60,6 @@
         <!-- end main content-->
     </div>
     <!-- END layout-wrapper -->
-
-    <!-- Right Sidebar -->
-    @include('layouts.right-sidebar')
-    <!-- /Right-bar -->
 
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
