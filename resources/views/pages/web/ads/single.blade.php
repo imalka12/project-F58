@@ -8,8 +8,12 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('site.home') }}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('ads.all') }}">All Ads</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('ads.category.single', $advertisement->subCategory->category_id) }}">{{ $advertisement->subCategory->category->title }}</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('ads.category.single', $advertisement->subCategory->category_id) }}?sub_category={{ $advertisement->sub_category_id }}">{{ $advertisement->subCategory->title }}</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="{{ route('ads.category.single', $advertisement->subCategory->category_id) }}">{{ $advertisement->subCategory->category->title }}</a>
+                        </li>
+                        <li class="breadcrumb-item"><a
+                                href="{{ route('ads.category.single', $advertisement->subCategory->category_id) }}?sub_category={{ $advertisement->sub_category_id }}">{{ $advertisement->subCategory->title }}</a>
+                        </li>
                         <li class="breadcrumb-item active" aria-current="page">{{ $advertisement->title }}</li>
                     </ol>
                 </nav>
@@ -39,8 +43,22 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-                <div class="mt-5">
-                    <h4>Description</h4>
+                <div class="mt-3">
+                    <h6 id="single_ad_price">Rs. {{ number_format($advertisement->price, 2) }}</h6>
+                </div>
+                <div class="mt-2">
+                    @if(count($advertisement->advertisementOptions) > 0)
+                        <div class="row">
+                            @foreach ($advertisement->advertisementOptions as $option)
+                            <div class="col-lg-6">
+                                {{ $option->optionGroup->title }} : <strong>{{ $option->optionGroupValue->title }}</strong>
+                            </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+                <div class="mt-3">
+                    <h6>Description</h4>
                     {!! $advertisement->description !!}
                 </div>
             </div>

@@ -72,6 +72,7 @@
                 </div>
             @endif
 
+            @if (count($advertisement->advertisementImages) < 4)
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-text">
@@ -119,6 +120,11 @@
                     </form>
                 </div>
             </div>
+            @else
+            <div class="alert alert-info">
+                You have added all 4 images allowed for an advertisements. If you need to change an image, remove the existing one first.
+            </div>
+            @endif
         </div>
     </div>
 

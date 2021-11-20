@@ -149,7 +149,13 @@ class AdvertisementController extends Controller
         $searchSubCategory = $selectedSubCategory->id == 0 ? false : $selectedSubCategory;
         $searchCity = $selectedCity->id == 0 ? false : $selectedCity;
 
-        $advertisementsByCategory = $this->advertisements->getAdsFiltered($category, $searchSubCategory, $searchCity, $searchStr, $selectedSortKey);
+        $advertisementsByCategory = $this->advertisements->getAdsFiltered(
+            $category,
+            $searchSubCategory,
+            $searchCity,
+            $searchStr,
+            $selectedSortKey
+        );
 
         $categoriesWithAdsCount = $this->categories->getCategoriesWithAdsCount();
 
@@ -297,12 +303,16 @@ class AdvertisementController extends Controller
      * @param Advertisement $advertisement
      * @return void
      */
-
     public function showEditCreatedAdvertisementOptions(Advertisement $advertisement)
     {
         $options = $this->advertisements->getAvailableOptionsForAdvertisement($advertisement);
 
         $advertisementOptions = $advertisement->advertisementOptions;
+
+        if (empty($advertisement->subCategory->optionGroups)) {
+            redirect()->route('advertisement.unpaid.images.edit.page')
+            ->with('success', 'Edit/add images for the advertisements.');
+        }
 
         $selectedOptions = [];
         foreach ($advertisementOptions as $option) {
@@ -321,7 +331,10 @@ class AdvertisementController extends Controller
      */
     public function saveEditUnpaidAdvertisementOptions(Advertisement $advertisement, UpdateOptionGroupValueRequest $updateOptionGroupValueRequest)
     {
-        $this->advertisements->updateOptions($advertisement, $updateOptionGroupValueRequest);
+        if (! empty($updateOptionGroupValueRequest->option_groups)) {
+            $this->advertisements->updateOptions($advertisement, $updateOptionGroupValueRequest);
+        }
+
 
         return redirect()->route('advertisement.unpaid.images.edit.page', $advertisement->id)
             ->with('success', 'Advertisement options edited successfully. 
