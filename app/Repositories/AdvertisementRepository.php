@@ -252,4 +252,15 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
     {
         return AdvertisementImage::find($id)->delete();
     }
+
+    /**
+     * Delete advertisements by user
+     *
+     * @param int|string $user
+     * @return void
+     */
+    public function deleteAdvertisementsByUser($user)
+    {
+        return Advertisement::where('user_id', $user)->delete();
+    }
 }
