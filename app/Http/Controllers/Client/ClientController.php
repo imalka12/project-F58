@@ -83,7 +83,7 @@ class ClientController extends Controller
      */
     public function processDeleteRequest(Request $request, User $user)
     {
-        $this->sendConfirmationEmail($user);
+        $this->sendAccountDeleteConfirmationEmail($user);
 
         // redirect
         return redirect()->route('site.home')->with('success', 'Please check your email for a confirmation email.');
@@ -101,9 +101,14 @@ class ClientController extends Controller
             abort(401);
         }
 
+        // delete ads
+        $this->advertisements->deleteAdvertisementsByUser($user);
+
+        // delete user
         $this->clientAuth->deleteUser($user);
 
-        $this->sendDeletedEmail($user);
+        // send user account deleted confirmation
+        $this->sendAccountDeletedEmail($user);
 
         // logout the currently logged user.
         Auth::logout();
@@ -116,7 +121,7 @@ class ClientController extends Controller
      *
      * @param User $user
      */
-    private function sendConfirmationEmail(User $user)
+    private function sendAccountDeleteConfirmationEmail(User $user)
     {
         // send email
         Mail::to($user->email)->send(new UserAccountDeletionRequested($user));
@@ -127,7 +132,7 @@ class ClientController extends Controller
      *
      * @param User $user
      */
-    private function sendDeletedEmail(User $user)
+    private function sendAccountDeletedEmail(User $user)
     {
         # code...
     }

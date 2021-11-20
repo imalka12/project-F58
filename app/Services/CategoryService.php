@@ -9,7 +9,8 @@ use App\Models\SubCategory;
 use App\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\Collection;
 
-class CategoryService {
+class CategoryService
+{
 
     private $categoryRepository;
 
@@ -69,10 +70,10 @@ class CategoryService {
         return $this->categoryRepository->getSubCategoryById($id);
     }
 
-    public function updateSubCategory(SubCategory $subCategory , SubCategoryUpdateRequest $request)
-    {   
+    public function updateSubCategory(SubCategory $subCategory, SubCategoryUpdateRequest $request)
+    {
         $data = $request->validated();
-        return $this->categoryRepository->updateSubCategory($subCategory , $data);
+        return $this->categoryRepository->updateSubCategory($subCategory, $data);
     }
 
     public function delete(SubCategory $subCategories)
@@ -84,5 +85,4 @@ class CategoryService {
     {
         return $this->categoryRepository->categoriesWithAdsCount();
     }
-
 }

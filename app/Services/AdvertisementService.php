@@ -13,6 +13,7 @@ use App\Models\AdvertisementOption;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\SubCategory;
+use App\Models\User;
 use App\Repositories\AdvertisementRepository;
 use App\Repositories\OptionGroupRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -196,5 +197,10 @@ class AdvertisementService
         }
 
         return $this->advertisementRepository->deleteImage($advertisementImage->id);
+    }
+
+    public function deleteAdvertisementsByUser(User $user)
+    {
+        return $this->advertisementRepository->deleteAdvertisementsByUser($user->id);
     }
 }

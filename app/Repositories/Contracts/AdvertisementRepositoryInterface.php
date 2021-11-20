@@ -178,4 +178,12 @@ interface AdvertisementRepositoryInterface
      * @return boolean
      */
     public function deleteImage($id);
+
+    /**
+     * Delete advertisements by user
+     *
+     * @param int|string $user
+     * @return void
+     */
+    public function deleteAdvertisementsByUser($user);
 }
