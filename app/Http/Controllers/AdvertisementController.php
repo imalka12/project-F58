@@ -16,6 +16,7 @@ use App\Services\AdvertisementService;
 use App\Services\CategoryService;
 use App\Services\LocationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AdvertisementController extends Controller
 {
@@ -80,8 +81,10 @@ class AdvertisementController extends Controller
         return view('pages.web.user.post-advertisements-options', compact('advertisement', 'options'));
     }
 
-    public function createAdvertisementOptionValues(AdvertisementOptionValuesCreateRequest $request, Advertisement $advertisement)
-    {
+    public function createAdvertisementOptionValues(
+        AdvertisementOptionValuesCreateRequest $request,
+        Advertisement $advertisement
+    ) {
         $this->advertisements->createOptionValues($request, $advertisement);
 
         return redirect()->route('client.advertisement.add-images', $advertisement)
@@ -148,16 +151,28 @@ class AdvertisementController extends Controller
         $searchStr = $request->get('search') ?? false;
         $searchSubCategory = $selectedSubCategory->id == 0 ? false : $selectedSubCategory;
         $searchCity = $selectedCity->id == 0 ? false : $selectedCity;
+        
+        $filters = false;
+
+        if ($request->filter) {
+            $filters = $this->getFiltersFromRequest($request);
+        }
 
         $advertisementsByCategory = $this->advertisements->getAdsFiltered(
             $category,
             $searchSubCategory,
             $searchCity,
             $searchStr,
-            $selectedSortKey
+            $selectedSortKey,
+            $filters
         );
 
         $categoriesWithAdsCount = $this->categories->getCategoriesWithAdsCount();
+
+        $optionFilters = collect([]);
+        if ($selectedSubCategory->id != 0) {
+            $optionFilters = $this->advertisements->getAllAdvertisementOptions($selectedSubCategory);
+        }
 
         return view('pages.web.ads.by-single-category', compact(
             'categories',
@@ -170,8 +185,27 @@ class AdvertisementController extends Controller
             'searchStr',
             'sortKeys',
             'selectedSortKey',
-            'categoriesWithAdsCount'
+            'categoriesWithAdsCount',
+            'optionFilters',
+            'filters'
         ));
+    }
+
+    private function getFiltersFromRequest(Request $request)
+    {
+        if (!$request->isMethod('get')) {
+            return false;
+        }
+
+        $filters = [];
+        $params = explode('&', $request->getQueryString());
+        foreach ($params as $param) {
+            $param = explode('=', $param);
+            if (Str::startsWith($param[0], 'f_')) {
+                $filters[str_replace('f_', '', $param[0])] = $param[1];
+            }
+        }
+        return $filters;
     }
 
     /**
@@ -212,7 +246,13 @@ class AdvertisementController extends Controller
         $searchSubCategory = $selectedSubCategory->id == 0 ? false : $selectedSubCategory;
         $searchCity = $selectedCity->id == 0 ? false : $selectedCity;
 
-        $advertisements = $this->advertisements->getAdsFiltered($category, $searchSubCategory, $searchCity, $searchStr, $selectedSortKey);
+        $advertisements = $this->advertisements->getAdsFiltered(
+            $category,
+            $searchSubCategory,
+            $searchCity,
+            $searchStr,
+            $selectedSortKey
+        );
 
         // $advertisements = $this->advertisements->getAllAds();
         return view('pages.web.ads.all', compact(
@@ -311,7 +351,7 @@ class AdvertisementController extends Controller
 
         if (empty($advertisement->subCategory->optionGroups)) {
             redirect()->route('advertisement.unpaid.images.edit.page')
-            ->with('success', 'Edit/add images for the advertisements.');
+                ->with('success', 'Edit/add images for the advertisements.');
         }
 
         $selectedOptions = [];
@@ -319,7 +359,10 @@ class AdvertisementController extends Controller
             $selectedOptions[$option->option_group_id] = $option->option_group_value_id;
         }
 
-        return view('pages.web.user.edit-unpaid-advertisement-options', compact('advertisement', 'options', 'selectedOptions'));
+        return view(
+            'pages.web.user.edit-unpaid-advertisement-options',
+            compact('advertisement', 'options', 'selectedOptions')
+        );
     }
 
     /**
@@ -329,9 +372,11 @@ class AdvertisementController extends Controller
      * @param UpdateAdvertisementRequest $updateAdvertisementRequest
      * @return void
      */
-    public function saveEditUnpaidAdvertisementOptions(Advertisement $advertisement, UpdateOptionGroupValueRequest $updateOptionGroupValueRequest)
-    {
-        if (! empty($updateOptionGroupValueRequest->option_groups)) {
+    public function saveEditUnpaidAdvertisementOptions(
+        Advertisement $advertisement,
+        UpdateOptionGroupValueRequest $updateOptionGroupValueRequest
+    ) {
+        if (!empty($updateOptionGroupValueRequest->option_groups)) {
             $this->advertisements->updateOptions($advertisement, $updateOptionGroupValueRequest);
         }
 
@@ -362,7 +407,8 @@ class AdvertisementController extends Controller
     {
         $this->advertisements->delete($advertisement);
 
-        return redirect()->route('client.profile', $advertisement->id)->with('success', 'Advertisement deleted successfully.');
+        return redirect()->route('client.profile', $advertisement->id)
+            ->with('success', 'Advertisement deleted successfully.');
     }
 
     /**
@@ -375,7 +421,8 @@ class AdvertisementController extends Controller
     public function showEditUnpaidAdImagesView(Request $request, Advertisement $advertisement)
     {
         if ($advertisement->is_approved) {
-            return redirect()->route('client.profile', $advertisement->id)->with('error', 'Advertisement is not approved yet.');
+            return redirect()->route('client.profile', $advertisement->id)
+                ->with('error', 'Advertisement is not approved yet.');
         }
 
         return view('pages.web.user.edit-unpaid-advertisement-images', compact('advertisement'));
@@ -398,13 +445,14 @@ class AdvertisementController extends Controller
     public function deleteUnpaidAdImage(Request $request, AdvertisementImage $advertisementImage)
     {
         $advertisement = $advertisementImage->advertisement;
-        
+
         $deleted = $this->advertisements->deleteAdvertisementImage($advertisementImage);
-        if (! $deleted) {
+        if (!$deleted) {
             return redirect()->route('advertisement.unpaid.images.edit.page', $advertisement->id)
-            ->with('error', 'Failed to delete advertisement image. Please try again later.');
+                ->with('error', 'Failed to delete advertisement image. Please try again later.');
         }
 
-        return redirect()->route('advertisement.unpaid.images.edit.page', $advertisement->id)->with('success', 'Image deleted successfully.');
+        return redirect()->route('advertisement.unpaid.images.edit.page', $advertisement->id)
+            ->with('success', 'Image deleted successfully.');
     }
 }

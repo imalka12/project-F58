@@ -66,7 +66,7 @@
             <span class="fs-4">Quick Ads</span>
         </a>
         @auth
-            <a href="/" class="btn btn-warning text-white">Post Your Ad</a>
+            <a href="{{ route('client.advertisement.create') }}" class="btn btn-warning text-white">Post Your Ad</a>
         @endauth
     </div>
 </header>

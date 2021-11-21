@@ -34,7 +34,12 @@
 
                             <div class="mb-3">
                                 <label for="title" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="title" name="title" placeholder="Ex: Brand">
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Ex: Brand Name">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="slug" class="form-label">Slug</label>
+                                <input type="text" class="form-control" id="slug" name="slug" placeholder="Ex: brand-name">
                             </div>
                         </div>
                         <div class="card-footer">
@@ -52,6 +57,7 @@
                                     <th>#</th>
                                     <th>Sub Category</th>
                                     <th>Title</th>
+                                    <th>Slug</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -61,6 +67,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $optionGroup->subCategory->title }}</td>
                                     <td>{{ $optionGroup->title }}</td>
+                                    <td>{{ $optionGroup->slug }}</td>
                                     <td>
                                         <a href="{{ route('admin.option-groups.edit', $optionGroup->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                         <form action="{{ route('admin.option-groups.delete', $optionGroup->id) }}" class="d-inline" method="post" onsubmit="return confirm('Are you sure you need to delete this option group?\n\nPlease note that all the associated values too will be deleted.\nPlease proceed with caution.');">

@@ -92,6 +92,36 @@
                         @endforeach
                     </ul>
                 </div>
+
+                @isset($optionFilters)
+                @if($optionFilters->isNotEmpty())
+                    <h5>Filter Results By</h5>
+                        @foreach($optionFilters as $option)
+                            @if($option->optionGroupValues->isNotEmpty())
+                            <div class="mb-2">
+                                <label for="option_{{ $option->id }}" class="form-label">{{ $option->title }}</label>
+                                <select name="option_{{ $option->id }}" id="option_{{ $option->id }}" class="form-control option-filter" 
+                                    data-slug="{{ $option->slug }}">
+                                    <option value="">Select {{ $option->title }}</option>
+
+                                    @foreach ($option->optionGroupValues as $optionGroupValue)
+                                        <option value="{{ $optionGroupValue->id }}" 
+                                            @if($filters)
+                                                @isset($filters[$option->slug])
+                                                    {{ ($filters[$option->slug] == $optionGroupValue->id) ? 'selected' : '' }}
+                                                @endisset
+                                            @endif
+                                            >{{ $optionGroupValue->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @endif
+                        @endforeach
+                        <div class="mb-2">
+                            <button class="btn btn-success w-100" id="filter_by_option_values">Filter Search</button>
+                        </div>
+                    @endif
+                @endisset
             </div>
             <div class="col-lg-9 pt-3">
                 <h4>Buy, Sell, Rent or Find <span class="text-primary">{{ $selectedSubCategory->title }}</span> in
@@ -155,6 +185,30 @@
                 let el = $(element);
                 ar.push(el[0].id + '=' + escape(el[0].value));
             });
+
+            let query = ar.join('&');
+            window, location.replace(url + '?' + query);
+        });
+
+        $('#filter_by_option_values').click(function(e) {
+            let ar = [];
+
+            let pf = $('.page-filter');
+            $.each(pf, function(i, element) {
+                let el = $(element);
+                ar.push(el[0].id + '=' + escape(el[0].value));
+            });
+
+            let ofs = $('.option-filter');
+            $.each(ofs, function(i, element) {
+                let el = $(element);
+                if(el.val() != '') {
+                    ar.push('f_' + el.data('slug') + '=' + escape(el.val()));
+                }
+            });
+
+            // add filters applied flag
+            ar.push('filter=1');
 
             let query = ar.join('&');
             window, location.replace(url + '?' + query);

@@ -10,11 +10,13 @@ use App\Models\OptionGroup;
 use App\Models\OptionGroupValue;
 use App\Repositories\OptionGroupRepository;
 
-class OptionGroupService {
+class OptionGroupService
+{
 
     private $optionGroupRepository;
 
-    public function __construct(OptionGroupRepository $optionGroupRepository) {
+    public function __construct(OptionGroupRepository $optionGroupRepository)
+    {
         $this->optionGroupRepository = $optionGroupRepository;
     }
 
@@ -70,5 +72,4 @@ class OptionGroupService {
     {
         return $this->optionGroupRepository->deleteValue($optionGroupValue);
     }
-
 }
