@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientProfileUpdateRequest;
+use App\Mail\UserAccountDeleted;
 use App\Mail\UserAccountDeletionRequested;
 use App\Models\User;
 use App\Services\AdvertisementService;
@@ -134,6 +135,11 @@ class ClientController extends Controller
      */
     private function sendAccountDeletedEmail(User $user)
     {
-        # code...
+        $user->firstname;
+        $user->email;
+
+        //send email
+        Mail::to($user->email)
+        ->send(new UserAccountDeleted($user['firstname'], $user['email']));
     }
 }
