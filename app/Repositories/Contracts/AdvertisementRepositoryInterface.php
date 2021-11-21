@@ -142,7 +142,8 @@ interface AdvertisementRepositoryInterface
         $subCategory = false,
         $city = false,
         $searchWords = false,
-        $sortKey = 'date_newest'
+        $sortKey = 'date_newest',
+        $options = false
     ): LengthAwarePaginator;
 
     /**
@@ -186,4 +187,12 @@ interface AdvertisementRepositoryInterface
      * @return void
      */
     public function deleteAdvertisementsByUser($user);
+
+    /**
+     * Get advertisement options for filters
+     *
+     * @param SubCategory $subCategory
+     * @return Collection Collection
+     */
+    public function getOptionsForAdvertisementFilters(SubCategory $subCategory): Collection;
 }

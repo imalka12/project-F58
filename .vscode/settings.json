@@ -1,3 +1,4 @@
 {
-    "cSpell.enableFiletypes": ["blade"]
+    "cSpell.enableFiletypes": ["blade"],
+    "cSpell.words": ["endisset", "isset"]
 }

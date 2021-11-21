@@ -44,6 +44,11 @@
                                 <label for="title" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="title" name="title" placeholder="Ex: Brand" value="{{ $optionGroup['title'] }}">
                             </div>
+                            
+                            <div class="mb-3">
+                                <label for="slug" class="form-label">Slug</label>
+                                <input type="text" class="form-control" id="slug" name="slug" placeholder="Ex: Brand" value="{{ $optionGroup['slug'] }}">
+                            </div>
                         </div>
 
                         <div class="card-footer">

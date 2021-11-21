@@ -176,7 +176,8 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
         $subCategory = false,
         $city = false,
         $searchWords = false,
-        $sortKey = 'date_newest'
+        $sortKey = 'date_newest',
+        $options = false
     ): LengthAwarePaginator {
         return Advertisement::join('cities', 'cities.id', '=', 'advertisements.city_id')
             ->join('sub_categories', 'sub_categories.id', '=', 'advertisements.sub_category_id')
@@ -210,6 +211,11 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
                         return $query->orderBy('advertisements.price', 'asc');
                         break;
                 }
+            })
+            ->when($options, function ($query, $options) {
+                $groupIDs = array_values($options);
+                return $query->join('advertisement_options', 'advertisements.id', '=', 'advertisement_options.advertisement_id')
+                    ->whereIn('advertisement_options.option_group_value_id', [$groupIDs]);
             })
             ->with(['advertisementImages', 'payments'])
             ->select('advertisements.*')
@@ -262,5 +268,14 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
     public function deleteAdvertisementsByUser($user)
     {
         return Advertisement::where('user_id', $user)->delete();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOptionsForAdvertisementFilters(SubCategory $subCategory): Collection
+    {
+        return OptionGroup::with('OptionGroupValues')
+            ->where('option_groups.sub_category_id', $subCategory->id)->get();
     }
 }

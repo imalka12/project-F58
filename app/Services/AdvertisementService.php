@@ -134,13 +134,28 @@ class AdvertisementService
         return $this->advertisementRepository->getByCity($city);
     }
 
-    public function getAdsFiltered($category = 'all', $subCategory = 'all', $city = 'all', $search = '', $sortKey = 'date_newest')
-    {
-        return $this->advertisementRepository->searchAdvertisementsEloquent($category, $subCategory, $city, $search, $sortKey);
+    public function getAdsFiltered(
+        $category = 'all',
+        $subCategory = 'all',
+        $city = 'all',
+        $search = '',
+        $sortKey = 'date_newest',
+        $options = false
+    ) {
+        return $this->advertisementRepository->searchAdvertisementsEloquent(
+            $category,
+            $subCategory,
+            $city,
+            $search,
+            $sortKey,
+            $options
+        );
     }
 
-    public function update(Advertisement $advertisement, UpdateAdvertisementRequest $updateAdvertisementRequest)
-    {
+    public function update(
+        Advertisement $advertisement,
+        UpdateAdvertisementRequest $updateAdvertisementRequest
+    ) {
         $data = $updateAdvertisementRequest->validated();
         return $this->advertisementRepository->update($advertisement, $data);
     }
@@ -178,7 +193,7 @@ class AdvertisementService
      */
     public function delete(Advertisement $advertisement)
     {
-        if (! $advertisement) {
+        if (!$advertisement) {
             return false;
         }
 
@@ -187,12 +202,12 @@ class AdvertisementService
 
     public function deleteAdvertisementImage(AdvertisementImage $advertisementImage)
     {
-        if (! Storage::exists('public/advs-images/' . $advertisementImage->image)) {
+        if (!Storage::exists('public/advs-images/' . $advertisementImage->image)) {
             return false;
         }
 
         $deleted = Storage::delete('public/advs-images/' . $advertisementImage->image);
-        if (! $deleted) {
+        if (!$deleted) {
             return false;
         }
 
@@ -202,5 +217,10 @@ class AdvertisementService
     public function deleteAdvertisementsByUser(User $user)
     {
         return $this->advertisementRepository->deleteAdvertisementsByUser($user->id);
+    }
+
+    public function getAllAdvertisementOptions(SubCategory $subCategory)
+    {
+        return $this->advertisementRepository->getOptionsForAdvertisementFilters($subCategory);
     }
 }
