@@ -75,7 +75,7 @@ class PaymentController extends Controller
 
     public function processRenewPayment(Request $request, Advertisement $advertisement)
     {
-        $amount = config('system.payments.advertisement_extend') * 100;
+        $amount = config('system.payments.advertisement_renew') * 100;
 
         Stripe::setApiKey(env('STRIPE_SECRET'));
         $charge = Charge::create([

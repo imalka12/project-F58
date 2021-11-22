@@ -16,7 +16,7 @@
                         <p>Item: <strong>{{ $advertisement->title }}</strong></p>
                         <div class="text-primary mt-5">
                             <h6>Pay Amount</h6>
-                            <h3>LKR {{ number_format(config('system.payments.advertisement_extend'), 2) }}</h3>
+                            <h3>LKR {{ number_format(config('system.payments.advertisement_renew'), 2) }}</h3>
                         </div>
                     </div>
                     <div class="col-lg-6 py-3">

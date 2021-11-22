@@ -127,6 +127,29 @@
                 <h4>Buy, Sell, Rent or Find <span class="text-primary">{{ $selectedSubCategory->title }}</span> in
                     <span class="text-success">{{ $selectedCity->title }}</span>
                 </h4>
+
+                @if($promoted->count())
+                <div class="border-top mb-3 mt-3"></div>
+                @foreach ($promoted as $promotedAd)
+                <a class="adv-link promoted-ad-block" href="{{ route('ads.view.single', $promotedAd->id) }}" style="text-decoration: none;">
+                    <div class="advertisement_block border rounded p-3 d-flex justify-content-start mb-3">
+                        <div class="thumbnail border rounded">
+                            <img src="{{ asset('storage/advs-images/' . $promotedAd->advertisementImages->first()->image) }}"
+                                alt="" width="100" height="100">
+                        </div>
+                        <div class="content ps-3">
+                            <small class="text-warning"><strong>Promoted Ad</strong></small>
+                            <h4>{{ $promotedAd->title }}</h4>
+                            <p>{{ $promotedAd->city->title }}, {{ $promotedAd->subCategory->title }} <br />
+                                Rs. {{ number_format($promotedAd->price, 2) }}<br />
+                                <small>{{ $promotedAd->payments->first()->created_at->diffForHumans() }}</small>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                @endforeach
+                @endif
+
                 @if (!$advertisementsByCategory->isEmpty())
                     <small class="text-muted">Showing 1-25 of {{ $advertisementsByCategory->count() }} ads</small>
                 @endif

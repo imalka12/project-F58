@@ -72,7 +72,7 @@
                     </div>
                     <div class="card-body">
                         <div class="card-price mb-4">
-                            <h2>LKR {{ number_format(config('system.payments.advertisement_extend'), 2) }} <small class=" text-muted">/ 7
+                            <h2>LKR {{ number_format(config('system.payments.advertisement_renew'), 2) }} <small class=" text-muted">/ 7
                                     Days</small></h2>
                         </div>
                         <div class="card-items">
