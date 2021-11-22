@@ -69,8 +69,8 @@
 
                 <div class="border-top mb-3"></div>
 
-                <h5>Sort Results By</h5>
-                <div id="category_list_wrapper" class="mb-5">
+                <h5>Categories</h5>
+                <div id="category_list_wrapper" class="mb-4">
                     <ul id="category_list_sidebar">
                         <li class="category_list_sidebar_link mb-2">
                             <a href="{{ route('ads.all', ['city' => $selectedCity->id]) }}" class="d-block clearfix"> All
@@ -92,6 +92,25 @@
                         @endforeach
                     </ul>
                 </div>
+
+                <div class="border-top mb-3"></div>
+
+                <h5>Price</h5>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label for="price_min">Min</label>
+                        <input type="number" name="price_min" id="price_min" class="form-control filter_price_min" min="0" placeholder="0" {{ $prices ? "value={$prices['min']}" : '' }}>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="price_max">Max</label>
+                        <input type="number" name="price_max" id="price_max" class="form-control filter_price_max" min="0" placeholder="0" {{ $prices ? "value={$prices['max']}" : '' }}>
+                    </div>
+                    <div class="col-lg-12 mt-3">
+                        <button class="btn btn-primary w-100 filter_price">Filter By Price</button>
+                    </div>
+                </div>
+
+                <div class="border-top mb-3"></div>
 
                 @isset($optionFilters)
                 @if($optionFilters->isNotEmpty())
@@ -209,6 +228,21 @@
                 ar.push(el[0].id + '=' + escape(el[0].value));
             });
 
+            let price_max = $('#price_max').val().trim();
+            if(price_max == '') {
+                price_max = 0;
+            }
+
+            if(Number(price_max) > 0) {
+                let price_min = $('#price_min').val().trim();
+                if(price_min == '') {
+                    price_min = 0;
+                }
+                ar.push('price_min=' + Number(price_min));
+
+                ar.push('price_max=' + Number(price_max));
+            }
+
             let query = ar.join('&');
             window, location.replace(url + '?' + query);
         });
@@ -229,6 +263,60 @@
                     ar.push('f_' + el.data('slug') + '=' + escape(el.val()));
                 }
             });
+
+            let price_max = $('#price_max').val().trim();
+            if(price_max == '') {
+                price_max = 0;
+            }
+
+            if(Number(price_max) > 0) {
+                let price_min = $('#price_min').val().trim();
+                if(price_min == '') {
+                    price_min = 0;
+                }
+                ar.push('price_min=' + Number(price_min));
+
+                ar.push('price_max=' + Number(price_max));
+            }
+
+            // add filters applied flag
+            ar.push('filter=1');
+
+            let query = ar.join('&');
+            window, location.replace(url + '?' + query);
+        });
+
+        $('.filter_price').click(function () {
+            let ar = [];
+
+            let pf = $('.page-filter');
+            $.each(pf, function(i, element) {
+                let el = $(element);
+                ar.push(el[0].id + '=' + escape(el[0].value));
+            });
+
+            let ofs = $('.option-filter');
+            $.each(ofs, function(i, element) {
+                let el = $(element);
+                if(el.val() != '') {
+                    ar.push('f_' + el.data('slug') + '=' + escape(el.val()));
+                }
+            });
+
+            let price_max = $('#price_max').val().trim();
+            if(price_max == '') {
+                price_max = 0;
+            }
+
+            if(Number(price_max) > 0) {
+                let price_min = $('#price_min').val().trim();
+                if(price_min == '') {
+                    price_min = 0;
+                }
+                ar.push('price_min=' + Number(price_min));
+
+                ar.push('price_max=' + Number(price_max));
+            }
 
             // add filters applied flag
             ar.push('filter=1');

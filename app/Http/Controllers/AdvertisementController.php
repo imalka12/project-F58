@@ -151,11 +151,19 @@ class AdvertisementController extends Controller
         $searchStr = $request->get('search') ?? false;
         $searchSubCategory = $selectedSubCategory->id == 0 ? false : $selectedSubCategory;
         $searchCity = $selectedCity->id == 0 ? false : $selectedCity;
-        
+
         $filters = false;
 
         if ($request->filter) {
             $filters = $this->getFiltersFromRequest($request);
+        }
+
+        $prices = false;
+        if ($request->price_min || $request->price_max) {
+            $prices = [
+                'min' => doubleval($request->price_min),
+                'max' => doubleval($request->price_max),
+            ];
         }
 
         $promoted = $this->advertisements->getPromotedAds($category, $searchSubCategory);
@@ -170,6 +178,7 @@ class AdvertisementController extends Controller
             $searchCity,
             $searchStr,
             $selectedSortKey,
+            $prices,
             $filters,
             $promotedAdIds,
         );
@@ -196,6 +205,7 @@ class AdvertisementController extends Controller
             'optionFilters',
             'filters',
             'promoted',
+            'prices'
         ));
     }
 
@@ -254,12 +264,21 @@ class AdvertisementController extends Controller
         $searchSubCategory = $selectedSubCategory->id == 0 ? false : $selectedSubCategory;
         $searchCity = $selectedCity->id == 0 ? false : $selectedCity;
 
+        $prices = false;
+        if ($request->price_min || $request->price_max) {
+            $prices = [
+                'min' => doubleval($request->price_min),
+                'max' => doubleval($request->price_max),
+            ];
+        }
+
         $advertisements = $this->advertisements->getAdsFiltered(
             $category,
             $searchSubCategory,
             $searchCity,
             $searchStr,
-            $selectedSortKey
+            $selectedSortKey,
+            $prices
         );
 
         // $advertisements = $this->advertisements->getAllAds();
@@ -273,7 +292,8 @@ class AdvertisementController extends Controller
             'searchStr',
             'sortKeys',
             'selectedSortKey',
-            'categoriesWithAdsCount'
+            'categoriesWithAdsCount',
+            'prices'
         ));
     }
 

@@ -64,9 +64,9 @@
                         </select>
                     </div>
                 </form>
-
+                
                 <div class="border-top mb-3"></div>
-                <h5>Sort Results By</h5>
+                <h5>Categories</h5>
                 <div id="category_list_wrapper" class="mb-5">
                     <ul id="category_list_sidebar">
                         <li class="category_list_sidebar_link mb-2">
@@ -88,6 +88,24 @@
                         @endforeach
                     </ul>
                 </div>
+
+                <div class="border-top mb-3"></div>
+
+                <h5>Price</h5>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label for="price_min">Min</label>
+                        <input type="number" name="price_min" id="price_min" class="form-control filter_price_min" min="0" placeholder="0" {{ $prices ? "value={$prices['min']}" : '' }}>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="price_max">Max</label>
+                        <input type="number" name="price_max" id="price_max" class="form-control filter_price_max" min="0" placeholder="0" {{ $prices ? "value={$prices['max']}" : '' }}>
+                    </div>
+                    <div class="col-lg-12 mt-3">
+                        <button class="btn btn-primary w-100 filter_price">Filter By Price</button>
+                    </div>
+                </div>
+
             </div>
             <div class="col-lg-9 pt-3">
                 <h4>Buy, Sell, Rent or Find <span class="text-primary">Anything</span> in <span class="text-success">{{ $selectedCity->title }}</span></h4>
@@ -137,7 +155,7 @@
     <script>
         let url = '{{ url()->current() }}';
 
-        $('.page-filter').change(function(e) {
+        function filter() {
             let ar = [];
 
             let all = $('.page-filter');
@@ -146,8 +164,28 @@
                 ar.push(el[0].id + '=' + escape(el[0].value));
             });
 
+            let price_max = $('#price_max').val().trim();
+            if(price_max == '') {
+                price_max = 0;
+            }
+            ar.push('price_max=' + Number(price_max));
+
+            let price_min = $('#price_min').val().trim();
+            if(price_min == '') {
+                price_min = 0;
+            }
+            ar.push('price_min=' + Number(price_min));
+
             let query = ar.join('&');
             window,location.replace(url + '?' + query);
+        }
+
+        $('.page-filter').change(function(e) {
+            filter();
+        });
+
+        $('.filter_price').click(function(){
+            filter();
         });
     </script>
 @endsection
