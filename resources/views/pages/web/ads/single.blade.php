@@ -76,6 +76,9 @@
                     <li class="list-group-item">
                         <small>Published on {{ $advertisement->publishedAt()->format('Y-m-d') }}</small>
                     </li>
+                    <li class="list-group-item">
+                        <small>Total viewed {{ $advertisement->total_views }} times</small>
+                    </li>
                 </ul>
 
                 <a href="#" class="btn btn-warning text-white mt-2 w-100 d-block">Report this ad</a>

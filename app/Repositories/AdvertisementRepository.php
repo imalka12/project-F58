@@ -302,4 +302,15 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
             ->limit(2)
             ->get();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function incrementViewCount(Advertisement $advertisement): Advertisement
+    {
+        $advertisement->update([
+            'total_views' => $advertisement->total_views + 1
+        ]);
+        return $advertisement;
+    }
 }

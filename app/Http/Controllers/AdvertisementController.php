@@ -402,6 +402,9 @@ class AdvertisementController extends Controller
      */
     public function showSingleAdView(Advertisement $advertisement)
     {
+        // increment total views for the advertisement
+        $advertisement = $this->advertisements->incrementViewCount($advertisement);
+
         return view('pages.web.ads.single', compact('advertisement'));
     }
 

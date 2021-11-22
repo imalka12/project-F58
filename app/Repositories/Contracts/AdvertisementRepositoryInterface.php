@@ -206,4 +206,12 @@ interface AdvertisementRepositoryInterface
      * @return $collection
      */
     public function getPromotedAdvertisements($category = false, $subCategory = false): Collection;
+
+    /**
+     * Increments total_views value by 1
+     *
+     * @param Advertisement $advertisement
+     * @return Advertisement $advertisement
+     */
+    public function incrementViewCount(Advertisement $advertisement): Advertisement;
 }
