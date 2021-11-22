@@ -230,4 +230,9 @@ class AdvertisementService
     {
         return $this->advertisementRepository->getPromotedAdvertisements($category, $subCategory, 2);
     }
+
+    public function incrementViewCount(Advertisement $advertisement)
+    {
+        return $this->advertisementRepository->incrementViewCount($advertisement);
+    }
 }

@@ -27,6 +27,7 @@ class Advertisement extends Model
         'user_id',
         'is_promoted',
         'payment_id',
+        'total_views',
     ];
 
     /**
