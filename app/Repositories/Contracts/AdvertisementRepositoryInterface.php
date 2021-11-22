@@ -143,7 +143,9 @@ interface AdvertisementRepositoryInterface
         $city = false,
         $searchWords = false,
         $sortKey = 'date_newest',
-        $options = false
+        $prices = false,
+        $options = false,
+        $promoted = false
     ): LengthAwarePaginator;
 
     /**

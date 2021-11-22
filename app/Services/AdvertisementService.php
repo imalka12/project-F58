@@ -140,7 +140,8 @@ class AdvertisementService
         $city = 'all',
         $search = '',
         $sortKey = 'date_newest',
-        $options = false,
+        $prices = false,
+        $filters = false,
         $promoted = false
     ) {
         return $this->advertisementRepository->searchAdvertisementsEloquent(
@@ -149,7 +150,8 @@ class AdvertisementService
             $city,
             $search,
             $sortKey,
-            $options,
+            $prices,
+            $filters,
             $promoted,
         );
     }

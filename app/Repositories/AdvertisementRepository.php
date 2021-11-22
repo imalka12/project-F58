@@ -177,6 +177,7 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
         $city = false,
         $searchWords = false,
         $sortKey = 'date_newest',
+        $prices = false,
         $options = false,
         $promoted = false
     ): LengthAwarePaginator {
@@ -220,6 +221,9 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
             })
             ->when($promoted, function ($query, $promoted) {
                 return $query->whereNotIn('advertisements.id', array_values($promoted));
+            })
+            ->when($prices, function ($query, $prices) {
+                return $query->whereBetween('advertisements.price', $prices);
             })
             ->with(['advertisementImages', 'payments'])
             ->select('advertisements.*')
