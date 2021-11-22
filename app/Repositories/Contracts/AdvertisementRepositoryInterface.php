@@ -195,4 +195,15 @@ interface AdvertisementRepositoryInterface
      * @return Collection Collection
      */
     public function getOptionsForAdvertisementFilters(SubCategory $subCategory): Collection;
+
+    /**
+     * Get Promoted Advertisements for the given category and/or sub category
+     * Returns only 2 advertisements selected randomly
+     *
+     * @param $category Category
+     * @param $subCategory SubCategory
+     *
+     * @return $collection
+     */
+    public function getPromotedAdvertisements($category = false, $subCategory = false): Collection;
 }

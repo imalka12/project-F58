@@ -140,7 +140,8 @@ class AdvertisementService
         $city = 'all',
         $search = '',
         $sortKey = 'date_newest',
-        $options = false
+        $options = false,
+        $promoted = false
     ) {
         return $this->advertisementRepository->searchAdvertisementsEloquent(
             $category,
@@ -148,7 +149,8 @@ class AdvertisementService
             $city,
             $search,
             $sortKey,
-            $options
+            $options,
+            $promoted,
         );
     }
 
@@ -222,5 +224,10 @@ class AdvertisementService
     public function getAllAdvertisementOptions(SubCategory $subCategory)
     {
         return $this->advertisementRepository->getOptionsForAdvertisementFilters($subCategory);
+    }
+
+    public function getPromotedAds($category, $subCategory)
+    {
+        return $this->advertisementRepository->getPromotedAdvertisements($category, $subCategory, 2);
     }
 }

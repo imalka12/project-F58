@@ -177,7 +177,8 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
         $city = false,
         $searchWords = false,
         $sortKey = 'date_newest',
-        $options = false
+        $options = false,
+        $promoted = false
     ): LengthAwarePaginator {
         return Advertisement::join('cities', 'cities.id', '=', 'advertisements.city_id')
             ->join('sub_categories', 'sub_categories.id', '=', 'advertisements.sub_category_id')
@@ -217,11 +218,13 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
                 return $query->join('advertisement_options', 'advertisements.id', '=', 'advertisement_options.advertisement_id')
                     ->whereIn('advertisement_options.option_group_value_id', [$groupIDs]);
             })
+            ->when($promoted, function ($query, $promoted) {
+                return $query->whereNotIn('advertisements.id', array_values($promoted));
+            })
             ->with(['advertisementImages', 'payments'])
             ->select('advertisements.*')
             ->paginate(25);
     }
-
 
     /**
      * @inheritDoc
@@ -277,5 +280,26 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
     {
         return OptionGroup::with('OptionGroupValues')
             ->where('option_groups.sub_category_id', $subCategory->id)->get();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPromotedAdvertisements($category = false, $subCategory = false): Collection
+    {
+        return Advertisement::select('advertisements.*')
+            ->where('is_promoted', 1)
+            ->where('expire_at', '>', now()->format('Y-m-d H:i:s'))
+            ->join('sub_categories', 'sub_categories.id', '=', 'advertisements.sub_category_id')
+            ->when($subCategory, function ($query, $subCategory) {
+                return $query->where('advertisements.sub_category_id', $subCategory->id);
+            })
+            ->when($category, function ($query, $category) {
+                return $query->where('sub_categories.id', $category->id);
+            })
+            ->with(['advertisementImages', 'payments'])
+            ->inRandomOrder()
+            ->limit(2)
+            ->get();
     }
 }

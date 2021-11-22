@@ -158,13 +158,20 @@ class AdvertisementController extends Controller
             $filters = $this->getFiltersFromRequest($request);
         }
 
+        $promoted = $this->advertisements->getPromotedAds($category, $searchSubCategory);
+        $promotedAdIds = false;
+        if ($promoted != null && $promoted->count() > 0) {
+            $promotedAdIds = $promoted->pluck('id')->toArray();
+        }
+
         $advertisementsByCategory = $this->advertisements->getAdsFiltered(
             $category,
             $searchSubCategory,
             $searchCity,
             $searchStr,
             $selectedSortKey,
-            $filters
+            $filters,
+            $promotedAdIds,
         );
 
         $categoriesWithAdsCount = $this->categories->getCategoriesWithAdsCount();
@@ -187,7 +194,8 @@ class AdvertisementController extends Controller
             'selectedSortKey',
             'categoriesWithAdsCount',
             'optionFilters',
-            'filters'
+            'filters',
+            'promoted',
         ));
     }
 
