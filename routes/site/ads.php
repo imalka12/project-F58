@@ -120,4 +120,9 @@ Route::middleware(['verified'])->group(function () {
         'advertisement/delete-advertisement-images/{advertisementImage}',
         [AdvertisementController::class, 'deleteUnpaidAdImage']
     )->name('advertisement.unpaid.images.delete');
+
+    Route::post(
+        'report-ad/{advertisement}',
+        [AdvertisementController::class, 'advertisementReport']
+    )->name('advertisement.report');
 });

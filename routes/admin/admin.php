@@ -1,6 +1,7 @@
 <?php
 // Administration Panel Routes
 
+use App\Http\Controllers\AdvertisementReportController;
 use App\Http\Controllers\ContactFormSubmissionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OptionGroupController;
@@ -86,3 +87,10 @@ Route::get(
     'admin/contact-form-submissions',
     [ContactFormSubmissionController::class, 'index']
 )->name('admin.contact-form-submissions');
+
+Route::get(
+    'admin/advertisement-reports',
+    [AdvertisementReportController::class, 'index']
+)->name('admin.advertisement-reports');
+
+

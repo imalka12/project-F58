@@ -237,4 +237,9 @@ class AdvertisementService
     {
         return $this->advertisementRepository->incrementViewCount($advertisement);
     }
+
+    public function report(array $data)
+    {
+        return $this->advertisementRepository->createReport($data);
+    }
 }

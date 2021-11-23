@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdvertisementImagesCreateRequest;
 use App\Http\Requests\AdvertisementOptionValuesCreateRequest;
 use App\Http\Requests\CreateAdvertisementRequest;
+use App\Http\Requests\ReportAdvertisementRequest;
 use App\Http\Requests\UpdateAdvertisementRequest;
 use App\Http\Requests\UpdateOptionGroupValueRequest;
 use App\Models\Advertisement;
 use App\Models\AdvertisementImage;
+use App\Models\AdvertisementReport;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\SubCategory;
@@ -16,6 +18,7 @@ use App\Services\AdvertisementService;
 use App\Services\CategoryService;
 use App\Services\LocationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class AdvertisementController extends Controller
@@ -485,5 +488,18 @@ class AdvertisementController extends Controller
 
         return redirect()->route('advertisement.unpaid.images.edit.page', $advertisement->id)
             ->with('success', 'Image deleted successfully.');
+    }
+
+    public function advertisementReport(
+        ReportAdvertisementRequest $request, 
+        Advertisement $advertisement
+    ) {
+        $data = $request->validated();
+
+        $data['user_id'] = Auth::user()->id;
+        $this->advertisements->report($data);
+
+        return redirect()->route('ads.view.single', $advertisement->id)
+        ->with('success' , 'Your report was received successfully. You will receive feedback after administrator review. Thank you.');
     }
 }
