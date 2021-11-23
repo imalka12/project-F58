@@ -2,6 +2,7 @@
 
 // Client Login / Signup & Logout Routes
 
+use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Client\AuthController;
 use App\Http\Controllers\Client\ClientController;
 use Illuminate\Support\Facades\Route;
@@ -80,4 +81,5 @@ Route::middleware(['verified'])->group(function () {
         'delete/user/profile/{user}',
         [ClientController::class, 'deleteUserProfile']
     )->name('user.profile.delete');
+
 });

@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Advertisement;
 use App\Models\AdvertisementImage;
 use App\Models\AdvertisementOption;
+use App\Models\AdvertisementReport;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\OptionGroup;
@@ -316,5 +317,13 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
             'total_views' => $advertisement->total_views + 1
         ]);
         return $advertisement;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function createReport(array $data): AdvertisementReport 
+    {
+        return AdvertisementReport::create($data);
     }
 }

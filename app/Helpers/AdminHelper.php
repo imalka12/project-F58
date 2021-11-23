@@ -31,6 +31,12 @@ class AdminHelper
                 'route' => 'admin.contact-form-submissions',
                 'icon' => 'bx bx-envelope',
                 'label' => 'Contact Form Submissions'
+            ],
+            [
+                'key' => 't-ad-reports-submissions',
+                'route' => 'admin.advertisement-reports',
+                'icon' => 'bx bx-spreadsheet',
+                'label' => 'Reported Ad Submissions'
             ]
         ];
     }

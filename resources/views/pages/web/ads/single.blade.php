@@ -47,19 +47,20 @@
                     <h6 id="single_ad_price">Rs. {{ number_format($advertisement->price, 2) }}</h6>
                 </div>
                 <div class="mt-2">
-                    @if(count($advertisement->advertisementOptions) > 0)
+                    @if (count($advertisement->advertisementOptions) > 0)
                         <div class="row">
                             @foreach ($advertisement->advertisementOptions as $option)
-                            <div class="col-lg-6">
-                                {{ $option->optionGroup->title }} : <strong>{{ $option->optionGroupValue->title }}</strong>
-                            </div>
+                                <div class="col-lg-6">
+                                    {{ $option->optionGroup->title }} :
+                                    <strong>{{ $option->optionGroupValue->title }}</strong>
+                                </div>
                             @endforeach
                         </div>
                     @endif
                 </div>
                 <div class="mt-3">
                     <h6>Description</h4>
-                    {!! $advertisement->description !!}
+                        {!! $advertisement->description !!}
                 </div>
             </div>
             <div class="col-lg-3 mt-3">
@@ -81,12 +82,54 @@
                     </li>
                 </ul>
 
-                <a href="#" class="btn btn-warning text-white mt-2 w-100 d-block">Report this ad</a>
+                <!-- <a href="#" class="btn btn-warning text-white mt-2 w-100 d-block" >Report this ad</a> -->
+                @auth
+                <button type="button" class="btn btn-warning text-white mt-2 w-100 d-block" data-bs-toggle="modal"
+                    data-bs-target="#reportModal">
+                    Report this ad
+                </button>
+                @endauth
             </div>
         </div>
+        @auth
+        <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reportModalLabel">Report this Advertisement</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('advertisement.report', $advertisement->id) }}" method="post">
+                        @csrf
+                        
+                        <input type="hidden" name="advertisement_id" value="{{ $advertisement->id }}">
+
+                        <div class="modal-body">
+                            <div class="col-lg-12 mb-2">
+                                <label for="reason" class="form-label">Reason</label>
+                                <select name="reason" id="reason" class="form-control" required>
+                                    <option value="">Please Select</option>
+                                    <option value="Unauthorized/Harmful Items">Unauthorized/Harmful Items</option>
+                                    <option value="Pornography/Sexually Explicit Content">Pornography/Sexually Explicit Content</option>
+                                    <option value="Violance/Terrorism">Violance/Terrorism</option>
+                                    <option value="Against Religious or Racial Beliefs">Against Religious or Racial Beliefs</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-12 mb-2">
+                                <label for="remarks" class="form-label">Remarks</label>
+                                <textarea name="comments" id="comments" cols="30" rows="10" class="form-control" placeholder="Please tell us why you felt this should be reported.."></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Send Report</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @endauth
     </div>
-
-
 @endsection
 
 @section('custom-css')

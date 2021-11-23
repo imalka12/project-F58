@@ -5,12 +5,14 @@ namespace App\Repositories\Contracts;
 use App\Models\Advertisement;
 use App\Models\AdvertisementImage;
 use App\Models\AdvertisementOption;
+use App\Models\AdvertisementReport;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\SubCategory;
 use Collator;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
 
 interface AdvertisementRepositoryInterface
 {
@@ -216,4 +218,11 @@ interface AdvertisementRepositoryInterface
      * @return Advertisement $advertisement
      */
     public function incrementViewCount(Advertisement $advertisement): Advertisement;
+
+    /**
+     * Create new report
+     * 
+     * @param $data array
+     */
+    public function createReport(array $data): AdvertisementReport; 
 }
