@@ -1,11 +1,13 @@
 <?php
 // Administration Panel Routes
 
+use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\AdvertisementReportController;
 use App\Http\Controllers\ContactFormSubmissionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OptionGroupController;
 use App\Http\Controllers\SubCategoryController;
+use App\Models\AdvertisementReport;
 use Illuminate\Support\Facades\Route;
 
 Route::get('admin', [HomeController::class, 'root'])->name('root');
@@ -93,4 +95,17 @@ Route::get(
     [AdvertisementReportController::class, 'index']
 )->name('admin.advertisement-reports');
 
+Route::post(
+    'admin/advertisement-force-expire/{advertisement}',
+    [AdvertisementReportController::class, 'advertisementForceToExpire']
+)->name('admin.advertisement-force-expire');
 
+Route::post(
+    'admin/advertisement-force-delete/{advertisement}',
+    [AdvertisementReportController::class, 'advertisementForceToDelete']
+)->name('admin.advertisement-force-delete');
+
+Route::post(
+    'admin/advertisement-dismiss-report/{report}',
+    [AdvertisementReportController::class, 'advertisementReportDismiss']
+)->name('admin.advertisement-report-dismiss');

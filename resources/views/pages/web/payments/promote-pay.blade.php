@@ -44,13 +44,13 @@
                                 <div class="col-lg-6">
                                     <div class="mb-2">
                                         <label for="cvv">CVV</label>
-                                        <input type="text" class="form-control" id="cvv" name="cvv" required="required">
+                                        <input type="text" class="form-control" id="cvv" name="cvv" required="required" placeholder="CVV">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-2">
                                         <label for="expiry">Expire On</label>
-                                        <input type="text" class="form-control" id="expiry" name="expiry" required="required">
+                                        <input type="text" class="form-control" id="expiry" name="expiry" required="required" placeholder="MM/YY">
                                     </div>
                                 </div>
                             </div>
