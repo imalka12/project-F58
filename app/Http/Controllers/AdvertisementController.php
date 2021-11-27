@@ -425,6 +425,10 @@ class AdvertisementController extends Controller
      */
     public function showSingleAdView(Advertisement $advertisement)
     {
+        if($advertisement->isExpired()) {
+            abort(404, 'This advertisement is not available.');
+        }
+
         // increment total views for the advertisement
         $advertisement = $this->advertisements->incrementViewCount($advertisement);
 

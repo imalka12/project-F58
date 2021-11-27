@@ -4,7 +4,7 @@
     <div class="container p-5">
         <div class="row">
             <div class="text-center">
-                <h2>Pricing</h2>
+                <h1>Pricing</h1>
                 <div class="row mt-4">
                     <p>Sell your items quickly at the best price by making your ads stand out on Quick Ads - the largest
                         marketplace in Sri Lanka!</p>

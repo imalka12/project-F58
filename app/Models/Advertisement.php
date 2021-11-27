@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -125,5 +126,15 @@ class Advertisement extends Model
 
         // get the payment entry created date
         return $payment->created_at;
+    }
+
+    /**
+     * Returns if this advertisement is expired
+     * 
+     * @return bool $isExpired
+     */
+    public function isExpired(): bool
+    {
+        return Carbon::parse($this->expire_at)->lt(now());
     }
 }
