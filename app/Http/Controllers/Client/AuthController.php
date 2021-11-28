@@ -7,10 +7,13 @@ use App\Http\Requests\ClientLoginRequest;
 use App\Http\Requests\ClientSignupRequest;
 use App\Models\User;
 use App\Services\ClientAuthService;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -43,14 +46,6 @@ class AuthController extends Controller
     public function showSignupPage()
     {
         return view('pages.web.auth.signup');
-    }
-
-    /**
-     * Show the forgot password page
-     */
-    public function showForgotPasswordPage()
-    {
-        return view('pages.web.auth.forgot-password');
     }
 
     /**
@@ -132,9 +127,9 @@ class AuthController extends Controller
     {
         $isLoggedIn = $this->clientAuth->login($request);
 
-        if (! $isLoggedIn) {
+        if (!$isLoggedIn) {
             return redirect()->route('client.login')
-            ->with('error', 'Failed to login. Please check your username and password and try again.');
+                ->with('error', 'Failed to login. Please check your username and password and try again.');
         }
 
         // redirect user to user profile
@@ -152,6 +147,75 @@ class AuthController extends Controller
         Auth::logout();
 
         return redirect()->route('site.home')
-        ->with('info', 'You are now successfully logged out.');
+            ->with('info', 'You are now successfully logged out.');
+    }
+
+    /**
+     * Show the forgot password page
+     */
+    public function showForgotPasswordPage()
+    {
+        return view('pages.web.auth.forgot-password');
+    }
+
+    /**
+     * Send password reset email
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse $response
+     */
+    public function sendPasswordResetLinkEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+            ? back()->with(['status' => __($status)])
+            : back()->withErrors(['email' => __($status)]);
+    }
+
+    /**
+     * Show a password reset form
+     *
+     * @param Request $request
+     * @param string $token
+     * @return void
+     */
+    public function passwordReset(Request $request, $token)
+    {
+        $email = $request->email;
+
+        return view('pages.web.auth.reset-password', ['token' => $token, 'email' => $email]);
+    }
+
+    public function updateUserPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+                    ? redirect()->route('client.login')->with('status', __($status))
+                    : back()->withErrors(['email' => [__($status)]]);
     }
 }

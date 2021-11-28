@@ -155,4 +155,22 @@ class ClientAuthService
     {
         return $this->userRepository->delete($user->id);
     }
+
+    public function getUserByEmailAddress($email)
+    {
+        return $this->userRepository->findBy('email', $email);
+    }
+
+    public function sendPasswordResetEmail($email)
+    {
+        $user = $this->getUserByEmailAddress($email);
+
+        if (!$user) {
+            return false;
+        }
+
+        $user->sendPasswordResetNotification($user->getEmailForPasswordReset());
+
+        return true;
+    }
 }

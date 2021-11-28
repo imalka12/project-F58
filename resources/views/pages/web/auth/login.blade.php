@@ -65,7 +65,7 @@
                         </div>
 
                         <div class="form-group mt-2 text-center">
-                            <a href="{{ route('client.forgot-password') }}">Forgot password?</a>
+                            <a href="{{ route('password.request') }}">Forgot password?</a>
                         </div>
 
                         <div class="form-group mt-2">
