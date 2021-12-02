@@ -148,4 +148,13 @@ class HomeController extends Controller
 
         return redirect()->route('/')->with('success' , 'Your profile deleted successfully');
     }
+
+    
+    public function blockUsers(User $user)
+    {
+        $user = $this->users->list();
+
+        dd($user);
+        return view('pages.admin.user-block-options');
+    }
 }

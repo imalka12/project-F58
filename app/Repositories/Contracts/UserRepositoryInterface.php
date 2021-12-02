@@ -3,6 +3,7 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 interface UserRepositoryInterface
 {
@@ -45,4 +46,11 @@ interface UserRepositoryInterface
      * @return boolean
      */
     public function delete($user): bool;
+
+
+    /**
+     * Get all users
+     * @return collection
+     */
+    public function getAllUsers($user): Collection;
 }

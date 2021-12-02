@@ -37,6 +37,12 @@ class AdminHelper
                 'route' => 'admin.advertisement-reports',
                 'icon' => 'bx bx-spreadsheet',
                 'label' => 'Reported Ad Submissions'
+            ],
+            [
+                'key' => 't-user-block-options',
+                'route' => 'admin.user-block-options',
+                'icon' => 'bx bx-spreadsheet',
+                'label' => 'Block Users'
             ]
         ];
     }

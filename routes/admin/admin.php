@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\AdvertisementReportController;
+use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\ContactFormSubmissionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OptionGroupController;
@@ -109,3 +110,7 @@ Route::post(
     'admin/advertisement-dismiss-report/{report}',
     [AdvertisementReportController::class, 'advertisementReportDismiss']
 )->name('admin.advertisement-report-dismiss');
+
+Route::get('admin/block-users',
+    [HomeController::class, 'blockUsers']
+)->name('admin.user-block-options');
