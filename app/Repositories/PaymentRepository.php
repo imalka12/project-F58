@@ -19,4 +19,21 @@ class PaymentRepository implements PaymentRepositoryInterface
     {
         return Payment::where('user_id', $user->id)->with('advertisement')->orderBy('created_at', 'desc')->get();
     }
+
+    public function getPaymentsByPeriod(string $startDate, string $endDate): Collection
+    {
+        return Payment::whereBetween('created_at', [$startDate, $endDate])
+            ->with('advertisement')
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    public function getPaymentsByPeriodAndType(string $startDate, string $endDate, string $type = null): Collection
+    {
+        return Payment::whereBetween('created_at', [$startDate, $endDate])
+            ->where('type', $type)
+            ->with('advertisement')
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
 }

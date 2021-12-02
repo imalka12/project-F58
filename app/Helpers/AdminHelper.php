@@ -30,7 +30,7 @@ class AdminHelper
                 'key' => 't-contact-form-submissions',
                 'route' => 'admin.contact-form-submissions',
                 'icon' => 'bx bx-envelope',
-                'label' => 'Contact Form Submissions'
+                'label' => 'Contact Us Submissions'
             ],
             [
                 'key' => 't-ad-reports-submissions',
