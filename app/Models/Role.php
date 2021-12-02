@@ -17,12 +17,13 @@ class Role extends Model
      *
      * @return void
      */
-    public function users() {
+    public function users()
+    {
         return $this->hasMany(User::class);
     }
 
-    public static function getDefault() {
+    public static function getDefault()
+    {
         return static::whereIsDefaultRole(true)->first();
     }
-
 }

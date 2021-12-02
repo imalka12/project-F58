@@ -6,8 +6,12 @@ use App\Http\Requests\OptionGroupCreateRequest;
 use App\Http\Requests\CategoryCreateRequest;
 use App\Models\OptionGroup;
 use App\Models\User;
+use App\Services\AdvertisementService;
 use App\Services\CategoryService;
+use App\Services\ClientAuthService;
+use App\Services\DashboardService;
 use App\Services\OptionGroupService;
+use App\Services\PaymentService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,15 +21,18 @@ use Illuminate\Support\Facades\Session;
 class HomeController extends Controller
 {
     private $users;
+    private $dashboard;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(DashboardService $dashboard)
     {
         $this->middleware('auth');
+
+        $this->dashboard = $dashboard;
     }
 
     /**
@@ -43,7 +50,44 @@ class HomeController extends Controller
 
     public function root()
     {
-        return view('pages.admin.index');
+        // total users
+        $totalUsers = $this->dashboard->getTotalUsers();
+
+        // total ads
+        $totalAds = $this->dashboard->getTotalAds();
+
+        // monthly ad stats
+        $monthlyAdStats = $this->dashboard->getCurrentMonthAdsStats();
+
+        // published ads
+        $currentMonthPublishedAds = $monthlyAdStats['published'];
+        // promoted ads
+        $currentMonthPromotedAds = $monthlyAdStats['promoted'];
+        // renewed ads
+        $currentMonthRenewedAds = $monthlyAdStats['renewed'];
+
+        // this month total earnings
+        $thisMonthTotalEarnings = $this->dashboard->getThisMonthTotalEarnings();
+        // last month total earnings
+        $lastMonthTotalEarnings = $this->dashboard->getLastMonthTotalEarnings();
+        // up or down percentage
+        $upDownPercentage = $thisMonthTotalEarnings['variationPercentage'];
+
+        // yearly ad stats
+        // published ads
+        // promoted ads
+        // renewed ads
+
+        return view(
+            'pages.admin.index',
+            compact(
+                'totalUsers',
+                'totalAds',
+                'currentMonthPublishedAds',
+                'currentMonthPromotedAds',
+                'currentMonthRenewedAds'
+            )
+        );
     }
 
     /*Language Translation*/
@@ -138,14 +182,12 @@ class HomeController extends Controller
 
     /**
      * Detele user profile
-     * 
      * @param User $id
-     * 
      */
     public function deleteUserProfile(User $user)
     {
         $this->users->delete($user);
 
-        return redirect()->route('/')->with('success' , 'Your profile deleted successfully');
+        return redirect()->route('/')->with('success', 'Your profile deleted successfully');
     }
 }

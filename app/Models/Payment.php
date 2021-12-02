@@ -9,7 +9,11 @@ class Payment extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'user_id', 'advertisement_id', 'amount', 'request_code', 'response_code', 'status' , 'type' ];
+    const TYPE_PUBLISH = 'publish';
+    const TYPE_RENEWAL = 'renewal';
+    const TYPE_PROMOTE = 'promote';
+
+    protected $fillable = ['user_id', 'advertisement_id', 'amount', 'request_code', 'response_code', 'status', 'type'];
 
     public function advertisement()
     {

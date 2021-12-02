@@ -130,7 +130,7 @@ class Advertisement extends Model
 
     /**
      * Returns if this advertisement is expired
-     * 
+     *
      * @return bool $isExpired
      */
     public function isExpired(): bool
