@@ -154,7 +154,6 @@
                         <div class="d-sm-flex flex-wrap">
                             <h4 class="card-title mb-4">Advertisements Summary {{ date('Y') }}</h4>
                         </div>
-
                         <div id="stacked-column-chart" class="apex-charts" dir="ltr"></div>
                     </div>
                 </div>
