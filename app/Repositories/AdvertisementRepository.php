@@ -322,8 +322,35 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function createReport(array $data): AdvertisementReport 
+    public function createReport(array $data): AdvertisementReport
     {
         return AdvertisementReport::create($data);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAllAds(): Collection
+    {
+        return Advertisement::where('is_approved', true)->get();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAdsByPeriod($fromDate, $toDate): Collection
+    {
+        return Advertisement::where('is_approved', true)
+            ->whereBetween('created_at', [$fromDate, $toDate])
+            ->get();
+    }
+
+    public function getAdsByPeriodAndType($fromDate, $toDate, $type): Collection
+    {
+        return Advertisement::where('is_approved', true)
+            ->join('payments', 'payments.advertisement_id', '=', 'advertisements.id')
+            ->whereBetween('payments.created_at', [$fromDate, $toDate])
+            ->where('payments.type', $type)
+            ->get();
     }
 }

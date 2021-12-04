@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Role;
 use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -61,5 +62,23 @@ class UserRepository implements UserRepositoryInterface
         $user = User::whereId($user)->first();
         $user->profile->delete();
         return $user->delete();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDefaultRole(): Role
+    {
+        return Role::getDefault();
+    }
+
+    /**
+     * Get all users by the given role
+     *
+     * @return Collection
+     */
+    public function getAllUsersByRole(Role $role): Collection
+    {
+        return User::whereRoleId($role->id)->get();
     }
 }

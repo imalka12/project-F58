@@ -221,8 +221,35 @@ interface AdvertisementRepositoryInterface
 
     /**
      * Create new report
-     * 
+     *
      * @param $data array
      */
-    public function createReport(array $data): AdvertisementReport; 
+    public function createReport(array $data): AdvertisementReport;
+
+    /**
+     * Get all advertisements
+     *
+     * @return Collection $ads
+     */
+    public function getAllAds(): Collection;
+
+    /**
+     * Get all advertisements during the given period
+     *
+     * @param string $fromDate
+     * @param string $toDate
+     *
+     * @return Collection $ads
+     */
+    public function getAdsByPeriod($fromDate, $toDate): Collection;
+
+    /**
+     * Get ads by period and type
+     *
+     * @param string $fromDate
+     * @param string $toDate
+     * @param string $type
+     * @return Collection
+     */
+    public function getAdsByPeriodAndType($fromDate, $toDate, $type): Collection;
 }

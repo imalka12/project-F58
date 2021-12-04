@@ -2,7 +2,9 @@
 
 namespace App\Repositories\Contracts;
 
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 interface UserRepositoryInterface
 {
@@ -45,4 +47,18 @@ interface UserRepositoryInterface
      * @return boolean
      */
     public function delete($user): bool;
+
+    /**
+     * Get the role with default flag set
+     *
+     * @return Role $role
+     */
+    public function getDefaultRole(): Role;
+
+    /**
+     * Get all users by the given role
+     *
+     * @return Collection
+     */
+    public function getAllUsersByRole(Role $role): Collection;
 }
