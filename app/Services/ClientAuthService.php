@@ -174,8 +174,4 @@ class ClientAuthService
         return true;
     }
 
-    public function getAllUsers($user)
-    {
-        return $this->userRepository->getAllUsers('user', $user);
-    }
 }

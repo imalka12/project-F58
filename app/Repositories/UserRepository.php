@@ -63,12 +63,4 @@ class UserRepository implements UserRepositoryInterface
         $user->profile->delete();
         return $user->delete();
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllUsers($user): Collection
-    {
-        return User::whereNull('deleted_at')->get();
-    }
 }

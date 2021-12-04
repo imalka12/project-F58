@@ -111,6 +111,10 @@ Route::post(
     [AdvertisementReportController::class, 'advertisementReportDismiss']
 )->name('admin.advertisement-report-dismiss');
 
-Route::get('admin/block-users',
+Route::get('admin/view-users',
+    [HomeController::class, 'viewUsersInAdmin']
+)->name('admin.user-view-options');
+
+Route::post('admin/block-users/{user}',
     [HomeController::class, 'blockUsers']
-)->name('admin.user-block-options');
+)->name('admin.user-block');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OptionGroupCreateRequest;
 use App\Http\Requests\CategoryCreateRequest;
+use App\Models\Advertisement;
 use App\Models\OptionGroup;
 use App\Models\User;
 use App\Services\CategoryService;
@@ -137,24 +138,22 @@ class HomeController extends Controller
     }
 
     /**
-     * Detele user profile
-     * 
-     * @param User $id
-     * 
+     * View users in admin panel
      */
-    public function deleteUserProfile(User $user)
+    public function viewUsersInAdmin()
     {
-        $this->users->delete($user);
+        $user = User::where('role_id' , '1')->get();
 
-        return redirect()->route('/')->with('success' , 'Your profile deleted successfully');
+        return view('pages.admin.user-block-options', compact('user'));
     }
 
-    
-    public function blockUsers(User $user)
+    /**
+     * Admin delete users
+     */
+    public function blockUsers(Request $request, User $user, Advertisement $advertisement)
     {
-        $user = $this->users->list();
+        // $this->users->delete($user);
 
-        dd($user);
-        return view('pages.admin.user-block-options');
+        return redirect()->route('admin.user-view-options')->with('success', 'User profile deleted successfully.');
     }
 }

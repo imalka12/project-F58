@@ -40,7 +40,7 @@ class AdminHelper
             ],
             [
                 'key' => 't-user-block-options',
-                'route' => 'admin.user-block-options',
+                'route' => 'admin.user-view-options',
                 'icon' => 'bx bx-spreadsheet',
                 'label' => 'Block Users'
             ]

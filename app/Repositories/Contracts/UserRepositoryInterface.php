@@ -46,11 +46,4 @@ interface UserRepositoryInterface
      * @return boolean
      */
     public function delete($user): bool;
-
-
-    /**
-     * Get all users
-     * @return collection
-     */
-    public function getAllUsers($user): Collection;
 }
