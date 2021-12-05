@@ -75,9 +75,7 @@ class HomeController extends Controller
         $upDownPercentage = $thisMonthTotalEarnings['variationPercentage'];
 
         // yearly ad stats
-        // published ads
-        // promoted ads
-        // renewed ads
+        $yearlyAdStats = $this->dashboard->getCurrentYearAdsStats();
 
         return view(
             'pages.admin.index',
@@ -91,6 +89,7 @@ class HomeController extends Controller
                 'lastMonthTotalEarnings',
                 'variationAmount',
                 'upDownPercentage',
+                'yearlyAdStats',
             )
         );
     }

@@ -153,4 +153,30 @@ class DashboardService
             'variationPercentage' => $variationPercentage,
         ];
     }
+
+    /**
+     * Get advertisement data for the current year
+     *
+     * @return array $array
+     */
+    public function getCurrentYearAdsStats()
+    {
+        $year = date('Y');
+
+        $months = [
+            'published' => [],
+            'promoted' => [],
+            'renewed' => [],
+        ];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $data = $this->getAdsByPeriod($year, $i);
+
+            $months['published'][] = $data['published'];
+            $months['promoted'][] = $data['promoted'];
+            $months['renewed'][] = $data['renewed'];
+        }
+
+        return $months;
+    }
 }
