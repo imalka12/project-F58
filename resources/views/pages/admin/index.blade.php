@@ -193,15 +193,15 @@
                 },
                 series: [{
                         name: "Published",
-                        data: [44, 55, 41, 67, 22, 43, 36, 52, 24, 18, 36, 48]
+                        data: {{ json_encode($yearlyAdStats['published']) }}
                     },
                     {
                         name: "Promoted",
-                        data: [13, 23, 20, 8, 13, 27, 18, 22, 10, 16, 24, 22]
+                        data: {{ json_encode($yearlyAdStats['promoted']) }}
                     },
                     {
                         name: "Renewed",
-                        data: [11, 17, 15, 15, 21, 14, 11, 18, 17, 12, 20, 18]
+                        data: {{ json_encode($yearlyAdStats['renewed']) }}
                     },
                 ],
                 xaxis: {
