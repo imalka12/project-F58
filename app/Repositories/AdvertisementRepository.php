@@ -300,7 +300,7 @@ class AdvertisementRepository implements AdvertisementRepositoryInterface
                 return $query->where('advertisements.sub_category_id', $subCategory->id);
             })
             ->when($category, function ($query, $category) {
-                return $query->where('sub_categories.id', $category->id);
+                return $query->where('sub_categories.category_id', $category->id);
             })
             ->with(['advertisementImages', 'payments'])
             ->inRandomOrder()

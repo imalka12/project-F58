@@ -174,6 +174,7 @@ class AdvertisementController extends Controller
         if ($promoted != null && $promoted->count() > 0) {
             $promotedAdIds = $promoted->pluck('id')->toArray();
         }
+        // dd($promoted);
 
         $advertisementsByCategory = $this->advertisements->getAdsFiltered(
             $category,

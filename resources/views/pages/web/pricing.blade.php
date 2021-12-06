@@ -17,13 +17,13 @@
                     </div>
                     <div class="card-body">
                         <div class="card-price mb-4">
-                            <h2>LKR {{ number_format(config('system.payments.advertisement_publish'), 2) }} <small class=" text-muted">/ 14
+                            <h2>LKR {{ number_format(config('system.payments.advertisement_publish'), 2) }} <small class=" text-muted">/ 21
                                     Days</small></h2>
                         </div>
                         <div class="card-items">
                             <ul class="list-unstyled">
                                 <li> <i class="fas fa-check text-primary"></i>
-                                    Published advertisements will display 14 days.
+                                    Published advertisements will display 21 days.
                                 </li>
                                 <li></li>
                                 <li></li>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="card-body">
                         <div class="card-price mb-4">
-                            <h2>LKR {{ number_format(config('system.payments.advertisement_promote'), 2) }} <small class=" text-muted">/ 14
+                            <h2>LKR {{ number_format(config('system.payments.advertisement_promote'), 2) }} <small class=" text-muted">/ 21
                                     Days</small></h2>
                         </div>
                         <div class="card-items">
